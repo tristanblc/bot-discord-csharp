@@ -10,3 +10,8 @@ D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\obj\Debug\net6
 D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\obj\Debug\net6.0\ModuleBotClassLibrary.dll
 D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\obj\Debug\net6.0\ref\ModuleBotClassLibrary.dll
 D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\obj\Debug\net6.0\ModuleBotClassLibrary.pdb
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\bin\Debug\net6.0\BotClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\bin\Debug\net6.0\ReaderClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\bin\Debug\net6.0\ReaderClassLibrary.pdb
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\bin\Debug\net6.0\BotClassLibrary.pdb
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\ModuleBotClassLibrary\obj\Debug\net6.0\ModuleBotClassLibrary.csproj.CopyComplete
