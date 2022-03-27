@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "d43ca2af-d911-46d2-8a79-7b9a885a240f": {
+      "ProjectGuid": "d43ca2af-d911-46d2-8a79-7b9a885a240f",
+      "DisplayName": "My-Bot-Discord-CSharp",
+      "ColorIndex": 0
+    },
+    "1ba06437-ed3a-4c5c-a3c0-4520cc8d4313": {
+      "ProjectGuid": "1ba06437-ed3a-4c5c-a3c0-4520cc8d4313",
+      "DisplayName": "ModuleBotClassLibrary",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

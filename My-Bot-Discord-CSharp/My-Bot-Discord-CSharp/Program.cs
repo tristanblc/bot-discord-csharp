@@ -16,7 +16,7 @@ static async Task MainAsync()
 
     var discord = new DiscordClient(new DiscordConfiguration()
     {
-        Token =,
+        Token = ,
         TokenType = TokenType.Bot,
         Intents = DiscordIntents.AllUnprivileged
     });
@@ -27,6 +27,7 @@ static async Task MainAsync()
     };
 
     var commands = discord.UseCommandsNext(command_configuration);
+
 
     commands.RegisterCommands<InfoModule>();
     commands.RegisterCommands<OtherToolsModule>();

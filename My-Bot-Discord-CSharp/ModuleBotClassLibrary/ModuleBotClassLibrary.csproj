@@ -12,4 +12,8 @@
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

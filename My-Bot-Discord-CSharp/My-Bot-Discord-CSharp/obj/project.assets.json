@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "AutoMapper/11.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/AutoMapper.dll": {}
+        }
+      },
       "ConcurrentHashSet/1.1.0": {
         "type": "package",
         "compile": {
@@ -11,7 +23,7 @@
           "lib/netstandard2.0/ConcurrentCollections.dll": {}
         }
       },
-      "DSharpPlus/4.2.0-nightly-01100": {
+      "DSharpPlus/4.2.0-nightly-01101": {
         "type": "package",
         "dependencies": {
           "Emzi0767.Common": "2.6.2",
@@ -31,10 +43,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.2.0-nightly-01100": {
+      "DSharpPlus.CommandsNext/4.2.0-nightly-01101": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.2.0-nightly-01100",
+          "DSharpPlus": "4.2.0-nightly-01101",
           "Microsoft.Extensions.DependencyInjection": "5.0.1"
         },
         "compile": {
@@ -44,11 +56,11 @@
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
         }
       },
-      "DSharpPlus.Interactivity/4.2.0-nightly-01100": {
+      "DSharpPlus.Interactivity/4.2.0-nightly-01101": {
         "type": "package",
         "dependencies": {
           "ConcurrentHashSet": "1.1.0",
-          "DSharpPlus": "4.2.0-nightly-01100"
+          "DSharpPlus": "4.2.0-nightly-01101"
         },
         "compile": {
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
@@ -57,10 +69,10 @@
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
         }
       },
-      "DSharpPlus.VoiceNext/4.2.0-nightly-01100": {
+      "DSharpPlus.VoiceNext/4.2.0-nightly-01101": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.2.0-nightly-01100",
+          "DSharpPlus": "4.2.0-nightly-01101",
           "DSharpPlus.VoiceNext.Natives": "1.0.0",
           "System.Threading.Channels": "5.0.0"
         },
@@ -105,6 +117,15 @@
         },
         "runtime": {
           "lib/netcoreapp2.1/Emzi0767.Common.dll": {}
+        }
+      },
+      "Microsoft.CSharp/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection/5.0.1": {
@@ -1275,12 +1296,23 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
+      "BotClassLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BotClassLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BotClassLibrary.dll": {}
+        }
+      },
       "ModuleBotClassLibrary/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "DSharpPlus": "4.2.0-nightly-01100",
-          "DSharpPlus.CommandsNext": "4.2.0-nightly-01100",
+          "DSharpPlus": "4.2.0-nightly-01101",
+          "DSharpPlus.CommandsNext": "4.2.0-nightly-01101",
+          "ReaderClassLibrary": "1.0.0",
           "System.Linq": "4.3.0"
         },
         "compile": {
@@ -1289,10 +1321,39 @@
         "runtime": {
           "bin/placeholder/ModuleBotClassLibrary.dll": {}
         }
+      },
+      "ReaderClassLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "AutoMapper": "11.0.1",
+          "BotClassLibrary": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ReaderClassLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ReaderClassLibrary.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "AutoMapper/11.0.1": {
+      "sha512": "WIadGC1pIwbnyTubvI577p3F++Bsj9q2Q3OaAc1I0QS+JhupN1xkdrPBhI9bPIeg63zM81tZplUNYkqU1HE5jQ==",
+      "type": "package",
+      "path": "automapper/11.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "automapper.11.0.1.nupkg.sha512",
+        "automapper.nuspec",
+        "icon.png",
+        "lib/netstandard2.1/AutoMapper.dll",
+        "lib/netstandard2.1/AutoMapper.xml"
+      ]
+    },
     "ConcurrentHashSet/1.1.0": {
       "sha512": "1SuuhZe0wUJbchXdjS23O+quojkw0IXqM9LtUp3RwgQreDI4cj1lfDbdHnD4fOYEnUrftzVIYoonvPlsXm30Bg==",
       "type": "package",
@@ -1310,57 +1371,57 @@
         "lib/netstandard2.0/ConcurrentCollections.xml"
       ]
     },
-    "DSharpPlus/4.2.0-nightly-01100": {
-      "sha512": "9dZRe2B/Xzvp/GqUeuBjCFS6UgnfscNKelI3/2C8u8f645tXlMByXr4xk+/SWnCk5BjFJNfAVT5BONs0n+EFJQ==",
+    "DSharpPlus/4.2.0-nightly-01101": {
+      "sha512": "2aSKOzZASvwtNKPRFN3hPQ2h+v0w76PP0JPOx1B7BW56AU0keomxlrp/AQ8cjdLIIGLu4WYd/I0GpnV0/UVP+A==",
       "type": "package",
-      "path": "dsharpplus/4.2.0-nightly-01100",
+      "path": "dsharpplus/4.2.0-nightly-01101",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dsharpplus.4.2.0-nightly-01100.nupkg.sha512",
+        "dsharpplus.4.2.0-nightly-01101.nupkg.sha512",
         "dsharpplus.nuspec",
         "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.dll",
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.2.0-nightly-01100": {
-      "sha512": "yAQGuearQWvKSvkKCIQA6dMfFBMeDZJiJd3sxjqu6IzR7wXyVry5DnZmYs36A89LkgMBlrnXwomNi0MPX9qiJA==",
+    "DSharpPlus.CommandsNext/4.2.0-nightly-01101": {
+      "sha512": "TSpW18d62rZgOcoUeWQyRsJzWlk5E+Rh3esOXc6g+VOcHmU5Gf9ZSXyXxKZdipMoBoouK2+2NVFXsRl0xWHl5Q==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.2.0-nightly-01100",
+      "path": "dsharpplus.commandsnext/4.2.0-nightly-01101",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dsharpplus.commandsnext.4.2.0-nightly-01100.nupkg.sha512",
+        "dsharpplus.commandsnext.4.2.0-nightly-01101.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
         "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
       ]
     },
-    "DSharpPlus.Interactivity/4.2.0-nightly-01100": {
-      "sha512": "vwKNffLSm07YKAT/aNc1sFPbwNFkW7pgZblmzPz4Fv7AcegHZPqGJgzS+oRTB4NyzlGXSNH19onQXV1pD4oD3w==",
+    "DSharpPlus.Interactivity/4.2.0-nightly-01101": {
+      "sha512": "UxzucKnmUA21Ld0OnfTdaI4IuuvHiJfCA13k8X7ScvyB8YdyTPW1MwJMe/nO6WLnq91QVYQerdsma+on9J5Xrg==",
       "type": "package",
-      "path": "dsharpplus.interactivity/4.2.0-nightly-01100",
+      "path": "dsharpplus.interactivity/4.2.0-nightly-01101",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dsharpplus.interactivity.4.2.0-nightly-01100.nupkg.sha512",
+        "dsharpplus.interactivity.4.2.0-nightly-01101.nupkg.sha512",
         "dsharpplus.interactivity.nuspec",
         "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.Interactivity.dll",
         "lib/netstandard2.0/DSharpPlus.Interactivity.xml"
       ]
     },
-    "DSharpPlus.VoiceNext/4.2.0-nightly-01100": {
-      "sha512": "9abPpJfnsST5QMU3pa4+Eiz1Db2py+R+7ALdFIegb84CRZ1GBdd0Udk9VDuByWL01ptbYLmcKwEoJ9Id9/SrAg==",
+    "DSharpPlus.VoiceNext/4.2.0-nightly-01101": {
+      "sha512": "0XHG1yThs+t8o4Kqjsq207L/nOORRYLt+0YitEs125wq+4DwLiIM3wBPc0P+k14V53Hluf86hQVcj+g1atq4ew==",
       "type": "package",
-      "path": "dsharpplus.voicenext/4.2.0-nightly-01100",
+      "path": "dsharpplus.voicenext/4.2.0-nightly-01101",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "dsharpplus.png",
-        "dsharpplus.voicenext.4.2.0-nightly-01100.nupkg.sha512",
+        "dsharpplus.voicenext.4.2.0-nightly-01101.nupkg.sha512",
         "dsharpplus.voicenext.nuspec",
         "lib/netstandard2.0/DSharpPlus.VoiceNext.dll",
         "lib/netstandard2.0/DSharpPlus.VoiceNext.xml"
@@ -1396,6 +1457,75 @@
         "lib/netcoreapp2.1/Emzi0767.Common.xml",
         "lib/netstandard2.0/Emzi0767.Common.dll",
         "lib/netstandard2.0/Emzi0767.Common.xml"
+      ]
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "type": "package",
+      "path": "microsoft.csharp/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/Microsoft.CSharp.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.3/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
+        "lib/portable-net45+win8+wp8+wpa81/_._",
+        "lib/uap10.0.16299/_._",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
+        "microsoft.csharp.nuspec",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcore50/Microsoft.CSharp.dll",
+        "ref/netcore50/Microsoft.CSharp.xml",
+        "ref/netcore50/de/Microsoft.CSharp.xml",
+        "ref/netcore50/es/Microsoft.CSharp.xml",
+        "ref/netcore50/fr/Microsoft.CSharp.xml",
+        "ref/netcore50/it/Microsoft.CSharp.xml",
+        "ref/netcore50/ja/Microsoft.CSharp.xml",
+        "ref/netcore50/ko/Microsoft.CSharp.xml",
+        "ref/netcore50/ru/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hans/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hant/Microsoft.CSharp.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/Microsoft.CSharp.dll",
+        "ref/netstandard1.0/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/de/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/es/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/fr/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/it/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ja/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ko/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ru/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hans/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hant/Microsoft.CSharp.xml",
+        "ref/netstandard2.0/Microsoft.CSharp.dll",
+        "ref/netstandard2.0/Microsoft.CSharp.xml",
+        "ref/portable-net45+win8+wp8+wpa81/_._",
+        "ref/uap10.0.16299/_._",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "Microsoft.Extensions.DependencyInjection/5.0.1": {
@@ -4316,18 +4446,28 @@
         "version.txt"
       ]
     },
+    "BotClassLibrary/1.0.0": {
+      "type": "project",
+      "path": "../BotClassLibrary/BotClassLibrary.csproj",
+      "msbuildProject": "../BotClassLibrary/BotClassLibrary.csproj"
+    },
     "ModuleBotClassLibrary/1.0.0": {
       "type": "project",
       "path": "../ModuleBotClassLibrary/ModuleBotClassLibrary.csproj",
       "msbuildProject": "../ModuleBotClassLibrary/ModuleBotClassLibrary.csproj"
+    },
+    "ReaderClassLibrary/1.0.0": {
+      "type": "project",
+      "path": "../ReaderClassLibrary/ReaderClassLibrary.csproj",
+      "msbuildProject": "../ReaderClassLibrary/ReaderClassLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "DSharpPlus >= 4.2.0-nightly-01100",
-      "DSharpPlus.CommandsNext >= 4.2.0-nightly-01100",
-      "DSharpPlus.Interactivity >= 4.2.0-nightly-01100",
-      "DSharpPlus.VoiceNext >= 4.2.0-nightly-01100",
+      "DSharpPlus >= 4.2.0-nightly-01101",
+      "DSharpPlus.CommandsNext >= 4.2.0-nightly-01101",
+      "DSharpPlus.Interactivity >= 4.2.0-nightly-01101",
+      "DSharpPlus.VoiceNext >= 4.2.0-nightly-01101",
       "ModuleBotClassLibrary >= 1.0.0"
     ]
   },
@@ -4384,19 +4524,19 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.2.0-nightly-01100, )"
+            "version": "[4.2.0-nightly-01101, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
-            "version": "[4.2.0-nightly-01100, )"
+            "version": "[4.2.0-nightly-01101, )"
           },
           "DSharpPlus.Interactivity": {
             "target": "Package",
-            "version": "[4.2.0-nightly-01100, )"
+            "version": "[4.2.0-nightly-01101, )"
           },
           "DSharpPlus.VoiceNext": {
             "target": "Package",
-            "version": "[4.2.0-nightly-01100, )"
+            "version": "[4.2.0-nightly-01101, )"
           }
         },
         "imports": [

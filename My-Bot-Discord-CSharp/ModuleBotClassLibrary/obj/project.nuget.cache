@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "sAeYbKV2TtmSnJHl9k3LQqppvcfbGnP9nCgS1sU8369IsToMPg6rhI7aCL0zuPzP2vpXFjyyPs0LqYLsj4/5tg==",
+  "dgSpecHash": "CasYnzqX/Xmr0m68vdbbqdlPeIFihW+Thx0zfqv9t/dDlf93EpTYugHcJ583t1VRL/LBeyF3EwAnwt03JkAkqg==",
   "success": true,
   "projectFilePath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\trito\\.nuget\\packages\\dsharpplus\\4.2.0-nightly-01100\\dsharpplus.4.2.0-nightly-01100.nupkg.sha512",
-    "C:\\Users\\trito\\.nuget\\packages\\dsharpplus.commandsnext\\4.2.0-nightly-01100\\dsharpplus.commandsnext.4.2.0-nightly-01100.nupkg.sha512",
+    "C:\\Users\\trito\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\trito\\.nuget\\packages\\dsharpplus\\4.2.0-nightly-01101\\dsharpplus.4.2.0-nightly-01101.nupkg.sha512",
+    "C:\\Users\\trito\\.nuget\\packages\\dsharpplus.commandsnext\\4.2.0-nightly-01101\\dsharpplus.commandsnext.4.2.0-nightly-01101.nupkg.sha512",
     "C:\\Users\\trito\\.nuget\\packages\\emzi0767.common\\2.6.2\\emzi0767.common.2.6.2.nupkg.sha512",
+    "C:\\Users\\trito\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\trito\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
     "C:\\Users\\trito\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\trito\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",

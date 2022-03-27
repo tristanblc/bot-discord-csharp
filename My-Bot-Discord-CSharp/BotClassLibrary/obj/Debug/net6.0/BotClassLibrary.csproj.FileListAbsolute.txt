@@ -1,0 +1,11 @@
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\bin\Debug\net6.0\BotClassLibrary.deps.json
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\bin\Debug\net6.0\BotClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\bin\Debug\net6.0\ref\BotClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\bin\Debug\net6.0\BotClassLibrary.pdb
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.AssemblyInfoInputs.cache
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.AssemblyInfo.cs
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.csproj.CoreCompileInputs.cache
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\ref\BotClassLibrary.dll
+D:\bot-discord-csharp\My-Bot-Discord-CSharp\BotClassLibrary\obj\Debug\net6.0\BotClassLibrary.pdb

@@ -4,14 +4,14 @@
     "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj": {}
   },
   "projects": {
-    "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj": {
+    "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\BotClassLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj",
-        "projectName": "ModuleBotClassLibrary",
-        "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj",
+        "projectUniqueName": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\BotClassLibrary.csproj",
+        "projectName": "BotClassLibrary",
+        "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\BotClassLibrary.csproj",
         "packagesPath": "C:\\Users\\trito\\.nuget\\packages\\",
-        "outputPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\obj\\",
+        "outputPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -45,18 +45,152 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj",
+        "projectName": "ModuleBotClassLibrary",
+        "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\ModuleBotClassLibrary.csproj",
+        "packagesPath": "C:\\Users\\trito\\.nuget\\packages\\",
+        "outputPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ModuleBotClassLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\trito\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\ProjetStock\\Auth0\\ConsoleStockBruker\\WPF_Application\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\ReaderClassLibrary.csproj": {
+                "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\ReaderClassLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "DSharpPlus": {
               "target": "Package",
-              "version": "[4.2.0-nightly-01100, )"
+              "version": "[4.2.0-nightly-01101, )"
             },
             "DSharpPlus.CommandsNext": {
               "target": "Package",
-              "version": "[4.2.0-nightly-01100, )"
+              "version": "[4.2.0-nightly-01101, )"
             },
             "System.Linq": {
               "target": "Package",
               "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\ReaderClassLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\ReaderClassLibrary.csproj",
+        "projectName": "ReaderClassLibrary",
+        "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\ReaderClassLibrary.csproj",
+        "packagesPath": "C:\\Users\\trito\\.nuget\\packages\\",
+        "outputPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\ReaderClassLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\trito\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\ProjetStock\\Auth0\\ConsoleStockBruker\\WPF_Application\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\BotClassLibrary.csproj": {
+                "projectPath": "D:\\bot-discord-csharp\\My-Bot-Discord-CSharp\\BotClassLibrary\\BotClassLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
             }
           },
           "imports": [
