@@ -16,7 +16,7 @@ static async Task MainAsync()
 
     var discord = new DiscordClient(new DiscordConfiguration()
     {
-        Token = ,
+        Token = "OTUwNzUxNTcyMTA5OTU1MTQz.YideZg.Gq3aUr6q8kJgJ7bsZOjBLNe0y10",
         TokenType = TokenType.Bot,
         Intents = DiscordIntents.AllUnprivileged
     });
@@ -32,7 +32,7 @@ static async Task MainAsync()
     commands.RegisterCommands<InfoModule>();
     commands.RegisterCommands<OtherToolsModule>();
     commands.RegisterCommands<AdminModule>();
-    commands.RegisterCommands<StockModule>();
+
 
 
     await discord.ConnectAsync();

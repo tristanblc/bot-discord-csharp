@@ -10,7 +10,17 @@
       "ProjectGuid": "1ba06437-ed3a-4c5c-a3c0-4520cc8d4313",
       "DisplayName": "ModuleBotClassLibrary",
       "ColorIndex": 1
+    },
+    "1d0d63c8-88e5-4628-b934-b95911721d65": {
+      "ProjectGuid": "1d0d63c8-88e5-4628-b934-b95911721d65",
+      "DisplayName": "BotClassLibrary",
+      "ColorIndex": 2
+    },
+    "1ffc5d7d-de9a-49ce-84cf-f822dcde16de": {
+      "ProjectGuid": "1ffc5d7d-de9a-49ce-84cf-f822dcde16de",
+      "DisplayName": "ReaderClassLibrary",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 4
 }
