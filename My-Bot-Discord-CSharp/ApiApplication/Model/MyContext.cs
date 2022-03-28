@@ -10,7 +10,7 @@ namespace ApiApplication.Model
 
         public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
-            ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=BDProjectStock;Trusted_Connection=True;MultipleActiveResultSets=true";
+            ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=BDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
         }
@@ -31,7 +31,7 @@ namespace ApiApplication.Model
             return base.Set<TEntity>();
         }
 
-        public DbSet<Bus> _bus { get; set; }
+        public DbSet<Arret> _bus { get; set; }
 
       
     }

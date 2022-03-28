@@ -26,9 +26,6 @@ namespace ApiApplication.Controllers
             this.genericRepository = genericRepository;
         }
 
-
-
-
         //// GET api/<ProjectController>/GetAll
 
         [HttpGet]
@@ -90,12 +87,12 @@ namespace ApiApplication.Controllers
 
 
 
-        public ActionResult Add(ArretDto entity)
+        public ActionResult Add(LigneDto entity)
         {
             try
             {
 
-                var mapped = _mapper.Map<Arret>(entity);
+                var mapped = _mapper.Map<Ligne>(entity);
                 genericRepository.Add(mapped);
                 return Ok();
 

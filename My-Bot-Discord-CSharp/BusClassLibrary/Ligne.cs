@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusClassLibrary
 {
-    public class Ligne :BaseEntity
+    public class Ligne : BaseEntity
     {
 
         public string route_short_name { get; set; }
