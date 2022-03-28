@@ -32,7 +32,7 @@ static async Task MainAsync()
     commands.RegisterCommands<InfoModule>();
     commands.RegisterCommands<OtherToolsModule>();
     commands.RegisterCommands<AdminModule>();
-    commands.RegisterCommands<StockModule>();
+
 
 
     await discord.ConnectAsync();
