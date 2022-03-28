@@ -19,7 +19,8 @@ namespace ApiApplication.Model
 
             base.OnConfiguring(optionsBuilder);
 
-            object p = optionsBuilder.UseSqlServer(ConnectionString);
+
+            optionsBuilder.UseSqlServer(ConnectionString);
         }
 
 
