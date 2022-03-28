@@ -39,9 +39,6 @@ namespace ApiApplication.Controllers
                 try
                 {
                     var p = genericRepository.GetAll();
-
-
-
                     if (p == null)
                         return NotFound();
                     else
