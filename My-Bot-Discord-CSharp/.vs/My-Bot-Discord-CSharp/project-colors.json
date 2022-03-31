@@ -20,7 +20,27 @@
       "ProjectGuid": "1ffc5d7d-de9a-49ce-84cf-f822dcde16de",
       "DisplayName": "ReaderClassLibrary",
       "ColorIndex": 3
+    },
+    "64b1e236-1dc2-40c7-9071-6ef0e5faea6b": {
+      "ProjectGuid": "64b1e236-1dc2-40c7-9071-6ef0e5faea6b",
+      "DisplayName": "HandlerClassLibrary",
+      "ColorIndex": 4
+    },
+    "7a2fbb2d-6504-4de1-9d61-c374e0d60999": {
+      "ProjectGuid": "7a2fbb2d-6504-4de1-9d61-c374e0d60999",
+      "DisplayName": "BusClassLibrary",
+      "ColorIndex": 5
+    },
+    "17148760-a97b-4d65-83a6-54ff3af109c8": {
+      "ProjectGuid": "17148760-a97b-4d65-83a6-54ff3af109c8",
+      "DisplayName": "ApiApplication",
+      "ColorIndex": 6
+    },
+    "48a45467-576d-4213-aa1c-871b01f0a83f": {
+      "ProjectGuid": "48a45467-576d-4213-aa1c-871b01f0a83f",
+      "DisplayName": "BotDTOClassLibrary",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 8
 }

@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using BotClassLibrary;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using ModuleBotClassLibrary;
 
 Console.WriteLine("Hello, World!");
@@ -26,14 +28,15 @@ static async Task MainAsync()
         StringPrefixes = new[] { "!" }
     };
 
+    
+
     var commands = discord.UseCommandsNext(command_configuration);
 
 
     commands.RegisterCommands<InfoModule>();
     commands.RegisterCommands<OtherToolsModule>();
     commands.RegisterCommands<AdminModule>();
-
-
+    commands.RegisterCommands<BusInfoModule>();
 
     await discord.ConnectAsync();
     await Task.Delay(-1);
