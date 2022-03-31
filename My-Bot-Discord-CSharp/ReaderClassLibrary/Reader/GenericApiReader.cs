@@ -54,6 +54,27 @@ namespace ReaderClassLibrary.Reader
         }
 
 
+        public virtual async Task<IEnumerable<T>> GetAll()
+        {
+
+            try
+            {
+
+                IEnumerable<T> resultat = await _httpClient.GetFromJsonAsync<IEnumerable<T>>(uri);
+
+                return resultat;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+
+        }
+
+
+
 
     }
 }
