@@ -1,16 +1,16 @@
 ﻿using BusClassLibrary;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiApplication.Model
+namespace ApiApplication
 {
-    public class MyContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
 
-        private string ConnectionString { get; }
+        private string ConnectionString { get; set; }
 
-        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=BDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+            ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=BDBus;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
         }
@@ -32,7 +32,9 @@ namespace ApiApplication.Model
             return base.Set<TEntity>();
         }
 
-        public DbSet<Arret> _bus { get; set; }
+        public DbSet<Arret>? _bus { get; set; }
+
+        public DbSet<Ligne>? _lignes { get; set; }
 
       
     }

@@ -1,4 +1,4 @@
-﻿using ApiApplication.Model;
+﻿using ApiApplication;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
 using BusClassLibrary;
@@ -9,13 +9,9 @@ namespace ApiApplication.Repository
     {
 
 
-        public IMapper mapper { get; set; }
+        private readonly ApplicationDbContext myContext;
 
-        private readonly MyContext myContext;
-
-        private List<T> myList { get; set; } = new List<T>();
-
-        public APIGenericRepository(MyContext _myContext)
+        public APIGenericRepository(ApplicationDbContext _myContext)
         {
             myContext = _myContext;
         }

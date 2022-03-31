@@ -1,4 +1,4 @@
-﻿using ApiApplication.Model;
+﻿using ApiApplication;
 using ApiApplication.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -15,20 +15,18 @@ namespace ApiApplication.Controllers
     {
         private readonly IMapper _mapper;
 
-        private readonly MyContext _context;
 
         private readonly APIGenericRepository<Ligne> genericRepository;
 
-        public LigneController(IMapper mapper, MyContext context, APIGenericRepository<Ligne> genericRepository)
+        public LigneController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
-            _context = context;
-            this.genericRepository = genericRepository;
+            this.genericRepository = new APIGenericRepository<Ligne>(context);
         }
 
         //// GET api/<ProjectController>/GetAll
 
-        [HttpGet]
+        [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LigneDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IGenericRepository<LigneDto>> GetAll()
@@ -57,8 +55,8 @@ namespace ApiApplication.Controllers
         }
 
 
-        // GET api/<ProjectController>/5
-        [HttpGet]
+        // GET api/<ProjectController>/id
+        [HttpGet("id")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LigneDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<LigneDto> Get([FromQuery] Guid id)
@@ -86,7 +84,7 @@ namespace ApiApplication.Controllers
         }
 
 
-
+        [HttpPost]
         public ActionResult Add(LigneDto entity)
         {
             try
@@ -103,6 +101,7 @@ namespace ApiApplication.Controllers
             }
         }
 
+        [HttpPut]
         public ActionResult Update(ArretDto entity)
         {
             try
@@ -120,6 +119,7 @@ namespace ApiApplication.Controllers
 
         }
 
+        [HttpDelete]
         public ActionResult Delete(ArretDto entity)
         {
             try

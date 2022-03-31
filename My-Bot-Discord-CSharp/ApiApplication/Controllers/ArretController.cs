@@ -1,4 +1,4 @@
-﻿using ApiApplication.Model;
+﻿using ApiApplication;
 using ApiApplication.Repository;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
@@ -14,15 +14,15 @@ namespace ApiApplication.Controllers
     {
             private readonly IMapper _mapper;
 
-            private readonly  MyContext _context;
+            private readonly  ApplicationDbContext _context;
 
-            private readonly APIGenericRepository<Arret> genericRepository;
+            private APIGenericRepository<Arret> genericRepository { get; set; }
 
-            public ArretController(IMapper mapper, MyContext context, APIGenericRepository<Arret>  genericRepository)
+            public ArretController(IMapper mapper, ApplicationDbContext context)
             {
                 _mapper = mapper;
                 _context = context;
-                this.genericRepository = genericRepository;
+                this.genericRepository = new APIGenericRepository<Arret>(context);
             }
 
 
@@ -30,7 +30,7 @@ namespace ApiApplication.Controllers
 
             //// GET api/<ProjectController>/GetAll
 
-            [HttpGet]
+            [HttpGet("all")]
             [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArretDto))]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             public ActionResult<IGenericRepository<ArretDto>> GetAll()
@@ -57,7 +57,7 @@ namespace ApiApplication.Controllers
 
 
             // GET api/<ProjectController>/5
-            [HttpGet]
+            [HttpGet("id")]
             [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArretDto))]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             public ActionResult<ArretDto> Get([FromQuery] Guid id)
@@ -84,8 +84,8 @@ namespace ApiApplication.Controllers
 
             }
 
- 
 
+        [HttpPost]
         public ActionResult Add(ArretDto entity)
         {
             try
@@ -101,6 +101,8 @@ namespace ApiApplication.Controllers
             }
         }
 
+
+        [HttpPut]
         public ActionResult Update(ArretDto entity)
         {
             try
@@ -118,6 +120,8 @@ namespace ApiApplication.Controllers
 
         }
 
+
+        [HttpDelete]
         public ActionResult Delete(ArretDto entity)
         {
             try
