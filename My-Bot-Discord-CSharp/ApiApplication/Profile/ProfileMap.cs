@@ -8,7 +8,10 @@ namespace ApiApplication.Profile
         public ProfileMap()
         {
             CreateMap<Arret,ArretDto>().ReverseMap();
-            CreateMap<Ligne,LigneDto>().ReverseMap();   
+            CreateMap<Ligne,LigneDto>().ReverseMap();
+
+            CreateMap<StopTimes, StopTimesDto>().ReverseMap();
+            CreateMap<Shape, ShapeDto>().ReverseMap();
         }
     }
 }

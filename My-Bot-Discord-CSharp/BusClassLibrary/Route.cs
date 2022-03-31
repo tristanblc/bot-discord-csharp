@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusClassLibrary
 {
-    internal class Horaire
+    internal class Route
     {
     }
 }

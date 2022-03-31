@@ -39,8 +39,8 @@ namespace BotClassLibrary
             try
             {
                 var _arrets = (await service.GetAll()).ToList();
-                
-                foreach(var arret in _arrets)
+                await ctx.RespondAsync($"Les  arrets /n");
+                foreach (var arret in _arrets)
                 {
                     await ctx.RespondAsync($"Nom arret : " + arret.stop_name.ToString() + " Ville : " + arret.ville.ToString());
                    
@@ -63,6 +63,7 @@ namespace BotClassLibrary
             try
             {
                 var _arrets = (await service.GetAll()).ToList();
+                await ctx.RespondAsync($"Les lignes /n");
 
                 foreach (var arret in _arrets)
                 {
