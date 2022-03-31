@@ -1,3 +1,8 @@
 # bot-discord-csharp
 
-Bot discord réalisé avec le framework DSharp pour voir les stocks
+Bot discord
+
+Bot discord réalisé avec le framework DSharp 
+
+-> Utilisation de DSharp
+

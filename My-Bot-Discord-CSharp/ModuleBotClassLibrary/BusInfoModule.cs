@@ -100,6 +100,95 @@ namespace BotClassLibrary
         }
 
 
+        [Command("time")]
+        public async Task timeCommand(CommandContext ctx, string arret)
+        {
+            var service = new StopTimesService(new HttpClient(), "https://localhost:7167/api/StopTimes/");
+
+            try
+            {
+                StopTimes stop = await service.Get();
+
+                await ctx.RespondAsync($"Date de depart : " + stop.departure_time+ " Date d'arrivée :" + stop.arrival_time.ToString());
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync("erreur");
+
+            }
+        }
+
+        [Command("times")]
+        public async Task timesCommand(CommandContext ctx)
+        {
+            var service = new StopTimesService(new HttpClient(), "https://localhost:7167/api/StopTimes/All");
+
+            try
+            {
+                var _stops = (await service.GetAll()).ToList();
+                await ctx.RespondAsync($"Les departs /n");
+                foreach (var stop in _stops)
+                {
+                    await ctx.RespondAsync($"Date de depart : " + stop.departure_time + " Date d'arrivée :" + stop.arrival_time.ToString());
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync("erreur");
+
+            }
+        }
+
+        [Command("trips")]
+        public async Task tripsCommand(CommandContext ctx)
+        {
+            var service = new TripService(new HttpClient(), "https://localhost:7167/api/Trip/All");
+
+            try
+            {
+                var trips = (await service.GetAll()).ToList();
+               
+
+                foreach (var trip in trips)
+                {
+                    await ctx.RespondAsync($" Service  " + trip.service_id);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync("erreur");
+
+            }
+        }
+
+
+        [Command("trip")]
+        public async Task tripCommand(CommandContext ctx, string name)
+        {
+            var service = new TripService(new HttpClient(), "https://localhost:7167/api/Trip/");
+
+            try
+            {
+                var trip = await service.Get();
+
+                await ctx.RespondAsync($" Service  " + trip.service_id);
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync("erreur");
+
+            }
+        }
+
+
+
 
 
 
