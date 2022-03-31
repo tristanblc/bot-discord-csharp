@@ -9,7 +9,7 @@ namespace ApiApplication.Profile
         {
             CreateMap<Arret,ArretDto>().ReverseMap();
             CreateMap<Ligne,LigneDto>().ReverseMap();
-
+            CreateMap<Trip, TripDto>().ReverseMap();
             CreateMap<StopTimes, StopTimesDto>().ReverseMap();
             CreateMap<Shape, ShapeDto>().ReverseMap();
         }

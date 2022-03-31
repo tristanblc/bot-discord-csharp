@@ -10,19 +10,19 @@ namespace BusClassLibrary
     {
 
 
-        public ulong lat { get; set; }
+        public float lat { get; set; }
 
-        public ulong longit { get; set; }
+        public float longit { get; set; }
 
         public int  sequence { get; set; }
 
 
-        public Shape(ulong _lat, ulong _longit, int _sequence)
+        public Shape(float lat, float longit, int sequence)
         {
             Id = Guid.NewGuid();
-            lat = _lat;
-            longit = _longit;
-            sequence = _sequence;
+            this.lat = lat;
+            this.longit = longit;
+            this.sequence = sequence;
                 
         }
     }

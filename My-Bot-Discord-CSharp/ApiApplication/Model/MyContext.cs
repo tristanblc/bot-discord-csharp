@@ -36,6 +36,14 @@ namespace ApiApplication
 
         public DbSet<Ligne>? _lignes { get; set; }
 
-      
+
+        public DbSet<Trip>? _trips { get; set; }
+
+
+        public DbSet<Shape>? _shapes { get; set; }
+         
+        public DbSet<StopTimes> _stopTimes { get; set; }
+
+        public DbSet<Arret> _arrets { get; set; }
     }
 }

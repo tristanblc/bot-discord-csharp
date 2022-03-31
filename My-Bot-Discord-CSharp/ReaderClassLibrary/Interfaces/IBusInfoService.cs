@@ -13,9 +13,5 @@ namespace ReaderClassLibrary.Interfaces
         Task<T> Get();
 
         Task<IEnumerable<T>> GetAll();
-
-
-
-
     }
 }

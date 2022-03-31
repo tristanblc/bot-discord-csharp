@@ -9,9 +9,9 @@ namespace BotDTOClassLibrary
 {
     public class ShapeDto : BaseEntity
     {
-        public ulong lat { get; set; }
+        public float lat { get; set; }
 
-        public ulong longit { get; set; }
+        public float longit { get; set; }
 
         public int sequence { get; set; }
 

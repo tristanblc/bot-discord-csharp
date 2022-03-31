@@ -10,16 +10,16 @@ namespace BusClassLibrary
     {
 
          public int stop_id { get; private set; }
-         public ulong stop_sequence { get; private set; }
+         public float stop_sequence { get; private set; }
          public DateTime arrival_time { get; private set; }
          public DateTime departure_time { get; private set; }
 
-        public StopTimes(int stopId, DateTime arrivaltime, DateTime departuretime, ulong stop_sequence)
+        public StopTimes(int stop_id, DateTime departure_time, DateTime arrival_time, float stop_sequence)
         {
-            this.stop_id = stopId;  
-            this.arrival_time = arrivaltime;
+            this.stop_id = stop_id;  
+            this.arrival_time = arrival_time;
             this.stop_sequence = stop_sequence;
-            this.departure_time = departuretime;   
+            this.departure_time = departure_time;   
         }
 
     }
