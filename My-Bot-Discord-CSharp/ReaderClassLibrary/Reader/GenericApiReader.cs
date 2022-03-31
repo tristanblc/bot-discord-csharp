@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +75,70 @@ namespace ReaderClassLibrary.Reader
 
         }
 
+
+        public virtual async Task<ActionResult> Add(T item) 
+        {
+            try
+            {
+                var resultat = await _httpClient.PostAsJsonAsync<T>(uri, item); 
+                if(resultat.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    
+                    return new BadRequestResult();
+                }
+               
+                return new OkResult();
+              
+
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestResult();
+            }
+
+        }
+
+
+        public virtual async Task<ActionResult> Update(T item)
+        {
+
+            try
+            {
+                var resultat = await _httpClient.PutAsJsonAsync<T>(uri,item);
+                if (resultat.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+
+                    return new BadRequestResult();
+                }
+
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestResult();
+            }
+        }
+
+
+
+        public virtual async Task<ActionResult> Delete(T item)
+        {
+            try
+            {
+                var resultat = await _httpClient.DeleteAsync(uri);
+                if (resultat.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+
+                    return new BadRequestResult();
+                }
+
+                return new OkResult();
+            }
+            catch(Exception ex)
+            {
+                return new BadRequestResult();
+            }
+        }
 
 
 
