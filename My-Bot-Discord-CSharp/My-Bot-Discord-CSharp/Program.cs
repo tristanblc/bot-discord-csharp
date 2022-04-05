@@ -3,9 +3,11 @@ using BotClassLibrary;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Lavalink;
+using DSharpPlus.Net;
 using ModuleBotClassLibrary;
 
-Console.WriteLine("Hello, World!");
+
 
 static void Main(string[] args)
 {
@@ -16,11 +18,12 @@ static void Main(string[] args)
 static async Task MainAsync()
 {
 
+
     var discord = new DiscordClient(new DiscordConfiguration()
     {
-        Token = ,
+        Token = "",
         TokenType = TokenType.Bot,
-        Intents = DiscordIntents.AllUnprivileged
+        Intents = DiscordIntents.All
     });
 
     var command_configuration = new CommandsNextConfiguration()
@@ -28,7 +31,21 @@ static async Task MainAsync()
         StringPrefixes = new[] { "!" }
     };
 
-    
+    var endpoint = new ConnectionEndpoint
+    {
+        Hostname = "127.0.0.1", // From your server configuration.
+        Port = 2333 // From your server configuration
+    };
+
+    var lavalinkConfig = new LavalinkConfiguration
+    {
+        Password = "", // From your server configuration.
+        RestEndpoint = endpoint,
+        SocketEndpoint = endpoint
+    };
+
+    var lavalink = discord.UseLavalink();
+
 
     var commands = discord.UseCommandsNext(command_configuration);
 
@@ -37,10 +54,10 @@ static async Task MainAsync()
     commands.RegisterCommands<OtherToolsModule>();
     commands.RegisterCommands<AdminModule>();
     commands.RegisterCommands<BusInfoModule>();
-
+    commands.RegisterCommands<MusicModule>();
     await discord.ConnectAsync();
+    await lavalink.ConnectAsync(lavalinkConfig);
     await Task.Delay(-1);
-
 }
 
 Main(args);

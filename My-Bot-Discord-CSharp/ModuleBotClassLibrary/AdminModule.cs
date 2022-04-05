@@ -78,7 +78,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            await ctx.Member.SetDeafAsync(true, reason);
+            await member.SetDeafAsync(true, reason);
 
             await ctx.RespondAsync("Member " + member.Username.ToString() + " is deafened now");
 
@@ -99,7 +99,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            await ctx.Member.SetDeafAsync(false, reason);
+            await member.SetDeafAsync(false, reason);
 
             await ctx.RespondAsync("Member " + member.Username.ToString() + " is not deafened now");
 
@@ -121,7 +121,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            await ctx.Member.SetMuteAsync(true, reason);
+            await member.SetMuteAsync(true, reason);
 
             await ctx.RespondAsync("Member " + member.Username.ToString() + " is mute now");
 
@@ -142,7 +142,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            await ctx.Member.SetMuteAsync(false, reason);
+            await member.SetMuteAsync(false, reason);
 
             await ctx.RespondAsync("Member" + member.Username.ToString() + " is not muted now");
 
@@ -200,7 +200,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            await member.TimeoutAsync(now);
+          
 
             await ctx.RespondAsync("User " + member.Username + " timeout for "+ time.ToString());
 
