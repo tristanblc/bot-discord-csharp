@@ -57,7 +57,6 @@ static async Task MainAsync()
     commands.RegisterCommands<MusicModule>();
     await discord.ConnectAsync();
     await lavalink.ConnectAsync(lavalinkConfig);
-
     await Task.Delay(-1);
 }
 

@@ -14,6 +14,10 @@ namespace ModuleBotClassLibrary
     public  class MusicModule : BaseCommandModule
     {
 
+        public  List<LavalinkTrack> myTracks { get; set; } = new List<LavalinkTrack> { };
+
+
+        
         [Command("join")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {
@@ -129,13 +133,15 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
+
+
             var track = loadResult.Tracks.First();
 
             await conn.StopAsync();
 
             await ctx.RespondAsync($"Stop playing!");
         }
-
+       
         [Command("pause")]
         public async Task Pause(CommandContext ctx)
         {
@@ -195,6 +201,123 @@ namespace ModuleBotClassLibrary
 
         }
 
+        [Command("add-queue")]
+        public async Task Queueing(CommandContext ctx, [RemainingText] string search)
+        {
+            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+            {
+                await ctx.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+
+            var lava = ctx.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+
+            if (conn == null)
+            {
+                await ctx.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+
+            var loadResult = await node.Rest.GetTracksAsync(search);
+
+            if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
+                || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+            {
+                await ctx.RespondAsync($"Track search failed for {search}.");
+                return;
+            }
+
+            var track = loadResult.Tracks.First();
+
+
+            myTracks.Add(track);
+
+            await ctx.RespondAsync($"Add to queue {track.Title}!");
+
+        }
+
+        [Command("skip")]
+        public async Task Skip(CommandContext ctx)
+        {
+
+
+
+            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+            {
+                await ctx.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+
+            var lava = ctx.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+
+  
+            if (myTracks.Count == 0)
+            {
+                await ctx.RespondAsync($"No track in queue !");
+                return;
+            }
+
+
+            var track = myTracks.First();
+            await conn.PlayAsync(track);
+
+        }
+        [Command("clear-queue")]
+        public async Task CleaningQueue(CommandContext ctx)
+        {
+
+            myTracks.Clear();
+            await ctx.RespondAsync("Cleaning Queue");          
+         
+
+        }
+
+
+
+        [Command("lists-queues")]
+        public async Task ListsQueue(CommandContext ctx)
+        {
+            string print = "Lists of tracks :";
+            int i = 0;
+            myTracks.ForEach(action =>
+           {
+               print += "\n - " + i.ToString() + " - " + action.Title.ToString();
+
+               i++;
+           });
+            await ctx.RespondAsync(print);
+
+
+        }
+
+
+        [Command("del-queue")]
+        public async Task delQueue(CommandContext ctx, string state)
+        {
+
+            int i = 0;
+
+            try
+            {
+                int.TryParse(state, out i);
+                myTracks.RemoveAt(i);
+
+                await ctx.RespondAsync($"del track { i.ToString() } in queue ");
+            }
+            catch(Exception ex)
+            {
+                await ctx.RespondAsync($"Impossible !");
+
+            }
+
+           
+
+
+        }
 
 
     }
