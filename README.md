@@ -4,5 +4,5 @@ Bot discord
 
 Bot discord réalisé avec le framework DSharp 
 
--> Utilisation de DSharp
+-> Utilisation de DSharp et de lavalink
 
