@@ -45,7 +45,12 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Fichiers divers",
       "ColorIndex": -1
+    },
+    "c2b51831-3215-426a-8151-9660a616c2dc": {
+      "ProjectGuid": "c2b51831-3215-426a-8151-9660a616c2dc",
+      "DisplayName": "ConvertPNGClassLibrary",
+      "ColorIndex": 8
     }
   },
-  "NextColorIndex": 8
+  "NextColorIndex": 9
 }
