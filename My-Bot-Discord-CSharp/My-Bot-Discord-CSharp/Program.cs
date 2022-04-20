@@ -3,6 +3,9 @@ using BotClassLibrary;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
@@ -45,7 +48,7 @@ static async Task MainAsync()
     };
 
     var lavalink = discord.UseLavalink();
-
+   
 
     var commands = discord.UseCommandsNext(command_configuration);
 
@@ -55,6 +58,8 @@ static async Task MainAsync()
     commands.RegisterCommands<AdminModule>();
     commands.RegisterCommands<BusInfoModule>();
     commands.RegisterCommands<MusicModule>();
+    commands.RegisterCommands<FilmModule>();
+    commands.RegisterCommands<ImageModule>();
     await discord.ConnectAsync();
     await lavalink.ConnectAsync(lavalinkConfig);
     await Task.Delay(-1);

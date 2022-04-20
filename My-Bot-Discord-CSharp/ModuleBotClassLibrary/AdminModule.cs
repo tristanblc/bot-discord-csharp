@@ -209,6 +209,19 @@ namespace ModuleBotClassLibrary
 
 
 
+        [Command("invite")]
+        [Description("invite")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task inviteUser(CommandContext ctx , DiscordChannel channel,int time)
+        {
+            var invite  = await channel.CreateInviteAsync(time);
+
+
+            await ctx.RespondAsync(invite.ToString());
+
+        }
+        
+
 
 
 
