@@ -50,7 +50,17 @@
       "ProjectGuid": "c2b51831-3215-426a-8151-9660a616c2dc",
       "DisplayName": "ConvertPNGClassLibrary",
       "ColorIndex": 8
+    },
+    "586a5da9-531e-470b-9add-09fad58fe2f1": {
+      "ProjectGuid": "586a5da9-531e-470b-9add-09fad58fe2f1",
+      "DisplayName": "ImageEffectClassLibrary",
+      "ColorIndex": 9
+    },
+    "0abbecc7-91ea-4d6c-ba72-d4c9140a3891": {
+      "ProjectGuid": "0abbecc7-91ea-4d6c-ba72-d4c9140a3891",
+      "DisplayName": "EffectClassLibrary",
+      "ColorIndex": 10
     }
   },
-  "NextColorIndex": 9
+  "NextColorIndex": 11
 }
