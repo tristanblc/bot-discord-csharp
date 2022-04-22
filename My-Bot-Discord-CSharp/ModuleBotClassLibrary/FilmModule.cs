@@ -40,28 +40,28 @@ namespace ModuleBotClassLibrary
 
 
 
-        //[Command("people")]
-        //public async Task PeopleCommand(CommandContext ctx, string message)
-        //{
+        [Command("people")]
+        public async Task PeopleCommand(CommandContext ctx, string message)
+        {
 
-        //    var url = urlBase + "search/people?q=" + message;
+            var url = urlBase + "search/people?q=" + message;
 
-        //    FilmPeopleService filmService = new FilmPeopleService(httpClient, url);
-
-
-        //    var film = await filmService.Get();
+            FilmPeopleService filmService = new FilmPeopleService(httpClient, url);
 
 
-        //    var return_value = $"Name { film.person.name}  ";
+            var film = await filmService.Get();
 
 
-        //    return_value += $"\n Birthday { film.person.birthdate.ToString() }";
-        //    if(film.person.deathdate != null)
-        //        return_value += $"\n Birthday { film.person.deathdate.ToString() }";
+            var return_value = $"Name { film.person.name}  ";
 
-        //    return_value += $"\n {film.person.image.medium.ToString()}";
 
-        //    await ctx.RespondAsync(return_value);
-        //}
+            return_value += $"\n Birthday { film.person.birthdate.ToString() }";
+            if (film.person.deathdate != null)
+                return_value += $"\n Birthday { film.person.deathdate.ToString() }";
+
+            return_value += $"\n {film.person.image.medium.ToString()}";
+
+            await ctx.RespondAsync(return_value);
+        }
     }
 }
