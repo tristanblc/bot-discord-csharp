@@ -42,7 +42,7 @@ static async Task MainAsync()
 
     var lavalinkConfig = new LavalinkConfiguration
     {
-        Password = ", // From your server configuration.
+        Password = "", // From your server configuration.
         RestEndpoint = endpoint,
         SocketEndpoint = endpoint
     };
