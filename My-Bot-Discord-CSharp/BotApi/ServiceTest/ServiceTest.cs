@@ -20,8 +20,6 @@ namespace BotApi
 
             arretService = new ArretService(http, "https://localhost:7167/api/Arret/");
 
-
-
         }
 
 

@@ -17,7 +17,6 @@ namespace BotApi
 
         private Fixture Fixture { get; set; }
 
-
         private IEnumerable<Trip> Lignes { get; set; }
 
         private IMapper Mapper { get; init; }
