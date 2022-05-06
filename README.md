@@ -18,6 +18,7 @@ Bot-discord-csharp uses a number of projects to work properly:
 
 - [.NET] -  Dotnet (EF/Tests/API)
 - [Lavalink](https://github.com/freyacodes/Lavalink) -  Java discord music library
+- [Python] - To insert data in database
 
 
 
