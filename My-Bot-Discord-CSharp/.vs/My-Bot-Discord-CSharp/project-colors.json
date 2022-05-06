@@ -60,7 +60,22 @@
       "ProjectGuid": "0abbecc7-91ea-4d6c-ba72-d4c9140a3891",
       "DisplayName": "EffectClassLibrary",
       "ColorIndex": 10
+    },
+    "ceaa6ac7-6ab2-461b-b5e6-f0590d1f02be": {
+      "ProjectGuid": "ceaa6ac7-6ab2-461b-b5e6-f0590d1f02be",
+      "DisplayName": "BotApi",
+      "ColorIndex": 11
+    },
+    "099ebfe3-1095-4cb6-94e9-1a25b0fdc336": {
+      "ProjectGuid": "099ebfe3-1095-4cb6-94e9-1a25b0fdc336",
+      "DisplayName": "ApiPerformanceTest",
+      "ColorIndex": 12
+    },
+    "20b1175c-9af0-4529-8631-0aad816744d4": {
+      "ProjectGuid": "20b1175c-9af0-4529-8631-0aad816744d4",
+      "DisplayName": "BenchmarkApiProject",
+      "ColorIndex": 13
     }
   },
-  "NextColorIndex": 11
+  "NextColorIndex": 14
 }
