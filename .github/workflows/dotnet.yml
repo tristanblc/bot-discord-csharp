@@ -48,5 +48,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build "D:\bot-discord-csharp\My-Bot-Discord-CSharp\My-Bot-Discord-CSharp.sln"
+          dotnet build "C:/bot-discord-csharp/My-Bot-Discord-CSharp/My-Bot-Discord-CSharp.sln"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
