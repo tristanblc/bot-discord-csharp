@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class DogService : GenericApiReader<Dogs>, IAnimalService<Dogs>
+    public class DogService : GenericApiReader<Dogs>, IGenericInterface<<Dogs>
     {
         public DogService(HttpClient httpClient, string uri) : base(httpClient, uri)
         {
