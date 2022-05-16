@@ -24,8 +24,8 @@ static async Task MainAsync()
 
     var discord = new DiscordClient(new DiscordConfiguration()
     {
-        Token = ",
-        TokenType = TokenType.Bot,
+        Token = "",
+        TokenType = TokenType.Bearer,
         Intents = DiscordIntents.All
     });
 
@@ -42,7 +42,7 @@ static async Task MainAsync()
 
     var lavalinkConfig = new LavalinkConfiguration
     {
-        Password = "", // From your server configuration.
+        Password = "youshallnotpass", // From your server configuration.
         RestEndpoint = endpoint,
         SocketEndpoint = endpoint
     };
