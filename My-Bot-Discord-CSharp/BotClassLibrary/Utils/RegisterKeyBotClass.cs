@@ -25,7 +25,7 @@ namespace BotClassLibrary.Utils
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(this.path)) {
                 try
                 {
-                    key.SetValue("discord_bot", "1");
+                    key.SetValue("discord_bot",this.path);
                 }
 
                catch(Exception ex)
