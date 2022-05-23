@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace My_Bot_Discord_CSharp.Services.ServiceBot
 {
-    public class DiscordClientService : IDiscordClientService
+    public class DiscordClientService: IDiscordClientService
     {
         public DiscordClientService()
         {
@@ -22,64 +22,45 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
         }
         public DiscordClient CreateDiscordClient()
         {
-            try
+
+            Startup startup = new Startup();
+
+
+            var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Startup startup = new Startup();
-
-                var discord = new DiscordClient(new DiscordConfiguration()
-                {
-                    Token = startup.GetTokenFromJsonFile(),
-                    TokenType = TokenType.Bot,
-                    Intents = DiscordIntents.All
-                });
-                var command_configuration = new CommandsNextConfiguration()
-                {
-                    StringPrefixes = new[] { "!" }
-                };
-
-                IServiceLavalink serviceLavalink = new LavalinkService(discord, startup);
-
-                var lavalinkConfig = serviceLavalink.CreateLavalinkConfig();
+                Token = startup.GetTokenFromJsonFile(),
+                TokenType = TokenType.Bot,
+                Intents = DiscordIntents.All
+            });
 
 
-                try
-                {
-                                 
-
-         
-
-                    var lavalink = discord.UseLavalink();
-
-
-                    var commands = discord.UseCommandsNext(command_configuration);
-
-
-                    commands.RegisterCommands<InfoModule>();
-                    commands.RegisterCommands<OtherToolsModule>();
-                    commands.RegisterCommands<AdminModule>();
-                    commands.RegisterCommands<BusInfoModule>();
-                    commands.RegisterCommands<MusicModule>();
-                    commands.RegisterCommands<FilmModule>();
-                    commands.RegisterCommands<ImageModule>();
-                    lavalink.ConnectAsync(lavalinkConfig);
-
-
-                    return discord;
-
-
-                }
-                catch(Exception ex)
-                {
-                    throw new Exception("Error lavalink connection");
-                }
-                                                            
-            }
-            catch(Exception ex)
+            var command_configuration = new CommandsNextConfiguration()
             {
-                throw new ProjectConfigurationException("Error discord client" + ex.ToString());
-            }
-            
-         
+                StringPrefixes = new[] { "!" }
+            };
+
+
+            IServiceLavalink serviceLavalink = new LavalinkService(discord, startup);
+
+            var lavalinkConfig = serviceLavalink.CreateLavalinkConfig();
+
+            var lavalink = discord.UseLavalink();
+
+
+            var commands = discord.UseCommandsNext(command_configuration);
+
+
+            commands.RegisterCommands<InfoModule>();
+            commands.RegisterCommands<OtherToolsModule>();
+            commands.RegisterCommands<AdminModule>();
+            commands.RegisterCommands<BusInfoModule>();
+            commands.RegisterCommands<MusicModule>();
+            commands.RegisterCommands<FilmModule>();
+            commands.RegisterCommands<ImageModule>();
+            lavalink.ConnectAsync(lavalinkConfig);
+
+
+            return discord;
         }
     }
 }

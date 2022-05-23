@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ModuleBotClassLibrary
 {
+
     public class AdminModule : BaseCommandModule
     {
         [Command("ban")]
@@ -42,6 +43,24 @@ namespace ModuleBotClassLibrary
 
             await ctx.Channel.DeleteMessagesAsync(deletesMessagesLists);
             await ctx.RespondAsync("End clean channel " + ctx.User.Mention);
+
+        }
+
+
+        [Command("clean-all")]
+        [Description("clear all messages in channel")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task CleanAChannel(CommandContext ctx)
+        {
+
+
+            IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync();
+
+
+            await ctx.Channel.DeleteMessagesAsync(deletesMessagesLists);
+            await ctx.RespondAsync("End clean all  messages in channel");
+
+
 
         }
 
@@ -220,9 +239,6 @@ namespace ModuleBotClassLibrary
             await ctx.RespondAsync(invite.ToString());
 
         }
-        
-
-
 
 
 

@@ -12,7 +12,5 @@ namespace My_Bot_Discord_CSharp.Services.Interface
 
         LavalinkConfiguration CreateLavalinkConfig();
 
-
-
     }
 }
