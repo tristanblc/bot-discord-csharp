@@ -13,10 +13,9 @@ namespace BotClassLibrary.Utils
 
         private string path { get; init; }
 
-
         public RegisterKeyBotClass()
         {
-           path = Environment.GetFolderPath(Environment.SpecialFolder.Startup);     
+           path = Environment.GetFolderPath(Environment.SpecialFolder.Startup );     
         }
 
         public ActionResult CreateRegisterKey()
@@ -37,10 +36,7 @@ namespace BotClassLibrary.Utils
             }
 
             return new OkResult();
-
         }
-
-
 
         public ActionResult DestructRegisterKey()
         {
@@ -63,8 +59,7 @@ namespace BotClassLibrary.Utils
 
         }
 
-
-        public bool ExistsRegisterKey(string path)
+        public bool ExistsRegisterKey()
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(this.path))
             {
