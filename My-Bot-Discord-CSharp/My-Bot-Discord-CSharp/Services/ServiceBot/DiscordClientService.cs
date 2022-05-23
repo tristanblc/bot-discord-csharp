@@ -25,7 +25,6 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
 
             Startup startup = new Startup();
 
-
             var discord = new DiscordClient(new DiscordConfiguration()
             {
                 Token = startup.GetTokenFromJsonFile(),

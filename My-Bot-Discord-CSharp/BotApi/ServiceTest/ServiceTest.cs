@@ -17,7 +17,6 @@ namespace BotApi
         {
             HttpClient http = new HttpClient();
 
-
             arretService = new ArretService(http, "https://localhost:7167/api/Arret/");
 
         }
@@ -31,7 +30,6 @@ namespace BotApi
 
             Assert.IsNotNull(resultat);
             Assert.IsInstanceOfType(resultat, typeof(IEnumerable<Arret>));
-
 
            
         }

@@ -19,9 +19,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceLavalink
         public LavalinkService(DiscordClient client, Startup startup)
         {
             discordClient = client != null ?  client :  throw new MyLavalinkException("Error client") ;
-            Startup = new Startup();
-
-
+            Startup = startup;
         }
 
         public LavalinkConfiguration CreateLavalinkConfig()

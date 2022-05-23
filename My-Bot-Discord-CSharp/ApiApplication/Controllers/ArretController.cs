@@ -127,9 +127,10 @@ namespace ApiApplication.Controllers
             try
             {
 
-                var mapped = _mapper.Map<Arret>(entity);
+               var mapped = _mapper.Map<Arret>(entity);
 
-                var result =  genericRepository.Delete(mapped);
+               var result =  genericRepository.Delete(mapped);
+
                if(result == true)
                 {
                     return Ok();

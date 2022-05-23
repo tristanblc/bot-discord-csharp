@@ -18,7 +18,6 @@ namespace BotApi.ServiceBot
         public ServiceBotTest()
         {
             discordClient = new DiscordClientService();
-
         }
 
         [TestMethod]
