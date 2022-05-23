@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace My_Bot_Discord_CSharp.Services
 {
-    internal class Startup : IStartupCredential
+    public class Startup : IStartupCredential
     {
         private ConfigurationSettings _configuration { get; init; }
 
