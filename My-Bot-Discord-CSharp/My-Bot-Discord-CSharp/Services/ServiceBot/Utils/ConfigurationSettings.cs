@@ -29,8 +29,7 @@ namespace My_Bot_Discord_CSharp.Services.Utils
         public void ConfigureServices()
         {
             try
-            {
-                
+            {                
                 var builder = new ConfigurationBuilder()                             
                               .AddJsonFile("app.json", optional: false, reloadOnChange: true)
                               .AddEnvironmentVariables();

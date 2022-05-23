@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Lavalink;
 using ModuleBotClassLibrary;
+using My_Bot_Discord_CSharp.Services.Exceptions;
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.ServiceLavalink;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace My_Bot_Discord_CSharp.Services.ServiceBot
 {
-    public class DiscordClientService : IDiscordClientService
+    public class DiscordClientService: IDiscordClientService
     {
         public DiscordClientService()
         {
@@ -23,7 +24,6 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
         {
 
             Startup startup = new Startup();
- 
 
             var discord = new DiscordClient(new DiscordConfiguration()
             {
@@ -39,7 +39,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             };
 
 
-            IServiceLavalink serviceLavalink = new LavalinkService(discord,startup);
+            IServiceLavalink serviceLavalink = new LavalinkService(discord, startup);
 
             var lavalinkConfig = serviceLavalink.CreateLavalinkConfig();
 
@@ -57,10 +57,9 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<FilmModule>();
             commands.RegisterCommands<ImageModule>();
             lavalink.ConnectAsync(lavalinkConfig);
-          
+
 
             return discord;
-         
         }
     }
 }

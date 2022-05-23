@@ -35,7 +35,6 @@ namespace ApiApplication.Controllers
             try
             {
                 var p = genericRepository.GetAll();
-
                 
                 if (p == null)
                     return NotFound();
@@ -87,11 +86,19 @@ namespace ApiApplication.Controllers
         [HttpPost]
         public ActionResult Add(LigneDto entity)
         {
-         
-
+            try
+            {
                 var mapped = _mapper.Map<Ligne>(entity);
                 genericRepository.Add(mapped);
                 return Ok();
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
+         
+
+             
 
           
         }
