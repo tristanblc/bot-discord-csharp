@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace My_Bot_Discord_CSharp.Services.ServiceLavalink
 {
-    internal class LavalinkService : IServiceLavalink
+    public class LavalinkService : IServiceLavalink
     {
         private  DiscordClient discordClient { get; init; }
         private Startup Startup { get; init ; }
@@ -23,8 +23,6 @@ namespace My_Bot_Discord_CSharp.Services.ServiceLavalink
 
 
         }
-
-   
 
         public LavalinkConfiguration CreateLavalinkConfig()
         {

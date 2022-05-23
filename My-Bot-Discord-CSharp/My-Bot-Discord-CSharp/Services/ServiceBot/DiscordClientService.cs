@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace My_Bot_Discord_CSharp.Services.ServiceBot
 {
-    internal class DiscordClientService : IDiscordClientService
+    public class DiscordClientService : IDiscordClientService
     {
         public DiscordClientService()
         {
