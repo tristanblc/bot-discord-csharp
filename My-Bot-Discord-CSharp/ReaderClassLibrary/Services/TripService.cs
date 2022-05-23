@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class TripService :  GenericApiReader<Trip>, IBusInfoService<Trip>
+    public class TripService :  GenericApiReader<Trip>, IGenericInterface<Trip>
     {
         public TripService(HttpClient httpClient, string uri) : base(httpClient, uri)
         {

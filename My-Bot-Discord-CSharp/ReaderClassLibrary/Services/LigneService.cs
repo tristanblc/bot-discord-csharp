@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class LigneService : GenericApiReader<Ligne>, IBusInfoService<Ligne>
+    public class LigneService : GenericApiReader<Ligne>, IGenericInterface<Ligne>
     {
         public LigneService(HttpClient httpClient, string uri) : base(httpClient, uri)
         {

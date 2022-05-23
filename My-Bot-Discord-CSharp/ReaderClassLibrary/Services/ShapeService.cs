@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class ShapeService : GenericApiReader<Shape>, IBusInfoService<Shape>
+
+    public class ShapeService : GenericApiReader<Shape>, IGenericInterface<Shape>
     {
 
         public ShapeService(HttpClient httpClient, string uri) : base(httpClient, uri)

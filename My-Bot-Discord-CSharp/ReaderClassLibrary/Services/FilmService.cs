@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public  class FilmService :GenericApiReader<Film>,IFilmService<Film>
+    public  class FilmService :GenericApiReader<Film>, IGenericInterface<Film>
     {
         public FilmService(HttpClient httpClient, string uri) : base(httpClient, uri)
         {

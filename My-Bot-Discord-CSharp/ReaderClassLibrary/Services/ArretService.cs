@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class ArretService : GenericApiReader<Arret>, IBusInfoService<Arret>
+    public class ArretService : GenericApiReader<Arret>, IGenericInterface<Arret>
     {
 
         public ArretService(HttpClient httpClient, string uri) : base(httpClient, uri)

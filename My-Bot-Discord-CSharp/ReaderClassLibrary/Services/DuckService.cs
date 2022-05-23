@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class DuckService : GenericApiReader<Duck>, IAnimalService<Duck>
+    public class DuckService : GenericApiReader<Duck>, IGenericInterface<Duck>
     {
         public DuckService(HttpClient httpClient, string uri) : base(httpClient, uri)
         {

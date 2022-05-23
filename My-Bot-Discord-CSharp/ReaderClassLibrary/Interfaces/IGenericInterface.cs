@@ -11,8 +11,6 @@ namespace ReaderClassLibrary.Interfaces
     {
 
         Task<T> Get();
-
-
-        Task<T> GetApprochDateTime();
+        Task<IEnumerable<T>> GetAll();
     }
 }
