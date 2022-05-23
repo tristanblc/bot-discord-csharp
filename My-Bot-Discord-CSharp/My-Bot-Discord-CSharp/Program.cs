@@ -17,15 +17,37 @@ using My_Bot_Discord_CSharp.Services.ServiceLavalink;
 
 static void Main(string[] args)
 {
+    try
+    {
+        MainAsync().GetAwaiter().GetResult();
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        return;
 
-     MainAsync().GetAwaiter().GetResult();
+    }
+
+   
 }
 
 static async Task MainAsync()
 {
 
     var discord_service = new DiscordClientService();
-    var discord = discord_service.CreateDiscordClient();
+
+
+    var discord = new DiscordClient(new DiscordConfiguration());
+    try
+    {
+        discord = discord_service.CreateDiscordClient();
+
+    }catch(Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        return;
+    }
+
     await discord.ConnectAsync();
 
     await Task.Delay(-1);
