@@ -18,7 +18,17 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task ban(CommandContext ctx, DiscordMember member, string reason)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Ban",
+
+                Color = DiscordColor.Green,
+
+                Description = $"{member.DisplayName} ban !"
+
+            };
             await member.BanAsync(1, reason);
+            await ctx.RespondAsync(builder.Build());
         }
 
 
@@ -27,38 +37,57 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task unban(CommandContext ctx, DiscordMember member, string reason)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Unban",
+
+                Color = DiscordColor.Green,
+
+                Description = $"{member.DisplayName} Unban !"
+
+            };
             await member.UnbanAsync(reason);
-
+            await ctx.RespondAsync(builder.Build());
         }
 
 
-        [Command("purge")]
-        [Description("purge channel")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task Purge(CommandContext ctx)
-        {
-
-            IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync();
-            
-
-            await ctx.Channel.DeleteMessagesAsync(deletesMessagesLists);
-            await ctx.RespondAsync("End clean channel " + ctx.User.Mention);
-
-        }
-
-
+    
         [Command("clean-all")]
         [Description("clear all messages in channel")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task CleanAChannel(CommandContext ctx)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = $"Clear discord channel {ctx.Channel.Name}",
+
+                Color = DiscordColor.Green,
 
 
-            IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync();
 
+            };
+            try
+            {
+                
+                IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync();
 
-            await ctx.Channel.DeleteMessagesAsync(deletesMessagesLists);
-            await ctx.RespondAsync("End clean all  messages in channel");
+                foreach(DiscordMessage message in deletesMessagesLists)
+                {
+                    await ctx.Channel.DeleteMessageAsync(message);
+                }
+             
+            
+                builder.Description = "End clean all  messages in channel";
+                await ctx.RespondAsync(builder.Build());
+            }
+            catch(Exception ex)
+            {
+                
+                builder.Description = "Error";
+                builder.Color = DiscordColor.Red;
+                await ctx.RespondAsync(builder.Build());
+            }
+
 
 
 
@@ -70,15 +99,30 @@ namespace ModuleBotClassLibrary
         public async Task clean(CommandContext ctx, string reason)
         {
 
+           
             ulong number = 0;
 
             ulong.TryParse(reason, out number);
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = $"Clear discord channel {ctx.Channel.Name} - {number} message(s)",
+
+                Color = DiscordColor.Green,
+
+
+
+            };
 
             IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAfterAsync(number);
+            foreach (DiscordMessage message in deletesMessagesLists)
+            {
+                await ctx.Channel.DeleteMessageAsync(message);
+            }
 
 
-            await ctx.Channel.DeleteMessagesAsync(deletesMessagesLists);
-            await ctx.RespondAsync("End clean + " + number+"  message(s) in channel " + ctx.User.Mention);
+         
+            builder.Description = "End clean + " + number + "  message(s) in channel " + ctx.User.Mention;
+            await ctx.RespondAsync(builder.Build());
 
 
 
@@ -90,16 +134,37 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task deafUser(CommandContext ctx, DiscordMember member, string reason)
         {
+           
             if (member.IsDeafened)
             {
-                await ctx.RespondAsync("Member " + member.Username.ToString() + " is Deafened");
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = $"Deaf User { member.Username }",
+                    Description= "Member " + member.Username.ToString() + " is already Deafened",
+
+                    Color = DiscordColor.Green,
+
+
+
+                };
+                await ctx.RespondAsync(builder.Build());
 
                 return;
             }
 
+            var builder_= new DiscordEmbedBuilder
+            {
+                Title = $"Deaf User { member.Username }",
+                Description = "Member " + member.Username.ToString() + " is  Deafened",
+
+                Color = DiscordColor.Red,
+
+
+
+            };
             await member.SetDeafAsync(true, reason);
 
-            await ctx.RespondAsync("Member " + member.Username.ToString() + " is deafened now");
+            await ctx.RespondAsync(builder_.Build());
 
 
 
@@ -113,14 +178,35 @@ namespace ModuleBotClassLibrary
         {
             if (member.IsDeafened == false)
             {
-                await ctx.RespondAsync("Member " + member.Username.ToString() + " is not Deafened");
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = $"Not Deaf User { member.Username }",
+                    Description = "Member " + member.Username.ToString() + " is not Deafened",
+
+                    Color = DiscordColor.Green,
+
+
+
+                };
+                await ctx.RespondAsync(builder.Build());
 
                 return;
             }
 
             await member.SetDeafAsync(false, reason);
 
-            await ctx.RespondAsync("Member " + member.Username.ToString() + " is not deafened now");
+            var builder_ = new DiscordEmbedBuilder
+            {
+                Title = $"UnDeaf User { member.Username }",
+                Description = "Member " + member.Username.ToString() + " is not deafened now",
+
+                Color = DiscordColor.Red,
+
+
+
+            };
+            await ctx.RespondAsync(builder_.Build());
+        
 
 
 
@@ -135,14 +221,37 @@ namespace ModuleBotClassLibrary
         {
             if (member.IsMuted == true)
             {
-                await ctx.RespondAsync("Member " + member.Username.ToString() + " is mute");
+
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = $"Already Mute User { member.Username }",
+                    Description = "Member " + member.Username.ToString() + " is already mute",
+
+                    Color = DiscordColor.Green,
+
+
+
+                };
+                await ctx.RespondAsync(builder.Build());
+            
 
                 return;
             }
 
             await member.SetMuteAsync(true, reason);
 
-            await ctx.RespondAsync("Member " + member.Username.ToString() + " is mute now");
+            var builder_ = new DiscordEmbedBuilder
+            {
+                Title = $" Mute User { member.Username } is muted now",
+                Description = "Member " + member.Username.ToString() + " is  muted",
+
+                Color = DiscordColor.Green,
+
+
+
+            };
+            await ctx.RespondAsync(builder_.Build());
+       
 
 
 
@@ -156,14 +265,38 @@ namespace ModuleBotClassLibrary
         {
             if (member.IsMuted == false)
             {
-                await ctx.RespondAsync("Member " + member.Username.ToString() + " is not muted");
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Member is not muted now",
+                    Description = $"Member" + member.Username.ToString() + " is not muted ",
+
+                    Color = DiscordColor.Green,
+
+
+
+                };
+                await ctx.RespondAsync(builder.Build());
+               
 
                 return;
             }
 
             await member.SetMuteAsync(false, reason);
 
-            await ctx.RespondAsync("Member" + member.Username.ToString() + " is not muted now");
+
+            var builder_ = new DiscordEmbedBuilder
+            {
+                Title = "Member is unmuted now",
+                Description = $"Member" + member.Username.ToString() + " is  unmuted now",
+
+                Color = DiscordColor.Green,
+
+
+
+            };
+            await ctx.RespondAsync(builder_.Build());
+
+     
 
 
 
@@ -178,14 +311,31 @@ namespace ModuleBotClassLibrary
         {
             if (member.Roles.Contains(role))
             {
-                await ctx.RespondAsync( member.Username.ToString() + " have the role "+ role.Name );
+                var builder_ = new DiscordEmbedBuilder
+                {
+                    Title = $"Have role {role.Name}",
+                    Description = "Add role : " + role.Name + " to " + member.Username.ToString(),
+                    Color = DiscordColor.Red
+
+
+                };
+                await ctx.RespondAsync(builder_.Build());
 
                 return;
             }
 
-           await member.GrantRoleAsync(role);  
+           await member.GrantRoleAsync(role);
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Grant role",
+                Description = "Add role : " + role.Name + " to " + member.Username.ToString(),
+                Color = DiscordColor.Green
 
-            await ctx.RespondAsync("Add role : " + role.Name +" to "+member.Username.ToString());
+
+            };
+            await member.RevokeRoleAsync(role);
+
+            await ctx.RespondAsync(builder.Build());
 
 
 
@@ -199,9 +349,19 @@ namespace ModuleBotClassLibrary
             if (member.Roles.Contains(role))
             {
 
-                await member.RevokeRoleAsync(role);
 
-                await ctx.RespondAsync("Remove role : " + role.Name + " to " + member.Username.ToString());
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Role Remover",
+                    Description = "Remove role : " + role.Name + " to " + member.Username.ToString(),
+                    Color = DiscordColor.Green
+
+
+                };
+                await member.RevokeRoleAsync(role);
+            
+
+                await ctx.RespondAsync(builder.Build());
             }
         }
 
@@ -215,13 +375,28 @@ namespace ModuleBotClassLibrary
 
             if (now == null)
             {
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Error ",
+                    Description = "Time can not be null",
+                    Color = DiscordColor.Red
+
+
+                };
                 await ctx.RespondAsync("Null time");
                 return;
             }
 
-          
+            var builder_ = new DiscordEmbedBuilder
+            {
+                Title = "Timeout user",
+                Description = "User { member.Username} is timeout for {time} seconds ",
+                Color = DiscordColor.Green
 
-            await ctx.RespondAsync("User " + member.Username + " timeout for "+ time.ToString());
+
+            };
+            await ctx.RespondAsync(builder_.Build());
+
 
         }
 
@@ -233,15 +408,27 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task inviteUser(CommandContext ctx , DiscordChannel channel,int time)
         {
+
             var invite  = await channel.CreateInviteAsync(time);
 
+            var builder_ = new DiscordEmbedBuilder
+            {
+                Title = "New invite",
+                Description = invite.ToString(),
+                Color = DiscordColor.Green,
 
-            await ctx.RespondAsync(invite.ToString());
+
+
+            };
+            await ctx.RespondAsync(builder_.Build());
+      
 
         }
 
 
 
+
+    
 
     }
 }

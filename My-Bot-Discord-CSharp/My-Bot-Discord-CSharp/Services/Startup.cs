@@ -38,41 +38,6 @@ namespace My_Bot_Discord_CSharp.Services
 
         }
 
-        public string GetLavalinkPassword()
-        {
-            try
-            {
-                return _configuration.LavalinkPassword;
-            }
-            catch (ProjectConfigurationException ex)
-            {
-                throw new ProjectConfigurationException("Invalid Token or :" + ex.ToString());
-
-            }
-        }
-        public string GetHostName()
-        {
-            try
-            {
-                return _configuration.HostName;
-            }
-            catch (ProjectConfigurationException ex)
-            {
-                throw new ProjectConfigurationException("Invalid Token or :" + ex.ToString());
-
-            }
-        }
-        public int GetPort()
-        {
-            try
-            {
-                return _configuration.Port;
-            }
-            catch (ProjectConfigurationException ex)
-            {
-                throw new ProjectConfigurationException("Invalid Token or :" + ex.ToString());
-
-            }
-        }
+    
     }
 }

@@ -1,7 +1,7 @@
-﻿using Microsoft.DotNet.PlatformAbstractions;
+﻿using ExceptionClassLibrary;
+using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using My_Bot_Discord_CSharp.Services.Exceptions;
 using My_Bot_Discord_CSharp.Services.Interface;
 using System;
 using System.Collections.Generic;

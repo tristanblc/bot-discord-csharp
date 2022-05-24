@@ -13,12 +13,11 @@ using ModuleBotClassLibrary;
 using My_Bot_Discord_CSharp.Services;
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.ServiceBot;
-using My_Bot_Discord_CSharp.Services.ServiceLavalink;
+;
 
 static void Main(string[] args)
 {
-      MainAsync().GetAwaiter().GetResult();
-   
+    MainAsync().GetAwaiter().GetResult();   
 }
 
 static async Task MainAsync()
@@ -30,14 +29,38 @@ static async Task MainAsync()
     {
         var discord = discord_service.CreateDiscordClient();
 
+        var endpoint = new ConnectionEndpoint
+        {
+            Hostname = "127.0.0.1", // From your server configuration.
+            Port = 2333, // From your server configuration
+        };
+
+        var lavalinkConfig = new LavalinkConfiguration
+        {
+            Password = "", // From your server configuration.
+            RestEndpoint = endpoint,
+            SocketEndpoint = endpoint
+        };
+
+
+        var lavalink = discord.UseLavalink();
+ 
+
+
         await discord.ConnectAsync();
+        lavalink.ConnectAsync(lavalinkConfig);
 
         await Task.Delay(-1);
+
+
+      
+
     }
     catch(Exception ex)
     {
         Console.WriteLine(ex.ToString());
     }
+
 
 
 }
