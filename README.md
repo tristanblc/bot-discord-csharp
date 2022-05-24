@@ -22,6 +22,6 @@ Bot-discord-csharp uses a number of projects to work properly:
 
 Use open source .Net discord Api :
 
-- [DsharpPlus]([https://github.com/freyacodes/Lavalink](https://github.com/DSharpPlus/DSharpPlus]) -  .Net Discord Api Wrapper
+- [DsharpPlus]([https://github.com/DSharpPlus/DSharpPlus]) -  .Net Discord Api Wrapper
 
 
