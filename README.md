@@ -10,7 +10,7 @@ Bot-discord-csharp is a discord bot , .NET discord bot using DSharpPlus library.
 - Call API
 - Create Bus API 
 - Image ( add effect on picture)
-- Moderation commmands -  (Voice & chat and server moderations commands)
+- Moderation commands -  (Voice & chat and server moderations commands)
 
 
 ## Tech
