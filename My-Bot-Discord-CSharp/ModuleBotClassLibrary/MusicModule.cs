@@ -21,10 +21,21 @@ namespace ModuleBotClassLibrary
         [Command("join")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Red,
+
+            };
+
             var lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await ctx.RespondAsync("The Lavalink connection is not established");
+                builder.Description = "The Lavalink connection is not established";
+
+                await ctx.RespondAsync(builder.Build());
+        
                 return;
             }
 
@@ -32,17 +43,31 @@ namespace ModuleBotClassLibrary
 
             if (channel.Type != ChannelType.Voice)
             {
-                await ctx.RespondAsync("Not a valid voice channel.");
+                builder.Description = "Not a valid voice channel.";
+
+                await ctx.RespondAsync(builder.Build());
+          
                 return;
             }
 
             await node.ConnectAsync(channel);
-            await ctx.RespondAsync($"Joined {channel.Name}!");
+            builder.Description = $"Joined {channel.Name}!";
+            builder.Color = DiscordColor.Green;
+
+            await ctx.RespondAsync(builder.Build());
+   
         }
 
         [Command("leave")]
         public async Task Leave(CommandContext ctx, DiscordChannel channel)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Red,
+
+            };
             var lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -54,7 +79,11 @@ namespace ModuleBotClassLibrary
 
             if (channel.Type != ChannelType.Voice)
             {
-                await ctx.RespondAsync("Not a valid voice channel.");
+                builder.Description = "Not a valid voice channel.";
+
+
+                await ctx.RespondAsync(builder.Build());
+
                 return;
             }
 
@@ -62,20 +91,38 @@ namespace ModuleBotClassLibrary
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
+                builder.Description = "Lavalink is not connected.";
+         
+                await ctx.RespondAsync(builder.Build());
+              
                 return;
             }
 
             await conn.DisconnectAsync();
-            await ctx.RespondAsync($"Left {channel.Name}!");
+            builder.Description = $"Left {channel.Name}!";
+            builder.Color = DiscordColor.Green;
+            await ctx.RespondAsync(builder.Build());
         }
 
         [Command]
         public async Task Play(CommandContext ctx, [RemainingText] string search)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Azure,
+               
+            };
+
+
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+
+                builder.Description = $"You are not in a voice channel.";
+
+                await ctx.RespondAsync(builder.Build());
+       
                 return;
             }
 
@@ -85,7 +132,11 @@ namespace ModuleBotClassLibrary
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
+                builder.Description = $"Lavalink is not connected.";              
+
+
+                await ctx.RespondAsync(builder.Build());
+          
                 return;
             }
 
@@ -94,7 +145,13 @@ namespace ModuleBotClassLibrary
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await ctx.RespondAsync($"Track search failed for {search}.");
+
+                builder.Description = $"Track search failed for {search}.";              
+
+
+                await ctx.RespondAsync(builder.Build());
+
+              
                 return;
             }
 
@@ -102,15 +159,37 @@ namespace ModuleBotClassLibrary
 
             await conn.PlayAsync(track);
 
-            await ctx.RespondAsync($"Now playing {track.Title}!");
+
+            builder.Title = "Playing music";
+
+            builder.Color = DiscordColor.Blue;
+            builder.Description = $"Now playing {track.Title}!";
+         
+
+
+            await ctx.RespondAsync(builder.Build());
+
+         
         }
 
         [Command("stop")]
         public async Task Stop(CommandContext ctx, [RemainingText] string search)
         {
+
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Azure,
+
+            };
+
+
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+                builder.Description = $"You are not in a voice channel.";
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -120,7 +199,10 @@ namespace ModuleBotClassLibrary
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
+                builder.Description = $"Lavalink is not connected.";
+
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -129,7 +211,11 @@ namespace ModuleBotClassLibrary
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await ctx.RespondAsync($"Track search failed for {search}.");
+
+                builder.Description = $"Track search failed for {search}.";
+
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -139,15 +225,28 @@ namespace ModuleBotClassLibrary
 
             await conn.StopAsync();
 
-            await ctx.RespondAsync($"Stop playing!");
+
+            builder.Title = "Stop music";
+
+            builder.Color = DiscordColor.Red;
+            builder.Description = $"Stop playing {track.Title}!";
         }
        
         [Command("pause")]
         public async Task Pause(CommandContext ctx)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Red,
+
+            };
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+                builder.Description = $"You are not in a voice channel.";
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -157,20 +256,38 @@ namespace ModuleBotClassLibrary
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
+             
+                builder.Description = "Lavalink is not connected.";
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
             await conn.ResumeAsync();
-            await ctx.RespondAsync("Now resume.");
+
+            builder.Description = "Lavalink is not connected.";
+            builder.Color = DiscordColor.Green;
+            await ctx.RespondAsync(builder.Build());
+            
+           
         }
 
         [Command("volume")]
         public async Task Volume(CommandContext ctx,string volume)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status",
+
+                Color = DiscordColor.Red,
+
+            };
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+
+                builder.Description = $"You are not in a voice channel.";
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -180,7 +297,11 @@ namespace ModuleBotClassLibrary
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
+
+                builder.Description = "Lavalink is not connected.";
+
+                await ctx.RespondAsync(builder.Build());
+             
                 return;
             }
             int vol = 0;
@@ -190,23 +311,38 @@ namespace ModuleBotClassLibrary
 
             if (vol < 0  && vol > 100)
             {
-                await ctx.RespondAsync("Not possible");
+                builder.Description = "Not possible";
+
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
 
 
             await conn.SetVolumeAsync(vol);
-            await ctx.RespondAsync("volume set to " + vol.ToString());
+            builder.Description = "Volume set to " + vol.ToString();
+
+            await ctx.RespondAsync(builder.Build());
+        
 
         }
 
         [Command("add-queue")]
         public async Task Queueing(CommandContext ctx, [RemainingText] string search)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "List track",
+
+                Color = DiscordColor.Red,
+                Description = "Cleaning Queue"
+
+            };
+
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+                builder.Description = "You are not in a voice channel.";
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -225,7 +361,8 @@ namespace ModuleBotClassLibrary
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await ctx.RespondAsync($"Track search failed for {search}.");
+                builder.Description = "You are not in a voice channel.";
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -241,12 +378,21 @@ namespace ModuleBotClassLibrary
         [Command("skip")]
         public async Task Skip(CommandContext ctx)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "List track",
 
+                Color = DiscordColor.Red,
+                Description = "Cleaning Queue"
+
+            };
 
 
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
-                await ctx.RespondAsync("You are not in a voice channel.");
+                builder.Description = "You are not in a voice channel.";
+                await ctx.RespondAsync(builder.Build());
+               
                 return;
             }
 
@@ -257,7 +403,8 @@ namespace ModuleBotClassLibrary
   
             if (myTracks.Count == 0)
             {
-                await ctx.RespondAsync($"No track in queue !");
+                builder.Description = $"No track in queue !";
+                await ctx.RespondAsync(builder.Build());
                 return;
             }
 
@@ -265,13 +412,32 @@ namespace ModuleBotClassLibrary
             var track = myTracks.First();
             await conn.PlayAsync(track);
 
+            var buildere = new DiscordEmbedBuilder
+            {
+                Title = "List track",
+
+                Color = DiscordColor.Green,
+                Description = "Skip music"
+
+            };
+            await ctx.RespondAsync(buildere.Build());
+
         }
         [Command("clear-queue")]
         public async Task CleaningQueue(CommandContext ctx)
         {
 
             myTracks.Clear();
-            await ctx.RespondAsync("Cleaning Queue");          
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "List track",
+
+                Color = DiscordColor.Azure,
+                Description = "Cleaning Queue"
+
+            };
+            await ctx.RespondAsync(builder.Build());
+               
          
 
         }
@@ -281,6 +447,7 @@ namespace ModuleBotClassLibrary
         [Command("lists-queues")]
         public async Task ListsQueue(CommandContext ctx)
         {
+         
             string print = "Lists of tracks :";
             int i = 0;
             myTracks.ForEach(action =>
@@ -289,7 +456,16 @@ namespace ModuleBotClassLibrary
 
                i++;
            });
-            await ctx.RespondAsync(print);
+
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "List track",
+
+                Color = DiscordColor.Azure,
+                Description = print
+
+            };
+            await ctx.RespondAsync(builder.Build());
 
 
         }
@@ -298,6 +474,14 @@ namespace ModuleBotClassLibrary
         [Command("del-queue")]
         public async Task delQueue(CommandContext ctx, string state)
         {
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Status music",
+
+                Color = DiscordColor.Azure,
+                Description = ""
+
+            };
 
             int i = 0;
 
@@ -305,12 +489,17 @@ namespace ModuleBotClassLibrary
             {
                 int.TryParse(state, out i);
                 myTracks.RemoveAt(i);
+                builder.Description = $"del track { i.ToString() } in queue ";
+                builder.Color = DiscordColor.Green;
 
-                await ctx.RespondAsync($"del track { i.ToString() } in queue ");
+                await ctx.RespondAsync(builder.Build());    
             }
             catch(Exception ex)
             {
-                await ctx.RespondAsync($"Impossible !");
+                builder.Description = $"Error ";
+                builder.Color = DiscordColor.Red;
+
+                await ctx.RespondAsync(builder.Build());
 
             }
 

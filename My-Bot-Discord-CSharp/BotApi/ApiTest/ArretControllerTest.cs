@@ -21,7 +21,7 @@ namespace BotApi
 
         private IEnumerable<Arret> Arrets { get; set; }
 
-        private IMapper Mapper { get; init; }
+        private IMapper Mapper { get; init; } 
 
         private ApplicationDbContext Context { get; init; }
 

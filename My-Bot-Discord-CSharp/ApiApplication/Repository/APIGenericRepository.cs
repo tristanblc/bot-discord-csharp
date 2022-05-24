@@ -7,8 +7,6 @@ namespace ApiApplication.Repository
 {
     public class APIGenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-
-
         private readonly ApplicationDbContext myContext;
 
         public APIGenericRepository(ApplicationDbContext _myContext)

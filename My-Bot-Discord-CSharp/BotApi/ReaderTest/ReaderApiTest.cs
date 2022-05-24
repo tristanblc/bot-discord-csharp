@@ -23,8 +23,6 @@ namespace BotApi
 
         private ApplicationDbContext Context { get; init; }
 
-
-
         private GenericApiReader<Trip> TripApiReader { get; set; }
 
 

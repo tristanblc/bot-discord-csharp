@@ -11,9 +11,7 @@ namespace My_Bot_Discord_CSharp.Services.Interface
     {  
 
         string GetTokenFromJsonFile();
-        string GetLavalinkPassword();
-        string GetHostName();
-        int GetPort();
+     
 
     }
 }

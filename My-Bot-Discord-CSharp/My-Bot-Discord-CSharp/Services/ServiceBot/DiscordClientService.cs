@@ -1,11 +1,12 @@
 ﻿using BotClassLibrary;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using DSharpPlus.Net;
 using ModuleBotClassLibrary;
-using My_Bot_Discord_CSharp.Services.Exceptions;
+
 using My_Bot_Discord_CSharp.Services.Interface;
-using My_Bot_Discord_CSharp.Services.ServiceLavalink;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,10 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             {
                 Token = startup.GetTokenFromJsonFile(),
                 TokenType = TokenType.Bot,
-                Intents = DiscordIntents.All
+                Intents = DiscordIntents.All,
+              
             });
+
 
 
             var command_configuration = new CommandsNextConfiguration()
@@ -39,27 +42,27 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             };
 
 
-            IServiceLavalink serviceLavalink = new LavalinkService(discord, startup);
-
-            var lavalinkConfig = serviceLavalink.CreateLavalinkConfig();
-
-            var lavalink = discord.UseLavalink();
-
-
             var commands = discord.UseCommandsNext(command_configuration);
 
 
             commands.RegisterCommands<InfoModule>();
             commands.RegisterCommands<OtherToolsModule>();
-            commands.RegisterCommands<AdminModule>();
-            commands.RegisterCommands<BusInfoModule>();
+            commands.RegisterCommands<AdminModule>();          
             commands.RegisterCommands<MusicModule>();
             commands.RegisterCommands<FilmModule>();
             commands.RegisterCommands<ImageModule>();
-            lavalink.ConnectAsync(lavalinkConfig);
+            commands.RegisterCommands<GitModule>();
 
 
             return discord;
         }
+
+
+
+
+
+   
+
+
     }
 }

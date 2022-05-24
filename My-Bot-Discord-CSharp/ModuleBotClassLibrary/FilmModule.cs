@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using ReaderClassLibrary.Services;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace ModuleBotClassLibrary
         public async Task FilmCommand(CommandContext ctx, string message)
         {
 
+           
+
             var url = urlBase + "singlesearch/shows?q=" + message;
 
             FilmService filmService = new FilmService(httpClient,url);
@@ -28,19 +31,30 @@ namespace ModuleBotClassLibrary
             var film = await filmService.Get();
 
 
-            var return_value = $"Name : { film.name } Langage : { film.status }  First premiere : { film.premiered.ToString() }";
-
+            var return_value = $"Name : { film.name }";
+            return_value += $"\nLangage : { film.status }";
+                
+            return_value += $"\nFirst premiere : { film.premiered.ToString() }";
 
             return_value += $"\n Link { film.url }";
 
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Film",
 
-            await ctx.RespondAsync(return_value);
+                Color = DiscordColor.Azure,
+
+                Description = return_value
+
+            };
+
+            await ctx.RespondAsync(builder.Build());
         }
 
 
 
 
-        [Command("people")]
+        [Command("star")]
         public async Task PeopleCommand(CommandContext ctx, string message)
         {
 
@@ -61,7 +75,17 @@ namespace ModuleBotClassLibrary
 
             return_value += $"\n {film.person.image.medium.ToString()}";
 
-            await ctx.RespondAsync(return_value);
+            var builder = new DiscordEmbedBuilder
+            {
+                Title = "Star",
+
+                Color = DiscordColor.Azure,
+
+                Description = return_value
+
+            };
+
+            await ctx.RespondAsync(builder.Build());
         }
     }
 }

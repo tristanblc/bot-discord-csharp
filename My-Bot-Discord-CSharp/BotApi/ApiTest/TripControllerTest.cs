@@ -39,7 +39,6 @@ namespace BotApi
             HttpClient httpClient1 = new HttpClient();
             HttpClient httpClient = httpClient1;
             Context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>());
-
             TripApiReader = new GenericApiReader<Trip>(httpClient, url);
 
 
@@ -49,7 +48,6 @@ namespace BotApi
         {
             Fixture = new Fixture();
             Lignes = Fixture.CreateMany<Trip>();
-
         }
 
 

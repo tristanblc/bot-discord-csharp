@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ReaderClassLibrary.Services;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 
 namespace ModuleBotClassLibrary
 {
@@ -35,8 +36,16 @@ namespace ModuleBotClassLibrary
                 PingReply reply = myPing.Send("localhost", 1000);
                 if (reply != null)
                 {
-                    await ctx.RespondAsync("Status :  " + reply.Status + " \n Time : " + reply.RoundtripTime.ToString());
-                    //Console.WriteLine(reply.ToString());
+                    var builder = new DiscordEmbedBuilder
+                    {
+                        Title = "Status",
+
+                        Color = DiscordColor.Azure,
+                        Description = $"Status :  " + reply.Status + " \n Time : " + reply.RoundtripTime.ToString()
+                    };
+
+
+                    await ctx.RespondAsync(builder.Build());
                     return;
                 }
 
@@ -61,8 +70,18 @@ namespace ModuleBotClassLibrary
                 PingReply reply = myPing.Send(url, 1000);
                 if (reply != null)
                 {
-                    await ctx.RespondAsync("Status :  " + reply.Status + " \n Time : " + reply.RoundtripTime.ToString());
-                    //Console.WriteLine(reply.ToString());
+
+                    var builder = new DiscordEmbedBuilder
+                    {
+                        Title = "Status",
+
+                        Color = DiscordColor.Azure,
+                        Description = $"Status :  " + reply.Status + " \n Time : " + reply.RoundtripTime.ToString()
+                    };
+
+
+                    await ctx.RespondAsync(builder.Build());
+     
                     return;
 
 
@@ -90,6 +109,8 @@ namespace ModuleBotClassLibrary
                     throw new NullReferenceException("Empty");
                 }
 
+
+
                 string reply_ = $" Prochain jour férie  :  { reply.DateTime}  ";
 
 
@@ -102,6 +123,57 @@ namespace ModuleBotClassLibrary
 
             }
         }
+
+
+
+        [Command("get-links")]
+        public async Task HandleLinks(CommandContext ctx,DiscordChannel channel)
+        {
+            try
+            {
+
+
+                string reply = "";
+                IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
+                foreach (DiscordMessage message in listDiscordMessages)
+                {
+                    if (message == null)
+                        continue;
+                    else
+                    {
+                        var messageString = message.Content.ToString();
+                        Match url = Regex.Match(messageString, @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+                        Console.WriteLine(url);
+                        if (url.Success)
+                            reply += $"{url.ToString()} \n";
+
+                    }
+                }
+
+
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Links",
+
+                    Color = DiscordColor.Azure,
+                    Description = reply
+                };
+            
+
+                await ctx.RespondAsync(builder.Build());
+
+
+            }
+            catch(Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+            }
+        }
+
+
+
+
 
 
     }

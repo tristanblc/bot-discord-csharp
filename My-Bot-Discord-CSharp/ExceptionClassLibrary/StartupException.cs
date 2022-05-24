@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace My_Bot_Discord_CSharp.Services.Exceptions
+namespace ExceptionClassLibrary
 {
-    internal class StartupException : Exception
+    public class StartupException : Exception
     {
         public StartupException() { }
 
