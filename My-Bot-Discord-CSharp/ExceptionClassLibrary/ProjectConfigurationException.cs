@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace My_Bot_Discord_CSharp.Services.Exceptions
+namespace ExceptionClassLibrary
 {
-    internal class ProjectConfigurationException : Exception
+    public class ProjectConfigurationException : Exception
     {
         public ProjectConfigurationException() { }
 

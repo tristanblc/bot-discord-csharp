@@ -28,7 +28,6 @@ static async Task MainAsync()
 
     try
     {
-
         var discord = discord_service.CreateDiscordClient();
 
         await discord.ConnectAsync();

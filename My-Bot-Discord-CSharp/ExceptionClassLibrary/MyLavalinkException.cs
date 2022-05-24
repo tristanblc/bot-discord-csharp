@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace My_Bot_Discord_CSharp.Services.Exceptions
+namespace ExceptionClassLibrary
 {
-    internal class MyLavalinkException : Exception
+    public class MyLavalinkException : Exception
     {
         public MyLavalinkException() { }
 
@@ -14,7 +14,6 @@ namespace My_Bot_Discord_CSharp.Services.Exceptions
             : base(message) { }
 
         public MyLavalinkException(string message, Exception inner)
-
             : base(message, inner) { }
     }
 }

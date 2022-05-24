@@ -18,12 +18,9 @@ namespace My_Bot_Discord_CSharp.Services.Utils
 
 
         public string DiscordToken { get; private set ; }
-        public string LavalinkPassword { get; private set; }
-        
+        public string LavalinkPassword { get; private set; }       
 
         public int Port { get; private set; }
-
-
         public string HostName { get; private set; }
 
         public void ConfigureServices()
@@ -33,7 +30,9 @@ namespace My_Bot_Discord_CSharp.Services.Utils
                 var builder = new ConfigurationBuilder()                             
                               .AddJsonFile("app.json", optional: false, reloadOnChange: true)
                               .AddEnvironmentVariables();
+
                 IConfiguration config = builder.Build();
+
                 DiscordToken = config.GetSection("Token").Value.ToString();
                 LavalinkPassword = config.GetSection("lavalink").Value.ToString();
                 HostName = config.GetSection("Hostname").Value.ToString();

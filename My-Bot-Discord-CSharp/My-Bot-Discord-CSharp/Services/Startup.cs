@@ -1,7 +1,8 @@
 ﻿using DSharpPlus;
+using ExceptionClassLibrary;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using My_Bot_Discord_CSharp.Services.Exceptions;
+
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.Utils;
 using System;
