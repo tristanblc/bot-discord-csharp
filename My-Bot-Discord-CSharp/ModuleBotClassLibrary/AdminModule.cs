@@ -2,10 +2,13 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ModuleBotClassLibrary.Services;
+using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ModuleBotClassLibrary
@@ -425,10 +428,208 @@ namespace ModuleBotClassLibrary
 
         }
 
+        [Command("clone")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleCloneChannel(CommandContext ctx,DiscordChannel channel)
+        {
+            try
+            {
+
+
+                await ctx.Channel.CloneAsync();
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Clone channel",
+                    Description = $"Clone {channel.Name} channel",
+                    Color = DiscordColor.Green,
+                };
+
+                await ctx.RespondAsync(builder.Build());
+
+            }catch(Exception ex)
+            {
+                var builder_ = new DiscordEmbedBuilder
+                {
+                    Title = "Clone channel",
+                    Description = $"ErrorClone {channel.Name} channel",
+                    Color = DiscordColor.Red,
 
 
 
-    
+                };
 
+                await ctx.RespondAsync(builder_.Build());
+
+            }
+
+        }
+
+        [Command("get-links")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleLinks(CommandContext ctx, DiscordChannel channel)
+        {
+            try
+            {
+
+
+                string reply = "";
+                IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
+                foreach (DiscordMessage message in listDiscordMessages)
+                {
+                    if (message == null)
+                        continue;
+                    else
+                    {
+                        var messageString = message.Content.ToString();
+                        Match url = Regex.Match(messageString, @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+                        Console.WriteLine(url);
+                        if (url.Success)
+                            reply += $"{url.ToString()} \n";
+
+                    }
+                }
+
+
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Links",
+
+                    Color = DiscordColor.Azure,
+                    Description = reply
+                };
+
+
+                await ctx.RespondAsync(builder.Build());
+
+
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+            }
+        }
+
+        [Command("delete-links")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleDeleteLinks(CommandContext ctx, DiscordChannel channel)
+        {
+            try
+            {
+
+                List<DiscordMessage> urls = new List<DiscordMessage>();
+                string reply = "";
+                IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
+                foreach (DiscordMessage message in listDiscordMessages)
+                {
+                    if (message == null)
+                        continue;
+                    else
+                    {
+                        var messageString = message.Content.ToString();
+                        Match url = Regex.Match(messageString, @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+                        Console.WriteLine(url);
+                        if (url.Success)
+                            urls.Add(message);
+
+                    }
+                }
+
+                int count = urls.ToList().Count;
+                urls.ToList().ForEach(async message => await ctx.Channel.DeleteMessageAsync(message));
+
+
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = " Links",
+
+                    Color = DiscordColor.Azure,
+                    Description = $"Delete links  number : {count}"
+                };            
+
+
+                await ctx.RespondAsync(builder.Build());
+
+
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+            }
+        }
+
+
+
+        [Command("export-links")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleExportLinks(CommandContext ctx, DiscordChannel channel)
+        {
+            try
+            {
+
+
+                List<DiscordMessage> urls = new List<DiscordMessage>();
+                IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
+                foreach (DiscordMessage message in listDiscordMessages)
+                {
+                    if (message == null)
+                        continue;
+                    else
+                    {
+                        var messageString = message.Content.ToString();
+                        Match url = Regex.Match(messageString, @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+                        Console.WriteLine(url);
+                        if (url.Success)
+                            urls.Add(message);
+
+                    }
+                }
+
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+
+                var pathFile = Path.Join(path, "write.txt");
+
+
+                IFileService fileService = new FileService();
+
+
+                fileService.WriteTxt(urls, "write.txt");
+
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = "Links",
+
+                    Color = DiscordColor.Azure,
+                    Description = "Export to .txt file"
+                };
+
+
+                DiscordMessageBuilder builders = new DiscordMessageBuilder();
+                FileStream fileStream = new FileStream(pathFile, FileMode.Open);
+                builders.WithFile(fileStream);
+
+
+                
+
+                await ctx.RespondAsync(builder.Build());
+
+                builders.SendAsync(ctx.Channel);
+
+        
+
+         
+
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+            }
+        }
     }
 }

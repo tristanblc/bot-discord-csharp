@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotClassLibrary.Git
+namespace BotApi.ServiceClassLibrary
 {
-    internal class GitRepository
+    internal class ImageServiceTest
     {
     }
 }
