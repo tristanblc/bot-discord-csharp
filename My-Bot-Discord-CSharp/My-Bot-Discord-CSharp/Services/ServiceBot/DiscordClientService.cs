@@ -50,8 +50,8 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<AdminModule>();          
             commands.RegisterCommands<MusicModule>();
             commands.RegisterCommands<FilmModule>();
-            commands.RegisterCommands<ImageModule>();
-            commands.RegisterCommands<GitModule>();
+            commands.RegisterCommands<FileModule>();
+           
 
 
             return discord;

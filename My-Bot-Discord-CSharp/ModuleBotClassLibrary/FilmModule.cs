@@ -68,11 +68,6 @@ namespace ModuleBotClassLibrary
 
             var return_value = $"Name { film.person.name}  ";
 
-
-            return_value += $"\n Birthday { film.person.birthdate.ToString() }";
-            if (film.person.deathdate != null)
-                return_value += $"\n Birthday { film.person.deathdate.ToString() }";
-
             return_value += $"\n {film.person.image.medium.ToString()}";
 
             var builder = new DiscordEmbedBuilder

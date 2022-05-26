@@ -34,9 +34,7 @@ namespace My_Bot_Discord_CSharp.Services.Utils
                 IConfiguration config = builder.Build();
 
                 DiscordToken = config.GetSection("Token").Value.ToString();
-                LavalinkPassword = config.GetSection("lavalink").Value.ToString();
-                HostName = config.GetSection("Hostname").Value.ToString();
-                Port = int.Parse(config.GetSection("Port").Value.ToString());
+           
             }
             catch(Exception ex)
             {

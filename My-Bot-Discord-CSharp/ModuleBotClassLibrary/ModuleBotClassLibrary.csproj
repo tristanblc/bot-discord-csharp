@@ -12,13 +12,15 @@
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0" />
     <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0-nightly-01106" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0" />
+    <PackageReference Include="ImageProcessor" Version="2.9.1" />
+    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EffectClassLibrary\EffectClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
+    <ProjectReference Include="..\ServiceClassLibrary\ServiceClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>
