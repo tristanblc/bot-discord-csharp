@@ -3,7 +3,6 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using EffectClassLibrary;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;

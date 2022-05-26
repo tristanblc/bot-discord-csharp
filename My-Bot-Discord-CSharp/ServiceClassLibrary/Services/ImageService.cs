@@ -39,8 +39,9 @@ namespace ModuleBotClassLibrary.Services
             if (bitmap != null)
             {           
                 bitmap.Save(pathBitmap,ImageFormat.Png);
-
+                bitmap.Dispose();
             }
+           
 
             stream.Flush();
             stream.Close();
@@ -48,7 +49,18 @@ namespace ModuleBotClassLibrary.Services
            
             
         }
+        public void SaveImage(Bitmap image,string path)
+        {
+            if (image != null)
+            {
+                image.Save(path, ImageFormat.Png);
+                image.Dispose();
 
+            }
+                
+
+
+        }
         public void DeleteImage(string filename)
         {
             var path = Path.Combine(DirectoryForSave, "images");
