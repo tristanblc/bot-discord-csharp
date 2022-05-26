@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DSharpPlus.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +24,24 @@ namespace BotApi.ServiceClassLibrary
         [TestMethod]
         public void TestSaveFile()
         {
-  
+
+            var filename = "test.txt";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+
+            var pathFile = Path.Join(path, filename);
+
+            fileService.SaveFile(pathFile,filename);
+
+
+            int fCount = Directory.GetFiles(pathFile, "*", SearchOption.AllDirectories).Length;
+
+
+            Assert.IsNotNull(fCount);
+
+            Assert.AreEqual(1, fCount);
 
         }
 
@@ -30,13 +49,43 @@ namespace BotApi.ServiceClassLibrary
         [TestMethod]
         public void TestDeleteFile()
         {
+            var filename = "test.txt";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
 
-          
+            var pathFile = Path.Join(path, filename);
+
+            fileService.DeleteFile(pathFile);
+
+
+            int fCount = Directory.GetFiles(pathFile, "*", SearchOption.AllDirectories).Length;
+
+
+            Assert.IsNotNull(fCount);
+
+            Assert.AreEqual(0, fCount);
+
+
         }
 
         public void TestWriteTxt()
         {
-           
+            List<DiscordMessage> listDiscordMessage = new List<DiscordMessage>();
+
+
+            fileService.WriteTxt(listDiscordMessage, "test.txt");
+
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
+            var pathFile = Path.Combine(path, "test.txt");
+
+            int fCount = Directory.GetFiles(pathFile, "*", SearchOption.AllDirectories).Length;
+
+
+            Assert.IsNotNull(fCount);
+
+            Assert.AreEqual(0, fCount);
+
+
         }
     }
 }
