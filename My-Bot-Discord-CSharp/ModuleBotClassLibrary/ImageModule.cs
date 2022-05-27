@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ModuleBotClassLibrary.Services;
@@ -17,74 +18,62 @@ namespace ModuleBotClassLibrary
     public class ImageModule : BaseCommandModule
     {
 
+
+        private string path { get; init; } = Path.Combine(Directory.GetCurrentDirectory(), "images");
+        private IUtilsService utilsService { get; set; }
+
+        private IEffectImageService effectImageService { get; set; }
         private ImageService imageService { get; set; }
 
         public ImageModule()
         {
             imageService = new ImageService();
+            effectImageService= new EffectImageService();
+            utilsService = new UtilsService();
+            utilsService.CheckDirectory(path);
 
         }
 
+   
         [Command("transpiracy")]
         public async Task HandleImageToTranspiracy(CommandContext ctx)
         {
 
             var attachments = ctx.Message.Attachments;
 
-            foreach(var attachment in attachments)
+            foreach (var attachment in attachments)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
-                
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-             
-                var pathFile = Path.Join(path, "changed.png");
 
-                if(File.Exists(pathFile))
-                    File.Delete(pathFile);
+                utilsService.DeleteDirectoryIfExist(path);
+
+                var pathFile = Path.Join(path, attachment.FileName);
+
+                utilsService.DeleteFile(pathFile);
 
                 try
                 {
-                    imageService.SaveImage(attachment.Url, "changed.png");
+                    imageService.SaveImage(attachment.Url, attachment.FileName);
 
                 }
-                
-                catch(Exception ex)
+
+                catch (Exception ex)
                 {
                     await ctx.RespondAsync("Error");
-                }    
-
-
-                IEffectImageService effectImageService = new EffectImageService();
-
+                }
 
                 Bitmap bitmap = new Bitmap(pathFile);
 
 
-                var pathFileFilter = Path.Join(path, "image_filter_changed.png");
-
-                imageService.SaveImage(effectImageService.DrawWithTransparency(bitmap),pathFileFilter);
-
-                var builder = new DiscordEmbedBuilder
-                {
-                    Title = "Add filter to image",
-
-                    Color = DiscordColor.Azure,
-                    Description = "Add filter ..."
-                };
+                var pathFileFilter = utilsService.GetFilePathFilter(path,attachment);
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(pathFileFilter, FileMode.Open);
-                builders.WithFile(fileStream);
+                utilsService.DeleteFile(pathFileFilter);
 
-                await ctx.RespondAsync(builder.Build());
+                imageService.SaveImage(effectImageService.DrawAsGrayscale(bitmap), pathFileFilter);
+                utilsService.SendResultat(ctx, pathFileFilter);
 
-                builders.SendAsync(ctx.Channel);
+
             }
-
-
-           
         }
 
         [Command("grayscale")]
@@ -95,19 +84,16 @@ namespace ModuleBotClassLibrary
 
             foreach (var attachment in attachments)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                utilsService.DeleteDirectoryIfExist(path);
 
-                var pathFile = Path.Join(path, "changed.png");
+                var pathFile = Path.Join(path, attachment.FileName);
 
-                if (File.Exists(pathFile))
-                    File.Delete(pathFile);
+                utilsService.DeleteFile(pathFile);
 
                 try
                 {
-                    imageService.SaveImage(attachment.Url, "changed.png");
+                    imageService.SaveImage(attachment.Url, attachment.FileName);
 
                 }
 
@@ -116,60 +102,41 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync("Error");
                 }
 
-
-                IEffectImageService effectImageService = new EffectImageService();
-
-
                 Bitmap bitmap = new Bitmap(pathFile);
 
 
-                var pathFileFilter = Path.Join(path, "image_filter_changed.png");
+                var pathFileFilter = utilsService.GetFilePathFilter(path, attachment);
+
+
+                utilsService.DeleteFile(pathFileFilter);
 
                 imageService.SaveImage(effectImageService.DrawAsGrayscale(bitmap), pathFileFilter);
-
-                var builder = new DiscordEmbedBuilder
-                {
-                    Title = "Add filter to image",
-
-                    Color = DiscordColor.Azure,
-                    Description = "Add filter ..."
-                };
+                utilsService.SendResultat(ctx, pathFileFilter);
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(pathFileFilter, FileMode.Open);
-                builders.WithFile(fileStream);
-
-                await ctx.RespondAsync(builder.Build());
-
-                builders.SendAsync(ctx.Channel);
             }
 
 
 
         }
 
-        [Command("sepiaTone")]
+        [Command("sepia")]
         public async Task HandleImageToSepiaTone(CommandContext ctx)
         {
-
             var attachments = ctx.Message.Attachments;
 
             foreach (var attachment in attachments)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                utilsService.DeleteDirectoryIfExist(path);
 
-                var pathFile = Path.Join(path, "changed.png");
+                var pathFile = Path.Join(path, attachment.FileName);
 
-                if (File.Exists(pathFile))
-                    File.Delete(pathFile);
+                utilsService.DeleteFile(pathFile);
 
                 try
                 {
-                    imageService.SaveImage(attachment.Url, "changed.png");
+                    imageService.SaveImage(attachment.Url, attachment.FileName);
 
                 }
 
@@ -178,39 +145,22 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync("Error");
                 }
 
-
-                IEffectImageService effectImageService = new EffectImageService();
-
-
                 Bitmap bitmap = new Bitmap(pathFile);
 
 
-                var pathFileFilter = Path.Join(path, "image_filter_changed.png");
+                var pathFileFilter = utilsService.GetFilePathFilter(path, attachment);
+
+
+                utilsService.DeleteFile(pathFileFilter);
 
                 imageService.SaveImage(effectImageService.DrawAsSepiaTone(bitmap), pathFileFilter);
-
-                var builder = new DiscordEmbedBuilder
-                {
-                    Title = "Add filter to image",
-
-                    Color = DiscordColor.Azure,
-                    Description = "Add filter ..."
-                };
+                utilsService.SendResultat(ctx, pathFileFilter);
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(pathFileFilter, FileMode.Open);
-                builders.WithFile(fileStream);
-
-                await ctx.RespondAsync(builder.Build());
-
-                builders.SendAsync(ctx.Channel);
             }
 
-
-
         }
-      
+
 
         [Command("negative")]
         public async Task HandleImageToNegativeCopy(CommandContext ctx)
@@ -220,19 +170,16 @@ namespace ModuleBotClassLibrary
 
             foreach (var attachment in attachments)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                utilsService.DeleteDirectoryIfExist(path);
 
-                var pathFile = Path.Join(path, "changed.png");
+                var pathFile = Path.Join(path, attachment.FileName);
 
-                if (File.Exists(pathFile))
-                    File.Delete(pathFile);
+                utilsService.DeleteFile(pathFile);
 
                 try
                 {
-                    imageService.SaveImage(attachment.Url, "changed.png");
+                    imageService.SaveImage(attachment.Url, attachment.FileName);
 
                 }
 
@@ -241,60 +188,39 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync("Error");
                 }
 
-
-                IEffectImageService effectImageService = new EffectImageService();
-
-
                 Bitmap bitmap = new Bitmap(pathFile);
 
 
-                var pathFileFilter = Path.Join(path, "image_filter_changed.png");
+                var pathFileFilter = utilsService.GetFilePathFilter(path, attachment);
+
+
+                utilsService.DeleteFile(pathFileFilter);
 
                 imageService.SaveImage(effectImageService.DrawAsNegative(bitmap), pathFileFilter);
-
-                var builder = new DiscordEmbedBuilder
-                {
-                    Title = "Add filter to image",
-
-                    Color = DiscordColor.Azure,
-                    Description = "Add filter ..."
-                };
+                utilsService.SendResultat(ctx, pathFileFilter);
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(pathFileFilter, FileMode.Open);
-                builders.WithFile(fileStream);
-
-                await ctx.RespondAsync(builder.Build());
-
-                builders.SendAsync(ctx.Channel);
             }
-
-
-
         }
 
-        [Command("argbCopy")]
-        public async Task HandleImageToArgbCopy(CommandContext ctx)
+        [Command("bw")]
+        public async Task HandleImageToBlackAndWhite(CommandContext ctx)
         {
 
             var attachments = ctx.Message.Attachments;
 
             foreach (var attachment in attachments)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
 
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+                utilsService.DeleteDirectoryIfExist(path);
 
-                var pathFile = Path.Join(path, "changed.png");
+                var pathFile = Path.Join(path, attachment.FileName);
 
-                if (File.Exists(pathFile))
-                    File.Delete(pathFile);
+                utilsService.DeleteFile(pathFile);
 
                 try
                 {
-                    imageService.SaveImage(attachment.Url, "changed.png");
+                    imageService.SaveImage(attachment.Url, attachment.FileName);
 
                 }
 
@@ -303,38 +229,87 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync("Error");
                 }
 
-
-                IEffectImageService effectImageService = new EffectImageService();
-
-
                 Bitmap bitmap = new Bitmap(pathFile);
 
 
-                var pathFileFilter = Path.Join(path, "image_filter_changed.png");
-
-                imageService.SaveImage(effectImageService.GetArgbCopy(bitmap), pathFileFilter);
-
-                var builder = new DiscordEmbedBuilder
-                {
-                    Title = "Add filter to image",
-
-                    Color = DiscordColor.Azure,
-                    Description = "Add filter ..."
-                };
+                var pathFileFilter = utilsService.GetFilePathFilter(path, attachment);
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(pathFileFilter, FileMode.Open);
-                builders.WithFile(fileStream);
+                utilsService.DeleteFile(pathFileFilter);
 
+                imageService.SaveImage(effectImageService.DrawBlackAndWhite(bitmap), pathFileFilter);
+                utilsService.SendResultat(ctx, pathFileFilter);
+
+
+            }
+        }
+
+
+
+       
+
+
+        [Command("clear-directory")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleClearDirectory(CommandContext ctx)
+        {
+            var builder = utilsService.CreateNewEmbed("Delete files in images Directory", DiscordColor.Azure, "Finished");
+            try
+            {
+                utilsService.DeleteDirectoryIfExist(path);
+                
+                var paths = Directory.GetFiles(path);
+                paths.ToList().ForEach(chemin => File.Delete(chemin));
                 await ctx.RespondAsync(builder.Build());
+            }
+            catch(Exception ex)
+            {
+                builder.Color = DiscordColor.Red;
+                builder.Description = "Error";
+                await ctx.RespondAsync(builder.Build());
+            }
 
-                builders.SendAsync(ctx.Channel);
+
+               
+        }
+
+        [Command("watch-directory")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleWatchDirectory(CommandContext ctx)
+        {
+            string reponse = $"";
+
+            var builder = utilsService.CreateNewEmbed("File in directory ", DiscordColor.Azure, "Empty");
+            try
+            {
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "images");
+
+                utilsService.DeleteDirectoryIfExist(path);
+
+
+                var files = Directory.GetFiles(path);
+
+                foreach (var item in files)
+                {
+                    var file = new FileInfo(Path.Join(item));
+                    reponse += $" Name : {file.Name} - Extension : {file.Extension} - LastWriteTime : {file.LastWriteTime.ToString()} -  Length :{file.Length} \n";
+                }
+
+
+                builder.Description = reponse;
+       
+                await ctx.RespondAsync(builder.Build());
+            }
+            catch (Exception ex)
+            {
+                builder.Color = DiscordColor.Red;
+                builder.Description = "Error";
+                await ctx.RespondAsync(builder.Build());
             }
 
 
 
         }
-
     }
 }

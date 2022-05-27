@@ -14,7 +14,7 @@ namespace ServiceClassLibrary.Services
 
         private Bitmap ApplyColorMatrix(Bitmap sourceImage, ColorMatrix colorMatrix)
         {
-            Bitmap bmp32BppSource = GetArgbCopy(sourceImage);
+            Bitmap bmp32BppSource = sourceImage;
             Bitmap bmp32BppDest = new Bitmap(bmp32BppSource.Width, bmp32BppSource.Height, PixelFormat.Format32bppArgb);
 
 
@@ -109,7 +109,32 @@ namespace ServiceClassLibrary.Services
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
 
-      
+        public Bitmap DrawBlackAndWhite(Bitmap sourceImage)
+        {
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                         {
+                            new float[] { 1f, 1f, 1f, 0, 0 },
+                            new float[] { 1f, 1f, 1f, 0, 0 },
+                            new float[] {  0.5f, 0.5f, 0.5f, 0, 0 },
+                            new float[] { 0,      0,      0,      1, 0 },
+                            new float[] { 0,      0,      0,      0, 1 }
+                         });
+
+
+            return ApplyColorMatrix(sourceImage, colorMatrix);
+        }
+
+
+        public void  DrawFilp(Bitmap sourceImage,string path)
+        {
+
+            sourceImage.RotateFlip(RotateFlipType.Rotate180FlipXY);
+            sourceImage.Save(path);
+            sourceImage.Dispose();
+        }
+
+
+
 
     }
 }

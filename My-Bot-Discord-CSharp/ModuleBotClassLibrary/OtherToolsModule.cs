@@ -4,6 +4,8 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using ReaderClassLibrary.Services;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,21 @@ namespace ModuleBotClassLibrary
 {
     public class OtherToolsModule : BaseCommandModule
     {
-       
-       [Command("random")]
+
+
+        private IUtilsService utilsService { get; init; }
+        public OtherToolsModule()
+        {
+            utilsService = new UtilsService();
+        }
+
+
+        [Command("random")]
         public async Task RandomCommand(CommandContext ctx, int min, int max)
         {
             var random = new Random();
-            await ctx.RespondAsync($"Le chiffre est : {random.Next(min, max)}");
+            var builder = utilsService.CreateNewEmbed($"Random number between {min.ToString()} and {max.ToString()}", DiscordColor.Azure, $"{random.Next(min, max)}");
+            await ctx.RespondAsync(builder.Build());
 
         }
 
@@ -38,22 +49,23 @@ namespace ModuleBotClassLibrary
 
 
             var service = new DuckService(new HttpClient(), "https://random-d.uk/api/v2/random");
-
+            var builder = utilsService.CreateNewEmbed("Animal", DiscordColor.Azure, $"");
             try
             {
                 var animal = await service.Get();
-
-                await ctx.RespondAsync(animal.url.ToString());
+                builder.Description = animal.url.ToString();
             }
             catch (Exception ex)
             {
-                await ctx.RespondAsync("erreur");
+                builder.Description = "error";
+                builder.Color = DiscordColor.Red;
 
             }
+            await ctx.RespondAsync("erreur");
         }
 
-       
-   
+
+
 
         [Command("dog")]
         public async Task DogCommand(CommandContext ctx)
@@ -62,19 +74,37 @@ namespace ModuleBotClassLibrary
 
             var service = new DogService(new HttpClient(), "https://random.dog/woof.json");
 
+            var builder = utilsService.CreateNewEmbed("Animal", DiscordColor.Azure, $"");
             try
             {
                 var animal = await service.Get();
 
-                await ctx.RespondAsync(animal.url.ToString());
+                builder.Description = animal.url.ToString();
+               
             }
             catch (Exception ex)
             {
-                await ctx.RespondAsync("erreur");
+                builder.Description = "error";
+                builder.Color = DiscordColor.Red;
 
-            }    
-          
+            }
+            await ctx.RespondAsync(builder.Build());
         }
+
+        [Command("contribute")]
+        public async Task ContributeCommand(CommandContext ctx)
+        {
+            var url = "https://github.com/tristanblc/bot-discord-csharp";
+
+            var builder = utilsService.CreateNewEmbed("Contribute", DiscordColor.Azure, $"Viens contribute sur git bg {url}");
+          
+
+            await ctx.RespondAsync(builder.Build());
+
+
+
+        }
+    
 
 
 

@@ -3,6 +3,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +19,18 @@ namespace ModuleBotClassLibrary
         public  List<LavalinkTrack> myTracks { get; set; } = new List<LavalinkTrack> { };
 
 
+        private IUtilsService utilsService { get; set; }
+
+
+        public MusicModule()
+        {
+            utilsService = new UtilsService();
+        }
         
         [Command("join")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
-
-                Color = DiscordColor.Red,
-
-            };
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
 
             var lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
@@ -61,13 +64,8 @@ namespace ModuleBotClassLibrary
         [Command("leave")]
         public async Task Leave(CommandContext ctx, DiscordChannel channel)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
-
-                Color = DiscordColor.Red,
-
-            };
+            
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
             var lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -107,15 +105,9 @@ namespace ModuleBotClassLibrary
         [Command]
         public async Task Play(CommandContext ctx, [RemainingText] string search)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
+           
 
-                Color = DiscordColor.Azure,
-               
-            };
-
-
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
 
@@ -176,14 +168,8 @@ namespace ModuleBotClassLibrary
         public async Task Stop(CommandContext ctx, [RemainingText] string search)
         {
 
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
-
-                Color = DiscordColor.Azure,
-
-            };
-
+         
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
 
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
@@ -235,13 +221,8 @@ namespace ModuleBotClassLibrary
         [Command("pause")]
         public async Task Pause(CommandContext ctx)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
 
-                Color = DiscordColor.Red,
-
-            };
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
                 builder.Description = $"You are not in a voice channel.";
@@ -275,13 +256,7 @@ namespace ModuleBotClassLibrary
         [Command("volume")]
         public async Task Volume(CommandContext ctx,string volume)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status",
-
-                Color = DiscordColor.Red,
-
-            };
+            var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
 
@@ -330,14 +305,8 @@ namespace ModuleBotClassLibrary
         [Command("add-queue")]
         public async Task Queueing(CommandContext ctx, [RemainingText] string search)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "List track",
 
-                Color = DiscordColor.Red,
-                Description = "Cleaning Queue"
-
-            };
+            var builder = utilsService.CreateNewEmbed("List track", DiscordColor.Red, "Cleaning Queue");
 
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
@@ -378,15 +347,10 @@ namespace ModuleBotClassLibrary
         [Command("skip")]
         public async Task Skip(CommandContext ctx)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "List track",
+         
+            var builder = utilsService.CreateNewEmbed("skip track", DiscordColor.Red, "Cleaning Queue");
 
-                Color = DiscordColor.Red,
-                Description = "Cleaning Queue"
-
-            };
-
+          
 
             if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
             {
@@ -427,15 +391,8 @@ namespace ModuleBotClassLibrary
         public async Task CleaningQueue(CommandContext ctx)
         {
 
-            myTracks.Clear();
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "List track",
-
-                Color = DiscordColor.Azure,
-                Description = "Cleaning Queue"
-
-            };
+            myTracks.Clear();           
+            var builder = utilsService.CreateNewEmbed("List track", DiscordColor.Red, "Cleaning Queue");
             await ctx.RespondAsync(builder.Build());
                
          
@@ -457,14 +414,8 @@ namespace ModuleBotClassLibrary
                i++;
            });
 
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "List track",
 
-                Color = DiscordColor.Azure,
-                Description = print
-
-            };
+            var builder = utilsService.CreateNewEmbed("List track", DiscordColor.Azure, print);
             await ctx.RespondAsync(builder.Build());
 
 
@@ -474,14 +425,8 @@ namespace ModuleBotClassLibrary
         [Command("del-queue")]
         public async Task delQueue(CommandContext ctx, string state)
         {
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Status music",
-
-                Color = DiscordColor.Azure,
-                Description = ""
-
-            };
+ 
+            var builder = utilsService.CreateNewEmbed("Status music", DiscordColor.Azure, "");
 
             int i = 0;
 

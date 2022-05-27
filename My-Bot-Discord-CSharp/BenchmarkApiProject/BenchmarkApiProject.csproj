@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.8" />
-    <PackageReference Include="NBomber" Version="3.0.0-beta6" />
+    <PackageReference Include="NBomber" Version="3.0.0-beta9" />
   </ItemGroup>
 
 </Project>
