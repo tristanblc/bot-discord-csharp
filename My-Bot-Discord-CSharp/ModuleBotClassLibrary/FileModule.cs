@@ -6,6 +6,7 @@ using DSharpPlus.Entities;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,6 +19,15 @@ namespace ModuleBotClassLibrary
     public class FileModule : BaseCommandModule
     {
 
+        private IUtilsService utilsService { get; set; }
+        private IFileService fileService { get; set; }
+
+        public FileModule()
+        {
+            fileService = new FileService();
+            utilsService = new UtilsService();
+        }
+
         [Command("messagetofile")]
         public async Task HandleMessageToFile(CommandContext ctx)
         {
@@ -29,8 +39,8 @@ namespace ModuleBotClassLibrary
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+
+            utilsService.CheckDirectory(path);    
 
 
             var pathFile = Path.Join(path, "messages.txt");
@@ -41,21 +51,13 @@ namespace ModuleBotClassLibrary
 
             fileService.WriteTxt((List<DiscordMessage>)listDiscordMessages, "message.txt");
 
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Message .txt",
-
-                Color = DiscordColor.Azure,
-                Description = "Export to .txt file"
-            };
 
 
-            DiscordMessageBuilder builders = new DiscordMessageBuilder();
-            FileStream fileStream = new FileStream(pathFile, FileMode.Open);
-            builders.WithFile(fileStream);
+            var builder = utilsService.CreateNewEmbed("Message .txt", DiscordColor.Azure, "Export to .txt file");
 
 
 
+            DiscordMessageBuilder builders = utilsService.SendImage(path);
 
             await ctx.RespondAsync(builder.Build());
 
@@ -82,32 +84,18 @@ namespace ModuleBotClassLibrary
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
+            utilsService.CheckDirectory(path);
 
             var pathFile = Path.Join(path, "messages.txt");
 
-
-            IFileService fileService = new FileService();
-
-
             fileService.WriteTxt(discordMessages, "message.txt");
 
-            var builder = new DiscordEmbedBuilder
-            {
-                Title = "Message .txt",
 
-                Color = DiscordColor.Azure,
-                Description = "Export to .txt file"
-            };
+            var builder = utilsService.CreateNewEmbed("Message .txt", DiscordColor.Azure, "Export to .txt file");
 
 
-            DiscordMessageBuilder builders = new DiscordMessageBuilder();
-            FileStream fileStream = new FileStream(pathFile, FileMode.Open);
-            builders.WithFile(fileStream);
 
-
+            DiscordMessageBuilder builders = utilsService.SendImage(path);
 
 
             await ctx.RespondAsync(builder.Build());

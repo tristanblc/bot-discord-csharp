@@ -54,7 +54,7 @@ namespace ModuleBotClassLibrary.Services
             if (image != null)
             {
                 image.Save(path, ImageFormat.Png);
-                image.Dispose();
+            
 
             }
                 

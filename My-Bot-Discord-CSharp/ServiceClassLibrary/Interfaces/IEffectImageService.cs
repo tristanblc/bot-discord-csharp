@@ -10,5 +10,7 @@ namespace ServiceClassLibrary.Interfaces
         Bitmap DrawAsSepiaTone(Bitmap sourceImage);
         Bitmap DrawWithTransparency(Bitmap sourceImage);
         Bitmap GetArgbCopy(Bitmap sourceImage);
+        Bitmap DrawBlackAndWhite(Bitmap sourceImage);
+        void DrawFilp(Bitmap sourceImage, string path);
     }
 }
