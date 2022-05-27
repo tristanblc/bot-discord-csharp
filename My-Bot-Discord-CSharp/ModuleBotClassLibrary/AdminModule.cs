@@ -315,7 +315,7 @@ namespace ModuleBotClassLibrary
             }
 
             builder.Title = "Timeout user";
-            builder.Description = "User { member.Username} is timeout for {time} seconds ",*;
+            builder.Description = "User { member.Username} is timeout for {time} seconds ";
             builder.Color = DiscordColor.Green;
 
 
@@ -378,7 +378,7 @@ namespace ModuleBotClassLibrary
                 urls.ToList().ForEach(message => reply += $"{message.Content} \n");
             
 
-                var builder = utilsService.CreateNewEmbed("Links", DiscordColor.Azure, "Export to .txt file");
+                var builder = utilsService.CreateNewEmbed("Links", DiscordColor.Azure, reply);
 
 
                 await ctx.RespondAsync(builder.Build());

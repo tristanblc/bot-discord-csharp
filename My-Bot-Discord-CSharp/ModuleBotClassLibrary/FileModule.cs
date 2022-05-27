@@ -43,21 +43,16 @@ namespace ModuleBotClassLibrary
             utilsService.CheckDirectory(path);    
 
 
-            var pathFile = Path.Join(path, "messages.txt");
+            var pathFile = Path.Join(path, $"messages_channel_{ctx.Channel.Id}.txt");
 
 
-            IFileService fileService = new FileService();
-
-
-            fileService.WriteTxt((List<DiscordMessage>)listDiscordMessages, "message.txt");
-
+            fileService.WriteTxt(listDiscordMessages.ToList(), $"messages_channel_{ctx.Channel.Id}.txt");
 
 
             var builder = utilsService.CreateNewEmbed("Message .txt", DiscordColor.Azure, "Export to .txt file");
 
 
-
-            DiscordMessageBuilder builders = utilsService.SendImage(path);
+            DiscordMessageBuilder builders = utilsService.SendImage(pathFile);
 
             await ctx.RespondAsync(builder.Build());
 
@@ -70,7 +65,6 @@ namespace ModuleBotClassLibrary
         {
 
 
-            List<DiscordMessage> urls = new List<DiscordMessage>();
             IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
 
 
@@ -86,17 +80,16 @@ namespace ModuleBotClassLibrary
             var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
             utilsService.CheckDirectory(path);
 
-            var pathFile = Path.Join(path, "messages.txt");
 
-            fileService.WriteTxt(discordMessages, "message.txt");
+            var pathFile = Path.Join(path, $"messages_user_{mem.Username}.txt");
 
+
+            fileService.WriteTxt(discordMessages, $"messages_user_{mem.Username}.txt");
 
             var builder = utilsService.CreateNewEmbed("Message .txt", DiscordColor.Azure, "Export to .txt file");
 
 
-
-            DiscordMessageBuilder builders = utilsService.SendImage(path);
-
+            DiscordMessageBuilder builders = utilsService.SendImage(pathFile);
 
             await ctx.RespondAsync(builder.Build());
 

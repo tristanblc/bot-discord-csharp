@@ -24,7 +24,7 @@ namespace ModuleBotClassLibrary
 
         public MusicModule()
         {
-            utilsService = new UtilsService()
+            utilsService = new UtilsService();
         }
         
         [Command("join")]
