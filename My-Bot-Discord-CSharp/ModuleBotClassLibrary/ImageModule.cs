@@ -279,7 +279,7 @@ namespace ModuleBotClassLibrary
         {
             string reponse = $"";
 
-            var builder = utilsService.CreateNewEmbed("Delete files in images Directory", DiscordColor.Azure, "Empty");
+            var builder = utilsService.CreateNewEmbed("File in directory ", DiscordColor.Azure, "Empty");
             try
             {
 
@@ -288,12 +288,12 @@ namespace ModuleBotClassLibrary
                 utilsService.DeleteDirectoryIfExist(path);
 
 
-                var paths = Directory.GetFiles(path);
+                var files = Directory.GetFiles(path);
 
-                foreach (var item in paths)
+                foreach (var item in files)
                 {
-                    var file = new FileInfo(path);
-                    reponse = $" Name : {file.Name} - Extension : {file.Extension} - LastWriteTime : {file.LastWriteTime.ToString()} -  Length :{file.Length} \n";
+                    var file = new FileInfo(Path.Join(item));
+                    reponse += $" Name : {file.Name} - Extension : {file.Extension} - LastWriteTime : {file.LastWriteTime.ToString()} -  Length :{file.Length} \n";
                 }
 
 

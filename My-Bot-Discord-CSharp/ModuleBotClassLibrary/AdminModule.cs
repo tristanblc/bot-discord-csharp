@@ -350,7 +350,7 @@ namespace ModuleBotClassLibrary
             var builder = utilsService.CreateNewEmbed("Clone channel", DiscordColor.Azure, $"Clone {channel.Name} channel");
             try
             {
-                await ctx.Channel.CloneAsync();
+                await channel.CloneAsync();
 
             }catch(Exception ex)
             {
@@ -363,6 +363,31 @@ namespace ModuleBotClassLibrary
             }
             await ctx.RespondAsync(builder.Build());
         }
+        [Command("delete-channel")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleDeleteChannel(CommandContext ctx, DiscordChannel channel)
+        {
+
+
+            var builder = utilsService.CreateNewEmbed("Clone channel", DiscordColor.Azure, $"Delete {channel.Name} channel");
+            try
+            {
+                await channel.DeleteAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                builder.Title = "Delete channel";
+                builder.Description = $"Delete channel {channel.Name} channel";
+                builder.Color = DiscordColor.Red;
+
+
+            }
+            await ctx.RespondAsync(builder.Build());
+        }
+
+     
 
         [Command("get-links")]
         [RequirePermissions(Permissions.Administrator)]
