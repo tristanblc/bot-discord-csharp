@@ -44,10 +44,12 @@ static async Task MainAsync()
 
 
         var lavalink = discord.UseLavalink();
- 
 
-
-        await discord.ConnectAsync();
+        var act = new DiscordActivity("temporiser sur COD Black Ops II",ActivityType.Playing);
+        act.Name = "temporiser sur COD Black Ops II . Je campe pas, je temporise. Bien sur.";
+       
+    
+        await discord.ConnectAsync(act);
         lavalink.ConnectAsync(lavalinkConfig);
 
         await Task.Delay(-1);

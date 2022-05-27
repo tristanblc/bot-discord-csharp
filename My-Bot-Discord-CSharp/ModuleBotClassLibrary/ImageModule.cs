@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace ModuleBotClassLibrary
 {
 
-
     public class ImageModule : BaseCommandModule
     {
 
@@ -25,7 +24,6 @@ namespace ModuleBotClassLibrary
             imageService = new ImageService();
 
         }
-
 
         [Command("transpiracy")]
         public async Task HandleImageToTranspiracy(CommandContext ctx)
