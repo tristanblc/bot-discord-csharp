@@ -30,6 +30,8 @@ namespace ServiceClassLibrary.Interfaces
 
         List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> message);
 
+        
+        public List<string> GetFiles(string path);
 
     }
 }

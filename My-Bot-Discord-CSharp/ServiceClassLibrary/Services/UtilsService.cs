@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace ServiceClassLibrary.Services
 {
     public class UtilsService : IUtilsService
     {
+
+       
         public List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> listDiscordMessages)
         {
 
@@ -41,6 +44,7 @@ namespace ServiceClassLibrary.Services
                 Directory.CreateDirectory(path);
         }
 
+       
         public DiscordEmbedBuilder CreateNewEmbed(string title, DiscordColor color, string description)
         {
 
@@ -54,6 +58,7 @@ namespace ServiceClassLibrary.Services
 
             return builder;
         }
+
 
         public void DeleteDirectoryIfExist(string path)
         {
@@ -74,8 +79,12 @@ namespace ServiceClassLibrary.Services
             return pathFileFilter;
         }
 
+        public List<string> GetFiles(string path)
+        {
+            return Directory.GetFiles(path).ToList();           
+        }
 
-       public DiscordMessageBuilder SendImage(string path)
+        public DiscordMessageBuilder SendImage(string path)
         {
             DiscordMessageBuilder builders = new DiscordMessageBuilder();
             FileStream fileStream = new FileStream(path, FileMode.Open);

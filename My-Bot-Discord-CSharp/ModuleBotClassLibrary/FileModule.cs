@@ -19,6 +19,7 @@ namespace ModuleBotClassLibrary
     public class FileModule : BaseCommandModule
     {
 
+
         private IUtilsService utilsService { get; set; }
         private IFileService fileService { get; set; }
 
@@ -35,12 +36,12 @@ namespace ModuleBotClassLibrary
 
             List<DiscordMessage> urls = new List<DiscordMessage>();
             IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
-          
+
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
 
-            utilsService.CheckDirectory(path);    
+            utilsService.CheckDirectory(path);
 
 
             var pathFile = Path.Join(path, $"messages_channel_{ctx.Channel.Id}.txt");
@@ -61,7 +62,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("usermessage")]
-        public async Task HandleMessageToFile(CommandContext ctx,DiscordMember mem)
+        public async Task HandleMessageToFile(CommandContext ctx, DiscordMember mem)
         {
 
 
@@ -70,7 +71,7 @@ namespace ModuleBotClassLibrary
 
             List<DiscordMessage> discordMessages = new List<DiscordMessage>();
 
-           foreach(var discordMessage in listDiscordMessages.ToList())
+            foreach (var discordMessage in listDiscordMessages.ToList())
             {
                 if (discordMessage.Author.Username == mem.Username)
                     discordMessages.Add(discordMessage);
@@ -96,7 +97,40 @@ namespace ModuleBotClassLibrary
             builders.SendAsync(ctx.Channel);
         }
 
+        [Command("convert2zip")]
+        public async Task HandleConvert2Zip(CommandContext ctx, string? filename)
+        { 
+            var attachments = ctx.Message.Attachments;
+            var path = fileService.Compress2Zip(attachments.ToList(), filename);
+
+            var builder = utilsService.CreateNewEmbed("Export to .zip", DiscordColor.Azure, "Export to .zip file");
 
 
+            DiscordMessageBuilder builders = utilsService.SendImage(path);
+
+            await ctx.RespondAsync(builder.Build());
+        }
+
+
+
+        [Command("decompress2zip")]
+        public async Task HandleDecompress2Zip(CommandContext ctx, string filename)
+        {
+
+            var attachments = ctx.Message.Attachments;
+            var paths = fileService.Decompress2File(attachments.ToList().First());
+            var builder = utilsService.CreateNewEmbed("Export .zip to files ", DiscordColor.Azure, "Export to .zip file to files");
+
+            await ctx.RespondAsync(builder.Build());
+
+            paths.ForEach(path =>
+            {
+                DiscordMessageBuilder builders = utilsService.SendImage(path); 
+                builders.SendAsync(ctx.Channel);
+            }
+            );    
+
+        }
     }
+
 }

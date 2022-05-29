@@ -15,5 +15,12 @@ namespace ServiceClassLibrary.Interfaces
 
         void WriteTxt(List<DiscordMessage> messages, string filename);
 
+
+        string Compress2Zip(List<DiscordAttachment> attachements, string filename);
+
+
+         List<string> Decompress2File(DiscordAttachment attachment);
+
+
     }
 }
