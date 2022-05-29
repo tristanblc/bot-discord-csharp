@@ -25,6 +25,8 @@ namespace ModuleBotClassLibrary
         private IEffectImageService effectImageService { get; set; }
         private ImageService imageService { get; set; }
 
+
+
         public ImageModule()
         {
             imageService = new ImageService();
@@ -311,5 +313,10 @@ namespace ModuleBotClassLibrary
 
 
         }
+
+
+
+     
+
     }
 }

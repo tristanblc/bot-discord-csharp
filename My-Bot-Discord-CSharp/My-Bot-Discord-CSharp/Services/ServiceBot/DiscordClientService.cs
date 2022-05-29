@@ -45,14 +45,26 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             var commands = discord.UseCommandsNext(command_configuration);
 
 
+
+
+
+            DiscordActivity discordActivity = new DiscordActivity();
+            discordActivity.StreamUrl = "https://github.com/tristanblc"; 
+        
+            
+
+
+
+
             commands.RegisterCommands<InfoModule>();
             commands.RegisterCommands<OtherToolsModule>();
             commands.RegisterCommands<AdminModule>();          
             commands.RegisterCommands<MusicModule>();
             commands.RegisterCommands<FilmModule>();
             commands.RegisterCommands<FileModule>();
-           
+            commands.RegisterCommands<ImageModule>();
 
+            discord.UpdateStatusAsync(discordActivity);
 
             return discord;
         }
