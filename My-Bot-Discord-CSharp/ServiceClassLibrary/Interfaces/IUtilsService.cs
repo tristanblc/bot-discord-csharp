@@ -11,6 +11,7 @@ namespace ServiceClassLibrary.Interfaces
 {
     public interface IUtilsService
     {
+
         DiscordMessageBuilder SendImage(string path);
 
         string GetFilePathFilter(string path, DiscordAttachment attachment);
