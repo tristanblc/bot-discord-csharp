@@ -63,6 +63,8 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<FilmModule>();
             commands.RegisterCommands<FileModule>();
             commands.RegisterCommands<ImageModule>();
+            commands.RegisterCommands<GamesModule>();
+            commands.RegisterCommands<VideoModule>();
 
             discord.UpdateStatusAsync(discordActivity);
 
