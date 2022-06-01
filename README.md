@@ -9,7 +9,7 @@ Bot-discord-csharp is a discord bot , .NET discord bot using DSharpPlus library.
 - Music (play/search) using Lavalink ( a Java discord music library)
 - Call API
 - Create Bus API 
-- Image ( add effect on picture)
+- Picture Effect
 - Moderation commands -  (Voice & chat and server moderations commands)
 - Video Module
 
