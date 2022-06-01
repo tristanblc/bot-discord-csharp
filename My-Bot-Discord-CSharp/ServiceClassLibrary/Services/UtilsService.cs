@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using ServiceClassLibrary.Interfaces;
 using System;
@@ -14,8 +15,8 @@ namespace ServiceClassLibrary.Services
 {
     public class UtilsService : IUtilsService
     {
+  
 
-       
         public List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> listDiscordMessages)
         {
 

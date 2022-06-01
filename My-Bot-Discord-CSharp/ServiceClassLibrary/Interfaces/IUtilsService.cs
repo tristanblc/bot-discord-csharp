@@ -11,6 +11,7 @@ namespace ServiceClassLibrary.Interfaces
 {
     public interface IUtilsService
     {
+
         DiscordMessageBuilder SendImage(string path);
 
         string GetFilePathFilter(string path, DiscordAttachment attachment);
@@ -31,7 +32,8 @@ namespace ServiceClassLibrary.Interfaces
         List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> message);
 
         
-        public List<string> GetFiles(string path);
+       List<string> GetFiles(string path);
+
 
     }
 }
