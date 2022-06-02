@@ -40,6 +40,13 @@ namespace ServiceClassLibrary.Services
             {
                 throw new FileDownloadException($"Erreur dans le téléchargement du fichier {discordAttachement.FileName}");
             }       
-        }        
+        }
+
+        public Stream ConvertVideoToStream(string path)
+        {
+            return new HttpClient().GetStreamAsync(path).Result;
+          
+           
+        }
     }
 }

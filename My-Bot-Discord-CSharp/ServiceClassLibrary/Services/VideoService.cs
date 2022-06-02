@@ -35,19 +35,22 @@ namespace ServiceClassLibrary.Services
 
         public string CompressVideo(DiscordAttachment discordAttachement)
         {
+            var path = Path.Join(PathGetVideo, discordAttachement.FileName);
+            var output_path = Path.Join(PathGetVideo, $"extract_{discordAttachement.FileName}");
             try
             {
               _downloader.DownloadVideoFromDiscord(discordAttachement);
-               var path = Path.Join(PathGetVideo, discordAttachement.FileName);
-                var output_path = Path.Join(PathGetVideo, $"extract_{discordAttachement.FileName}");
+              
 
 
                 try
                 {
                    FFMpegArguments
-                        .FromFileInput(path)
-                        .OutputToFile(output_path)
-                        .ProcessAsynchronously(true);
+                         .FromFileInput(path)
+                         .OutputToFile(output_path)
+                         .ProcessAsynchronously(false);
+                         
+                        
                 }
                 catch(Exception ex)
                 {
@@ -55,13 +58,13 @@ namespace ServiceClassLibrary.Services
 
                 }
 
-                return output_path;
+              
             }
             catch (Exception ex)
             {
                 throw new VideoException($"Error :  can't compress video ");
             }
-            return "";
+            return output_path;
         }
 
       
@@ -142,5 +145,18 @@ namespace ServiceClassLibrary.Services
             }
         }
 
+        public Stream GetStream(string path)
+        {
+            try
+            {
+                return _downloader.ConvertVideoToStream(path);
+
+            }
+            
+            catch(Exception ex)
+            {
+                throw new FileDownloadException("Error load");
+            }
+        }
     }
 }
