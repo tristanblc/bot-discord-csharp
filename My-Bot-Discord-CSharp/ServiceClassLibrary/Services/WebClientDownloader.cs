@@ -19,12 +19,10 @@ namespace ServiceClassLibrary.Services
         private string PathToSave { get; set; } 
         private IUtilsService UtilsService { get; set; }
 
-
         public WebClientDownloader(WebClient webClient)
         {
             WebClient = webClient;
-
-            PathToSave =Path.Join (Directory.GetCurrentDirectory() , "video");
+            PathToSave = Path.Join (Directory.GetCurrentDirectory() , "video");
             UtilsService = new UtilsService();
 
         }
@@ -41,11 +39,7 @@ namespace ServiceClassLibrary.Services
             catch(Exception ex)
             {
                 throw new FileDownloadException($"Erreur dans le téléchargement du fichier {discordAttachement.FileName}");
-               
-
-            }
-        
-
-        }
+            }       
+        }        
     }
 }

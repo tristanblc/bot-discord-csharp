@@ -111,10 +111,7 @@ namespace ModuleBotClassLibrary
             {
 
 
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = new FileStream(path, FileMode.Open);
-                builders.WithFile(fileStream);
-             
+                DiscordMessageBuilder builders = UtilsService.SendImage(path);
                 builders.SendAsync(ctx.Channel);
             });
 
@@ -149,7 +146,6 @@ namespace ModuleBotClassLibrary
 
 
             await ctx.RespondAsync(builder.Build());
-
 
 
         }

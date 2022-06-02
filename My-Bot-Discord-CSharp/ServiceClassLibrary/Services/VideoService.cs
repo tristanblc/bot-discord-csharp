@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -140,5 +141,6 @@ namespace ServiceClassLibrary.Services
                 throw new VideoException("Error upload");
             }
         }
+
     }
 }
