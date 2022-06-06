@@ -1,6 +1,9 @@
 ﻿using DSharpPlus.Entities;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +12,8 @@ using System.Linq;
 using System.Net;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace ModuleBotClassLibrary.Services
@@ -20,9 +25,12 @@ namespace ModuleBotClassLibrary.Services
 
         private string DirectoryForSave { get; init; } = Directory.GetCurrentDirectory();
 
+        private IUtilsService UtilsService { get; set; }
+
         public FileService()
         {
               WebClient = new WebClient();
+              UtilsService = new UtilsService();
         }
 
         public void SaveFile(string fileUrl, string filename)
@@ -71,6 +79,23 @@ namespace ModuleBotClassLibrary.Services
                 messages.ToList().ForEach(async message => writetext.WriteLine(message.Content.ToString()));
 
             }
+
+        }
+        public void WriteJson(List<DiscordMessage> messages, string filename)
+        {
+            var path = Path.Combine(DirectoryForSave, "documents");
+            var pathFile = Path.Combine(path, filename);
+            using (StreamWriter writetext = new StreamWriter(Path.Join(pathFile)))
+            {
+
+                messages.ToList().ForEach(async message =>
+                {
+                    //if (UtilsService.isJson(message.ToString()) == true)                 
+                        writetext.WriteLine(JsonConvert.SerializeObject(message.ToString()));
+                });
+            
+
+             }
 
         }
 
@@ -155,5 +180,7 @@ namespace ModuleBotClassLibrary.Services
 
             return Directory.GetFiles(path).ToList();
         }
+
+    
     }
 }

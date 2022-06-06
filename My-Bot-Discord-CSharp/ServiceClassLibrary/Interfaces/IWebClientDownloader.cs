@@ -12,5 +12,6 @@ namespace ServiceClassLibrary.Interfaces
     {
         void DownloadVideoFromDiscord(DiscordAttachment discordAttachement);
 
+        FileStream ConvertVideoToStream(string path);
     }
 }

@@ -85,6 +85,18 @@ namespace ServiceClassLibrary.Services
             return Directory.GetFiles(path).ToList();           
         }
 
+        public bool isJson(string message)
+        {
+            string input = message.ToString();
+
+
+            if (input.StartsWith("{") && input.EndsWith("}")
+                   || input.StartsWith("[") && input.EndsWith("]"))
+                return true;
+
+            return false;
+        }
+
         public DiscordMessageBuilder SendImage(string path)
         {
             DiscordMessageBuilder builders = new DiscordMessageBuilder();

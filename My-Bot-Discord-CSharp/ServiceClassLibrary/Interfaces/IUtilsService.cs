@@ -35,5 +35,9 @@ namespace ServiceClassLibrary.Interfaces
        List<string> GetFiles(string path);
 
 
+        bool isJson(string message);
+
+
+
     }
 }

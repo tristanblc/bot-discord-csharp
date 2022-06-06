@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using ModuleBotClassLibrary.Services;
+using Newtonsoft.Json;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -18,8 +19,6 @@ namespace ModuleBotClassLibrary
 {
     public class FileModule : BaseCommandModule
     {
-
-
         private IUtilsService utilsService { get; set; }
         private IFileService fileService { get; set; }
 
@@ -131,6 +130,39 @@ namespace ModuleBotClassLibrary
             );    
 
         }
+
+
+
+        [Command("tojson")]
+
+        public async Task HandleChatToJson(CommandContext ctx)
+        {
+
+            IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
+
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
+
+            utilsService.CheckDirectory(path);
+
+
+            var pathFile = Path.Join(path, $"messages_channel_{ctx.Channel.Id}.json");
+
+
+            fileService.WriteJson(listDiscordMessages.ToList(), $"messages_channel_{ctx.Channel.Id}.json");
+
+            var builder = utilsService.CreateNewEmbed("Export json", DiscordColor.Azure, "Export to json");
+
+
+            DiscordMessageBuilder builders = utilsService.SendImage(pathFile);
+
+            await ctx.RespondAsync(builder.Build());
+
+            builders.SendAsync(ctx.Channel);
+
+
+        }
+
     }
 
 }

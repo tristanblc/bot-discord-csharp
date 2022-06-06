@@ -17,7 +17,9 @@ namespace ServiceClassLibrary.Interfaces
 
         void DeleteVideo(string path);
 
-        string ExtractAudioFromVideo(DiscordAttachment discordAttachment); 
+        string ExtractAudioFromVideo(DiscordAttachment discordAttachment);
+
+        FileStream GetStream(string path);
 
     }
 }
