@@ -1,4 +1,5 @@
 ﻿using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,20 +14,23 @@ namespace ModuleBotClassLibrary.Services
     public class ImageService :  IImageService
     {
         private WebClient WebClient{ get; init; }
-
+        private ILoggerProject LoggerProject { get; init; }
 
         private string DirectoryForSave { get; init; } = Directory.GetCurrentDirectory();
 
         public ImageService()
         {
               WebClient = new WebClient();
+                 LoggerProject = new LoggerProject(); 
         }
 
         public void SaveImage(string imageUrl, string filename)
         {
-            
-            Stream stream = WebClient.OpenRead(imageUrl);
-            Bitmap bitmap; bitmap = new Bitmap(stream);
+
+                Stream stream = WebClient.OpenRead(imageUrl);
+                Bitmap bitmap; bitmap = new Bitmap(stream);
+       
+ 
 
 
             var path = Path.Combine(DirectoryForSave, "images");
@@ -51,24 +55,45 @@ namespace ModuleBotClassLibrary.Services
         }
         public void SaveImage(Bitmap image,string path)
         {
-            if (image != null)
+            try
             {
-                image.Save(path, ImageFormat.Png);
-            
+                if (image != null)
+                {
+                    image.Save(path, ImageFormat.Png);
+
+
+                }
 
             }
+            catch(Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Error Bitmap save");
+
+            }
+           
                 
 
 
         }
         public void DeleteImage(string filename)
         {
-            var path = Path.Combine(DirectoryForSave, "images");
 
-            var pathBitmap = Path.Combine(path, filename);
+            try
+            {
+                var path = Path.Combine(DirectoryForSave, "images");
 
-            File.Delete(pathBitmap);
+                var pathBitmap = Path.Combine(path, filename);
 
+                File.Delete(pathBitmap);
+
+
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Error Bitmap delete");
+
+            }
+         
         }
     }
 }

@@ -19,11 +19,16 @@ namespace ServiceClassLibrary.Services
         private string PathToSave { get; set; } 
         private IUtilsService UtilsService { get; set; }
 
+
+        private ILoggerProject LoggerProject { get; init; }
+
+
         public WebClientDownloader(WebClient webClient)
         {
             WebClient = webClient;
             PathToSave = Path.Join (Directory.GetCurrentDirectory() , "video");
             UtilsService = new UtilsService();
+            LoggerProject = new LoggerProject();
 
         }
 
@@ -38,6 +43,8 @@ namespace ServiceClassLibrary.Services
             }
             catch(Exception ex)
             {
+
+                LoggerProject.WriteLogErrorLog($"Erreur dans le téléchargement du fichier {discordAttachement.FileName}");
                 throw new FileDownloadException($"Erreur dans le téléchargement du fichier {discordAttachement.FileName}");
             }       
         }
@@ -51,6 +58,7 @@ namespace ServiceClassLibrary.Services
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't convert ot filestream video -> path = {path} ");
                 throw new FileDownloadException("Exception");
             }
            

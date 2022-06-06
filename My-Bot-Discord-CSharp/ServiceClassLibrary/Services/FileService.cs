@@ -25,32 +25,48 @@ namespace ModuleBotClassLibrary.Services
 
         private string DirectoryForSave { get; init; } = Directory.GetCurrentDirectory();
 
+
+        private ILoggerProject LoggerProject { get; set; }
+
         private IUtilsService UtilsService { get; set; }
 
         public FileService()
         {
               WebClient = new WebClient();
               UtilsService = new UtilsService();
+              LoggerProject = new LoggerProject();
         }
 
         public void SaveFile(string fileUrl, string filename)
         {
-            
-            var stream = WebClient.OpenRead(fileUrl);
 
-            
-
-            var path = Path.Combine(DirectoryForSave, "documents");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            stream.Seek(0, SeekOrigin.Begin);
-
-            using (var fs = new FileStream("path", FileMode.OpenOrCreate))
+            try
             {
-                stream.CopyTo(fs);
+                var stream = WebClient.OpenRead(fileUrl);
+
+
+
+                var path = Path.Combine(DirectoryForSave, "documents");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (var fs = new FileStream("path", FileMode.OpenOrCreate))
+                {
+                    stream.CopyTo(fs);
+                }
+                stream.Dispose();
+
             }
-            stream.Dispose();
+            catch(Exception ex)
+            {
+
+                LoggerProject.WriteLogErrorLog("Probleme fichier -> soit load soit filestream");
+                throw new FileLoadException("Error");
+            }
+            
+         
 
 
 
@@ -62,45 +78,84 @@ namespace ModuleBotClassLibrary.Services
 
         public void DeleteFile(string filename)
         {
-            
-            var path = Path.Combine(DirectoryForSave, "documents");
-            var pathBitmap = Path.Combine(path, filename);
+            try
+            {
+                var path = Path.Combine(DirectoryForSave, "documents");
+                var pathBitmap = Path.Combine(path, filename);
 
-            File.Delete(pathBitmap);
+                File.Delete(pathBitmap);
+            }
+            catch(Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Probleme delete fichier {filename}");
+            }
+            
+           
         }
 
         public void WriteTxt(List<DiscordMessage> messages,string filename)
         {
-            var path = Path.Combine(DirectoryForSave, "documents");
-            var pathFile = Path.Combine(path, filename);
-            using (StreamWriter writetext = new StreamWriter(Path.Join(pathFile)))
+            try
             {
+                var path = Path.Combine(DirectoryForSave, "documents");
+                var pathFile = Path.Combine(path, filename);
+                using (StreamWriter writetext = new StreamWriter(Path.Join(pathFile)))
+                {
+                    try
+                    {
+                        messages.ToList().ForEach(async message => writetext.WriteLine(message.Content.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggerProject.WriteLogWarningLog($"Probleme message writetxt");
 
-                messages.ToList().ForEach(async message => writetext.WriteLine(message.Content.ToString()));
+                    }
 
+            
+
+                }
+            }
+           
+            catch(Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Probleme write fichier {filename}");
             }
 
         }
         public void WriteJson(List<DiscordMessage> messages, string filename)
         {
-            var path = Path.Combine(DirectoryForSave, "documents");
-            var pathFile = Path.Combine(path, filename);
-            using (StreamWriter writetext = new StreamWriter(Path.Join(pathFile)))
+            try
             {
-
-                messages.ToList().ForEach(async message =>
+                var path = Path.Combine(DirectoryForSave, "documents");
+                var pathFile = Path.Combine(path, filename);
+                using (StreamWriter writetext = new StreamWriter(Path.Join(pathFile)))
                 {
-                    //if (UtilsService.isJson(message.ToString()) == true)                 
-                        writetext.WriteLine(JsonConvert.SerializeObject(message.ToString()));
-                });
-            
+                    try
+                    {
+                        messages.ToList().ForEach(async message =>
+                        {
+                            //if (UtilsService.isJson(message.ToString()) == true)                 
+                            writetext.WriteLine(JsonConvert.SerializeObject(message.ToString()));
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggerProject.WriteLogErrorLog($"Probleme message writejson conversion json");
+                    }
 
-             }
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Probleme write fichier json {filename}");
+            }
+          
 
         }
 
         public string Compress2Zip(List<DiscordAttachment> attachements, string filename)
         {
+           
 
             
             var path = Path.Combine(DirectoryForSave, "zip_document");
@@ -115,14 +170,23 @@ namespace ModuleBotClassLibrary.Services
 
             foreach (var attachment in attachements)
             {
+                try
+                {
+                    var pathFile = Path.Combine(path_directory, attachment.FileName.ToString());
 
-                var pathFile = Path.Combine(path_directory, attachment.FileName.ToString());
+                    WebClient.DownloadFile(attachment.Url, pathFile);
+                }
+                catch(Exception ex)
+                {
+                    LoggerProject.WriteLogErrorLog($"Probleme webclient");
+                }
+            }
 
-                WebClient.DownloadFile(attachment.Url, pathFile);
+            
 
              
 
-            }
+            
 
             var path_zip = Path.Combine(path, $"{filename}.zip");
 
@@ -133,10 +197,11 @@ namespace ModuleBotClassLibrary.Services
             {              
 
                 ZipFile.CreateFromDirectory(path_directory, path_zip);
-              
+        
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Probleme zip conversion");
                 throw new FileNotFoundException("Error ");
             }
 
@@ -163,7 +228,16 @@ namespace ModuleBotClassLibrary.Services
             var pathFile = Path.Combine(path, attachment.FileName);
 
 
-            WebClient.DownloadFile(attachment.Url, pathFile);
+
+            try
+            {
+           
+                WebClient.DownloadFile(attachment.Url, pathFile);
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Probleme webclient extract zip");
+            }
 
 
             try
@@ -173,6 +247,7 @@ namespace ModuleBotClassLibrary.Services
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Probleme zip extract");
                 throw new FileLoadException("Error zip");
             }
 
