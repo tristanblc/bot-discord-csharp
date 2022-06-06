@@ -48,7 +48,7 @@ namespace ServiceClassLibrary.Services
                    FFMpegArguments
                          .FromFileInput(path)
                          .OutputToFile(output_path)
-                         .ProcessAsynchronously(false);
+                         .ProcessAsynchronously(false).Wait();
                          
                         
                 }
@@ -118,7 +118,8 @@ namespace ServiceClassLibrary.Services
                     UtilsService.DeleteFile(PathVideoAudio_extract);
 
                     UtilsService.DeleteDirectoryIfExist(PathVideoAudio);
-                    FFMpeg.ExtractAudio(path_filename, PathVideoAudio_extract);
+                FFMpeg.ExtractAudio(path_filename, PathVideoAudio_extract);
+             
 
                     return PathVideoAudio_extract;
                            
@@ -145,7 +146,7 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public Stream GetStream(string path)
+        public FileStream GetStream(string path)
         {
             try
             {

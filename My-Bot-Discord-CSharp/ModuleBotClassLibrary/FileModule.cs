@@ -19,8 +19,6 @@ namespace ModuleBotClassLibrary
 {
     public class FileModule : BaseCommandModule
     {
-
-
         private IUtilsService utilsService { get; set; }
         private IFileService fileService { get; set; }
 

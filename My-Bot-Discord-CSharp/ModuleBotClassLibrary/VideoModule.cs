@@ -85,10 +85,11 @@ namespace ModuleBotClassLibrary
         [Command("compressvideo")]
         public async Task HandleCompressVideoCommand(CommandContext ctx)
         {
-            var builder = UtilsService.CreateNewEmbed("Compress video", DiscordColor.Red, "send audio");
+     
 
 
             List<string> audios = new List<string>();
+            var builder = UtilsService.CreateNewEmbed("Compress video", DiscordColor.Red, "Send compress video");
 
             ctx.Message.Attachments.ToList().ForEach(attachment =>
             {
@@ -110,8 +111,21 @@ namespace ModuleBotClassLibrary
             audios.ForEach(path =>
             {
 
+                DiscordMessageBuilder builders = new DiscordMessageBuilder();
+                try
+                {
 
-                DiscordMessageBuilder builders = UtilsService.SendImage(path);
+                    FileStream fileStream = VideoService.GetStream(path);   
+
+                    builders.WithFile(fileStream);
+                }catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+              
+         
+            
                 builders.SendAsync(ctx.Channel);
             });
 

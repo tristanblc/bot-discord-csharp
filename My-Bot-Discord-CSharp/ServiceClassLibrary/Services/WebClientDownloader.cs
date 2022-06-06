@@ -42,10 +42,17 @@ namespace ServiceClassLibrary.Services
             }       
         }
 
-        public Stream ConvertVideoToStream(string path)
+        public FileStream ConvertVideoToStream(string path)
         {
-            return new HttpClient().GetStreamAsync(path).Result;
-          
+
+            try
+            {
+                return File.Open(path, FileMode.Open);
+            }
+            catch(Exception ex)
+            {
+                throw new FileDownloadException("Exception");
+            }
            
         }
     }
