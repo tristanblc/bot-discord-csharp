@@ -68,9 +68,7 @@ namespace ServiceClassLibrary.Services
             {
                 LoggerProject.WriteLogErrorLog($"Error build new embed  - {description}  - {title} - {color}");
                 throw new Exception("can't send embed");
-            }
-
-          
+            }          
         }
 
 

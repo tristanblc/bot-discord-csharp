@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceClassLibrary.Services
 {
-    internal class LoggerProject : ILoggerProject
+    public class LoggerProject : ILoggerProject
     {
 
         private Logger Logger{ get; init; } 

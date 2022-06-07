@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceClassLibrary.Interfaces
 {
-    internal interface ILoggerProject
+    public interface ILoggerProject
     {
         void WriteLogWarningLog(string message);
         void WriteLogErrorLog(string message);

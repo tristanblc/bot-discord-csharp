@@ -5,6 +5,8 @@ using BotDTOClassLibrary;
 using BusClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -17,12 +19,15 @@ namespace ApiApplication.Controllers
         private readonly ApplicationDbContext _context;
 
         private APIGenericRepository<Shape> genericRepository { get; set; }
+        private ILoggerProject LoggerProject { get; init; }
 
-        public ShapeController(IMapper mapper, ApplicationDbContext context)
+
+        public ShapeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<Shape>(context);
+            LoggerProject = loggerProject;
         }
 
 
@@ -49,6 +54,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error GetALL() - Shape");
                 return BadRequest(ex);
             }
 
@@ -79,6 +85,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error get() - shape -  id :{id.ToString()} ");
                 return BadRequest();
             }
 
@@ -98,6 +105,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Add() - shape - {entity.ToString()} ");
                 return BadRequest();
             }
         }
@@ -116,6 +124,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error update() - shape - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -140,6 +149,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Delete() - shape - {entity.ToString()} ");
                 return BadRequest();
             }
         }
