@@ -5,6 +5,8 @@ using BotDTOClassLibrary;
 using BusClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -19,11 +21,14 @@ namespace ApiApplication.Controllers
 
         private APIGenericRepository<StopTimes> genericRepository { get; set; }
 
-        public StopTimeController(IMapper mapper, ApplicationDbContext context)
+        private ILoggerProject LoggerProject { get; init; }
+
+        public StopTimeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<StopTimes>(context);
+            LoggerProject = loggerProject;
         }
 
 
@@ -50,6 +55,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error GetAll() - StopTimes ");
                 return BadRequest(ex);
             }
 
@@ -80,6 +86,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Get() - stop-  id : {id.ToString()} ");
                 return BadRequest();
             }
 
@@ -99,6 +106,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Add() - stoptimes - {entity.ToString()} ");
                 return BadRequest();
             }
         }
@@ -117,6 +125,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error update() - stoptimes - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -141,6 +150,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error delete() - stoptime - {entity.ToString()} ");
                 return BadRequest();
             }
         }

@@ -32,7 +32,7 @@ namespace ServiceClassLibrary.Interfaces
         List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> message);
 
         
-       List<string> GetFiles(string path);
+        List<string> GetFiles(string path);
 
 
         bool isJson(string message);

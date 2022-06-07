@@ -5,6 +5,8 @@ using BotDTOClassLibrary;
 using BusClassLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -17,12 +19,14 @@ namespace ApiApplication.Controllers
         private readonly ApplicationDbContext _context;
 
         private APIGenericRepository<Trip> genericRepository { get; set; }
+        private ILoggerProject LoggerProject { get; init; }
 
-        public TripController(IMapper mapper, ApplicationDbContext context)
+        public TripController(IMapper mapper, ApplicationDbContext context,LoggerProject loggerProject)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<Trip>(context);
+            LoggerProject = loggerProject;
         }
 
 
@@ -49,6 +53,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error GetAll() - trip ");
                 return BadRequest(ex);
             }
 
@@ -79,6 +84,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Get() - trip - id : {id.ToString()} ");
                 return BadRequest();
             }
 
@@ -98,6 +104,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Add() - trip - {entity.ToString()} ");
                 return BadRequest();
             }
         }
@@ -116,6 +123,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Upadate() - trip - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -140,6 +148,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Delete() - trip - {entity.ToString()} ");
                 return BadRequest();
             }
         }

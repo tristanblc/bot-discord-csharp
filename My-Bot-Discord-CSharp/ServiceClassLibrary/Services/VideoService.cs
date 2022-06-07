@@ -26,8 +26,13 @@ namespace ServiceClassLibrary.Services
 
         private IUtilsService UtilsService { get; set; }
 
+        private ILoggerProject LoggerProject { get; init; }
+
+
+
         public VideoService()
         {
+            LoggerProject = new LoggerProject();
             _downloader = new WebClientDownloader(new System.Net.WebClient());
             UtilsService = new UtilsService();
    
@@ -54,6 +59,7 @@ namespace ServiceClassLibrary.Services
                 }
                 catch(Exception ex)
                 {
+                    LoggerProject.WriteLogErrorLog($"FFMEG convert error");
                     throw new VideoException("Error => Erreur enregistrement");
 
                 }
@@ -62,6 +68,7 @@ namespace ServiceClassLibrary.Services
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't compress video");
                 throw new VideoException($"Error :  can't compress video ");
             }
             return output_path;
@@ -76,6 +83,7 @@ namespace ServiceClassLibrary.Services
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't delete video path = {path}");
                 throw new VideoException($"Error :  can't delete video from path { path }");
             }
         }
@@ -95,7 +103,8 @@ namespace ServiceClassLibrary.Services
             }
             catch (Exception ex)
             {
-                throw new VideoException($"Error :  can't compress video ");
+                LoggerProject.WriteLogErrorLog($"can't get video info");
+                throw new VideoException($"Error : can't get video info");
             }
 
             return null;
@@ -128,6 +137,7 @@ namespace ServiceClassLibrary.Services
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't extract audio ");
                 throw new VideoException($"Error :  can't compress video ");
             }
 
@@ -142,6 +152,7 @@ namespace ServiceClassLibrary.Services
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't upload video {discordAttachment.FileName}");
                 throw new VideoException("Error upload");
             }
         }
@@ -156,6 +167,7 @@ namespace ServiceClassLibrary.Services
             
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"can't stream video -> path = {path}");
                 throw new FileDownloadException("Error load");
             }
         }

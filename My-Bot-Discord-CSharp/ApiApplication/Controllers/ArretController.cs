@@ -5,6 +5,8 @@ using AutoMapper;
 using BotDTOClassLibrary;
 using BusClassLibrary;
 using Microsoft.AspNetCore.Mvc;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -18,11 +20,16 @@ namespace ApiApplication.Controllers
 
             private APIGenericRepository<Arret> genericRepository { get; set; }
 
-            public ArretController(IMapper mapper, ApplicationDbContext context)
+
+            private ILoggerProject  LoggerProject { get; init; }
+
+            public ArretController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
             {
                 _mapper = mapper;
                 _context = context;
+                LoggerProject = loggerProject;
                 this.genericRepository = new APIGenericRepository<Arret>(context);
+                
             }
 
 
@@ -40,7 +47,11 @@ namespace ApiApplication.Controllers
                 {
                     var p = genericRepository.GetAll();
                     if (p == null)
-                        return NotFound();
+                     {
+                         LoggerProject.WriteLogWarningLog($"Not found ");
+                         return NotFound();
+                     }
+                      
                     else
                     {
                         return Ok(p);
@@ -49,7 +60,8 @@ namespace ApiApplication.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex);
+                      LoggerProject.WriteLogErrorLog($"Error GetAll() - Arret "); 
+                       return BadRequest(ex);
                 }
 
 
@@ -68,7 +80,11 @@ namespace ApiApplication.Controllers
                     var p = genericRepository.Get(id);
 
                     if (p == null)
+                    {
+                         LoggerProject.WriteLogWarningLog($"Not found Id = {id} - Get Arret ");
                         return NotFound();
+                    }
+                     
                     else
                     {
                         var mapped = _mapper.Map<ArretDto>(p);
@@ -79,7 +95,8 @@ namespace ApiApplication.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest();
+                 LoggerProject.WriteLogErrorLog($"Error Get() - Arret ");
+                 return BadRequest();
                 }
 
             }
@@ -97,6 +114,7 @@ namespace ApiApplication.Controllers
 
             }catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Add() - Arret - {entity.ToString()} ");
                 return BadRequest();
             }
         }
@@ -115,6 +133,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Update() - Arret ");
                 return BadRequest();
             }
 
@@ -140,6 +159,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Delete() - Arret ");
                 return BadRequest();
             }
         }

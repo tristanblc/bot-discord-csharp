@@ -15,7 +15,11 @@ namespace ServiceClassLibrary.Services
 {
     public class UtilsService : IUtilsService
     {
-  
+        private ILoggerProject LoggerProject { get; init; }
+        public UtilsService()
+        {
+            LoggerProject = new LoggerProject();
+        }
 
         public List<DiscordMessage> CheckContainsLinks(IEnumerable<DiscordMessage> listDiscordMessages)
         {
@@ -48,16 +52,23 @@ namespace ServiceClassLibrary.Services
        
         public DiscordEmbedBuilder CreateNewEmbed(string title, DiscordColor color, string description)
         {
-
-            var builder = new DiscordEmbedBuilder
+            try
             {
-                Title = title,
+                var builder = new DiscordEmbedBuilder
+                {
+                    Title = title,
 
-                Color = color,
-                Description = description
-            };
+                    Color = color,
+                    Description = description
+                };
 
-            return builder;
+                return builder;
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Error build new embed  - {description}  - {title} - {color}");
+                throw new Exception("can't send embed");
+            }          
         }
 
 
@@ -99,23 +110,40 @@ namespace ServiceClassLibrary.Services
 
         public DiscordMessageBuilder SendImage(string path)
         {
-            DiscordMessageBuilder builders = new DiscordMessageBuilder();
-            FileStream fileStream = new FileStream(path, FileMode.Open);
-            builders.WithFile(fileStream);
-            return builders;
-           
+            try
+            {
+                DiscordMessageBuilder builders = new DiscordMessageBuilder();
+                FileStream fileStream = new FileStream(path, FileMode.Open);
+                builders.WithFile(fileStream);
+                return builders;
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Error Send discordmessagebuilder");
+                throw new Exception("can't send embed");
+            }
+
         }
 
         public void SendResultat(CommandContext ctx,string pathFileFilter)
         {
+            try
+            {
+                var embed_info = this.CreateNewEmbed("Add filter to image", DiscordColor.Azure, "Add filter ...");
 
-            var embed_info = this.CreateNewEmbed("Add filter to image", DiscordColor.Azure, "Add filter ...");
+                ctx.RespondAsync(embed_info.Build());
 
-            ctx.RespondAsync(embed_info.Build());
-  
-            var embed = this.SendImage(pathFileFilter);
+                var embed = this.SendImage(pathFileFilter);
 
-            embed.SendAsync(ctx.Channel);
+                embed.SendAsync(ctx.Channel);
+
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"Error Send embed");
+            }
+
+           
 
         }
     }

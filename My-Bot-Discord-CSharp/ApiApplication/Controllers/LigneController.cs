@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using BusClassLibrary;
 using BotDTOClassLibrary;
 using ApiApplication.Repository.Interface;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -17,11 +19,13 @@ namespace ApiApplication.Controllers
 
 
         private readonly APIGenericRepository<Ligne> genericRepository;
+        private ILoggerProject LoggerProject { get; init; }
 
-        public LigneController(IMapper mapper, ApplicationDbContext context)
+        public LigneController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
         {
             _mapper = mapper;
             this.genericRepository = new APIGenericRepository<Ligne>(context);
+            LoggerProject = loggerProject;
         }
 
         //// GET api/<ProjectController>/GetAll
@@ -47,6 +51,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Getall() - ligne");
                 return BadRequest(ex);
             }
 
@@ -77,6 +82,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error get() - ligne - id : {id.ToString()} ");
                 return BadRequest();
             }
 
@@ -94,6 +100,7 @@ namespace ApiApplication.Controllers
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Add() - ligne - {entity.ToString()} ");
                 return NotFound();
             }
          
@@ -104,8 +111,8 @@ namespace ApiApplication.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(ArretDto entity)
-        {
+        public ActionResult Update(LigneDto entity) 
+        { 
             try
             {
                 var mapped = _mapper.Map<Ligne>(entity);
@@ -116,6 +123,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Update() - Ligne - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -139,6 +147,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog($"Error Delete() - Ligne - {entity.ToString()} ");
                 return BadRequest();
             }
         }
