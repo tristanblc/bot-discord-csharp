@@ -1,7 +1,9 @@
-﻿using ApiApplication.Repository;
+﻿using ApiApplication.Controllers.Interfaces;
+using ApiApplication.Repository;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
 using BotClassLibrary;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -10,7 +12,7 @@ namespace ApiApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketController : Controller
+    public class TicketController : Controller, IGenericController<Ticket>
     {
         private readonly IMapper _mapper;
 
@@ -32,7 +34,7 @@ namespace ApiApplication.Controllers
 
 
         //// GET api/<ProjectController>/GetAll
-
+        [Authorize]
         [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Ticket))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,7 +61,7 @@ namespace ApiApplication.Controllers
 
         }
 
-
+        [Authorize]
         // GET api/<ProjectController>/5
         [HttpGet("id")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Ticket))]
@@ -89,7 +91,7 @@ namespace ApiApplication.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult Add(Ticket entity)
         {
@@ -108,7 +110,7 @@ namespace ApiApplication.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpPut]
         public ActionResult Update(Ticket entity)
         {
@@ -128,7 +130,7 @@ namespace ApiApplication.Controllers
 
         }
 
-
+        [Authorize]
         [HttpDelete]
         public ActionResult Delete([FromQuery] Guid id)
         {
