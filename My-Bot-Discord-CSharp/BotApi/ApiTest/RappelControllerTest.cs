@@ -95,7 +95,7 @@ namespace BotApi.ApiTest
             //Assert
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(result),200);
+            Assert.AreEqual(result,200);
 
         }
 
