@@ -70,8 +70,7 @@ namespace BotApi.ApiTest
         [TestMethod]
         public void AddRappelTest()
         {
-
-          
+                     
             Guid id = new Guid();
             var result = RappelService.Get(id).Result;
 
@@ -89,7 +88,7 @@ namespace BotApi.ApiTest
            
             Guid id = new Guid();
             var result = RappelService.Get(id).Result ;
-          
+
             var sent = RappelService.Update(result);
 
             //Assert
@@ -105,9 +104,7 @@ namespace BotApi.ApiTest
         {
             Guid id = new Guid();
        
-            var result = RappelService.Delete(id).Result;
-
-      
+            var result = RappelService.Delete(id).Result;      
 
             Assert.IsNotNull(result);
 

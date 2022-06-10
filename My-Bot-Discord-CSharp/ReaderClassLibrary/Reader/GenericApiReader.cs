@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,14 +27,20 @@ namespace ReaderClassLibrary.Reader
             });
             Mapper =  new Mapper(config);
 
+
+
+            var AppSetting = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("app.json")
+                    .Build();
+
             _httpClient = httpClient;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", AppSetting["bearer:token"]);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
           
             uri = baseuri;
         
             _httpClient.BaseAddress = new Uri(uri);
-
-
 
         }
 

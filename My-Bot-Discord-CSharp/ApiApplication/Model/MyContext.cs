@@ -1,4 +1,5 @@
-﻿using BotClassLibrary;
+﻿
+using BotClassLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiApplication
@@ -32,6 +33,10 @@ namespace ApiApplication
             return base.Set<TEntity>();
         }
 
+
+        public DbSet<Users> _users { get; set; }
+        
+        public DbSet<Tokens> _tokens { get; set; }
 
         public DbSet<Ticket> _tickets { get; set; }
 
