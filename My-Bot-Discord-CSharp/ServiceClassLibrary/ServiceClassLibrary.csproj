@@ -10,8 +10,11 @@
     <PackageReference Include="DSharpPlus" Version="4.3.0-nightly-01135" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.3.0-nightly-01135" />
     <PackageReference Include="FFMpegCore" Version="4.8.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="PuppeteerSharp" Version="7.0.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.2.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="103.0.5060.2400-beta" />
     <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

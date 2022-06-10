@@ -1,9 +1,7 @@
 ﻿using ApiApplication.Repository;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
-using BotDTOClassLibrary;
-using BusClassLibrary;
-using Microsoft.AspNetCore.Http;
+using BotClassLibrary;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -12,22 +10,22 @@ namespace ApiApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShapeController : Controller
+    public class RappelController : Controller
     {
         private readonly IMapper _mapper;
 
         private readonly ApplicationDbContext _context;
 
-        private APIGenericRepository<Shape> genericRepository { get; set; }
+        private APIGenericRepository<Rappel> GenericRepository { get; set; }
+
         private ILoggerProject LoggerProject { get; init; }
 
-
-        public ShapeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public RappelController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
-            this.genericRepository = new APIGenericRepository<Shape>(context);
-            LoggerProject = loggerProject;
+            GenericRepository = new APIGenericRepository<Rappel>(context);
+            LoggerProject = new LoggerProject();
         }
 
 
@@ -36,14 +34,14 @@ namespace ApiApplication.Controllers
         //// GET api/<ProjectController>/GetAll
 
         [HttpGet("all")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShapeDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Rappel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IGenericRepository<ShapeDto>> GetAll()
+        public ActionResult<IGenericRepository<Rappel>> GetAll()
         {
 
             try
             {
-                var p = genericRepository.GetAll();
+                var p = GenericRepository.GetAll();
                 if (p == null)
                     return NotFound();
                 else
@@ -54,7 +52,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error GetALL() - Shape");
+                LoggerProject.WriteLogErrorLog($"Error GetAll() - Rappel ");
                 return BadRequest(ex);
             }
 
@@ -64,20 +62,20 @@ namespace ApiApplication.Controllers
 
         // GET api/<ProjectController>/5
         [HttpGet("id")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShapeDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Rappel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ShapeDto> Get([FromQuery] Guid id)
+        public ActionResult<Rappel> Get([FromQuery] Guid id)
         {
 
             try
             {
-                var p = genericRepository.Get(id);
+                var p = GenericRepository.Get(id);
 
                 if (p == null)
                     return NotFound();
                 else
                 {
-                    var mapped = _mapper.Map<Shape>(p);
+                    var mapped = _mapper.Map<Rappel>(p);
                     return Ok(mapped);
                 }
 
@@ -85,7 +83,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error get() - shape -  id :{id.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error Get() - Rappel-  id : {id.ToString()} ");
                 return BadRequest();
             }
 
@@ -93,38 +91,38 @@ namespace ApiApplication.Controllers
 
 
         [HttpPost]
-        public ActionResult Add(ShapeDto entity)
+        public ActionResult Add(Rappel entity)
         {
             try
             {
 
-                var mapped = _mapper.Map<Shape>(entity);
-                genericRepository.Add(mapped);
+               
+                GenericRepository.Add(entity);
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error Add() - shape - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error Add() -  Rappel - {entity.ToString()} ");
                 return BadRequest();
             }
         }
 
 
         [HttpPut]
-        public ActionResult Update(ShapeDto entity)
+        public ActionResult Update(Rappel entity)
         {
             try
             {
-                var mapped = _mapper.Map<Shape>(entity);
+                var mapped = _mapper.Map<Rappel>(entity);
 
-                genericRepository.Update(mapped);
+                GenericRepository.Update(mapped);
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error update() - shape - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error update() - Rappel - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -132,14 +130,12 @@ namespace ApiApplication.Controllers
 
 
         [HttpDelete]
-        public ActionResult Delete(ShapeDto entity)
+        public ActionResult Delete([FromQuery] Guid id)
         {
             try
             {
 
-                var mapped = _mapper.Map<Shape>(entity);
-
-                var result = genericRepository.Delete(mapped);
+                var result = GenericRepository.Delete(id);
                 if (result == true)
                 {
                     return Ok();
@@ -149,9 +145,10 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error Delete() - shape - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error delete() - Rappel");
                 return BadRequest();
             }
         }
+
     }
 }

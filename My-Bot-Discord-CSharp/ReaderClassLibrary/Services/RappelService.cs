@@ -1,4 +1,4 @@
-﻿using BusClassLibrary;
+﻿using BotClassLibrary;
 using ReaderClassLibrary.Interfaces;
 using ReaderClassLibrary.Reader;
 using System;
@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace ReaderClassLibrary.Services
 {
-    public class ArretService : GenericApiReader<Arret>, IGenericInterface<Arret>
+    public class RappelService : GenericApiReader<Rappel>, IGenericInterface<Rappel>
     {
-
-        public ArretService(HttpClient httpClient, string uri) : base(httpClient, uri)
+        public RappelService(HttpClient httpClient, string baseuri) : base(httpClient, baseuri)
         {
-
         }
     }
 }

@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BotClassLibrary\BotClassLibrary.csproj" />
     <ProjectReference Include="..\BotDTOClassLibrary\BotDTOClassLibrary.csproj" />
-    <ProjectReference Include="..\BusClassLibrary\BusClassLibrary.csproj" />
     <ProjectReference Include="..\ServiceClassLibrary\ServiceClassLibrary.csproj" />
   </ItemGroup>
 

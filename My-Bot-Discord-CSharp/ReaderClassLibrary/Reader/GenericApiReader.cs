@@ -55,14 +55,36 @@ namespace ReaderClassLibrary.Reader
 
         }
 
+        public virtual async Task<T> Get(Guid id)
+        {
+
+            try
+            {
+
+                var uri_get = uri + "/id?id=" + id.ToString();
+
+                var resultat = await _httpClient.GetFromJsonAsync<T>(uri_get);
+
+                return resultat;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+
+        }
+
 
         public virtual async Task<IEnumerable<T>> GetAll()
         {
 
             try
             {
-
-                IEnumerable<T> resultat = await _httpClient.GetFromJsonAsync<IEnumerable<T>>(uri);
+                var uri_get = uri + "/all";
+                IEnumerable<T> resultat = await _httpClient.GetFromJsonAsync<IEnumerable<T>>(uri_get);
 
                 return resultat;
             }
@@ -81,7 +103,7 @@ namespace ReaderClassLibrary.Reader
             try
             {
                 var resultat = await _httpClient.PostAsJsonAsync<T>(uri, item); 
-                if(resultat.StatusCode != System.Net.HttpStatusCode.OK)
+                if(!resultat.IsSuccessStatusCode)
                 {
                     
                     return new BadRequestResult();
@@ -121,11 +143,13 @@ namespace ReaderClassLibrary.Reader
 
 
 
-        public virtual async Task<ActionResult> Delete(T item)
+        public virtual async Task<ActionResult> Delete(Guid id)
         {
             try
             {
-                var resultat = await _httpClient.DeleteAsync(uri);
+
+                var uri_delete = uri + "/id?id=" + id.ToString();
+                var resultat = await _httpClient.DeleteAsync(uri_delete);
                 if (resultat.StatusCode != System.Net.HttpStatusCode.OK)
                 {
 

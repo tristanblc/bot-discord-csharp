@@ -1,7 +1,8 @@
 ﻿using ApiApplication;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
-using BusClassLibrary;
+using BotClassLibrary;
+
 
 namespace ApiApplication.Repository
 {
@@ -24,9 +25,10 @@ namespace ApiApplication.Repository
 
         }
 
-        public bool Delete(T entity)
+        public bool Delete(Guid id)
         {
-            myContext.Set<T>().Remove(entity);
+            var entity = myContext.Set<T>().Where(element => element.Id == id).FirstOrDefault();
+            myContext.Set<T>().Remove(entity) ;
             if (myContext.SaveChanges() == 1)
             {
                 return myContext.SaveChanges() == 1;

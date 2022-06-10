@@ -1,34 +1,31 @@
 ﻿using ApiApplication.Repository;
 using ApiApplication.Repository.Interface;
 using AutoMapper;
-using BotDTOClassLibrary;
-using BusClassLibrary;
-using Microsoft.AspNetCore.Http;
+using BotClassLibrary;
 using Microsoft.AspNetCore.Mvc;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-    public class StopTimeController : Controller
+    public class TicketController : Controller
     {
         private readonly IMapper _mapper;
 
         private readonly ApplicationDbContext _context;
 
-        private APIGenericRepository<StopTimes> genericRepository { get; set; }
+        private APIGenericRepository<Ticket> GenericRepository { get; set; }
 
         private ILoggerProject LoggerProject { get; init; }
 
-        public StopTimeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public TicketController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
-            this.genericRepository = new APIGenericRepository<StopTimes>(context);
-            LoggerProject = loggerProject;
+            GenericRepository = new APIGenericRepository<Ticket>(context);
+            LoggerProject = new LoggerProject();
         }
 
 
@@ -37,14 +34,14 @@ namespace ApiApplication.Controllers
         //// GET api/<ProjectController>/GetAll
 
         [HttpGet("all")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StopTimesDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Ticket))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IGenericRepository<StopTimesDto>> GetAll()
+        public ActionResult<IGenericRepository<Ticket>> GetAll()
         {
 
             try
             {
-                var p = genericRepository.GetAll();
+                var p = GenericRepository.GetAll();
                 if (p == null)
                     return NotFound();
                 else
@@ -55,7 +52,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error GetAll() - StopTimes ");
+                LoggerProject.WriteLogErrorLog($"Error GetAll() -Ticket ");
                 return BadRequest(ex);
             }
 
@@ -65,20 +62,20 @@ namespace ApiApplication.Controllers
 
         // GET api/<ProjectController>/5
         [HttpGet("id")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StopTimesDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Ticket))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<StopTimesDto> Get([FromQuery] Guid id)
+        public ActionResult<Ticket> Get([FromQuery] Guid id)
         {
 
             try
             {
-                var p = genericRepository.Get(id);
+                var p = GenericRepository.Get(id);
 
                 if (p == null)
                     return NotFound();
                 else
                 {
-                    var mapped = _mapper.Map<StopTimes>(p);
+                    var mapped = _mapper.Map<Ticket>(p);
                     return Ok(mapped);
                 }
 
@@ -86,7 +83,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error Get() - stop-  id : {id.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error Get() - Ticket -  id : {id.ToString()} ");
                 return BadRequest();
             }
 
@@ -94,38 +91,38 @@ namespace ApiApplication.Controllers
 
 
         [HttpPost]
-        public ActionResult Add(StopTimesDto entity)
+        public ActionResult Add(Ticket entity)
         {
             try
             {
 
-                var mapped = _mapper.Map<StopTimes>(entity);
-                genericRepository.Add(mapped);
+                var mapped = _mapper.Map<Ticket>(entity);
+                GenericRepository.Add(mapped);
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error Add() - stoptimes - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error Add() -Ticket - {entity.ToString()} ");
                 return BadRequest();
             }
         }
 
 
         [HttpPut]
-        public ActionResult Update(StopTimesDto entity)
+        public ActionResult Update(Ticket entity)
         {
             try
             {
-                var mapped = _mapper.Map<StopTimes>(entity);
+                var mapped = _mapper.Map<Ticket>(entity);
 
-                genericRepository.Update(mapped);
+                GenericRepository.Update(mapped);
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error update() - stoptimes - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error update() - Ticket - {entity.ToString()} ");
                 return BadRequest();
             }
 
@@ -133,14 +130,15 @@ namespace ApiApplication.Controllers
 
 
         [HttpDelete]
-        public ActionResult Delete(StopTimesDto entity)
+        public ActionResult Delete([FromQuery] Guid id)
         {
             try
             {
+   
 
-                var mapped = _mapper.Map<StopTimes>(entity);
+               
 
-                var result = genericRepository.Delete(mapped);
+                var result = GenericRepository.Delete(id);
                 if (result == true)
                 {
                     return Ok();
@@ -150,10 +148,9 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error delete() - stoptime - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error delete() - delete  ");
                 return BadRequest();
             }
         }
     }
-       
 }
