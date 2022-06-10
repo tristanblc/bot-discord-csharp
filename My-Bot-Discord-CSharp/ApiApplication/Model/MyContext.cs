@@ -35,6 +35,8 @@ namespace ApiApplication
 
 
         public DbSet<Users> _users { get; set; }
+        
+        public DbSet<Tokens> _tokens { get; set; }
 
         public DbSet<Ticket> _tickets { get; set; }
 

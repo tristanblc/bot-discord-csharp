@@ -1,10 +1,15 @@
 using ApiApplication;
 using ApiApplication;
+using ApiApplication.Authentification.Interface;
+using ApiApplication.Authentification.Manager;
 using ApiApplication.Repository;
 using ApiApplication.Repository.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +21,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+
+var AppSetting = new ConfigurationBuilder()
+		.SetBasePath(Directory.GetCurrentDirectory())
+		.AddJsonFile("appsettings.json")
+		.Build();
+
 var services = builder.Services;
 services.AddCors();
 services.AddControllers();
@@ -25,6 +36,36 @@ services.AddDbContext<ApplicationDbContext>();
 services.AddCors();
 services.AddControllers();
 
+
+
+services.AddTransient<JwtRepository>();
+
+
+
+services.AddAuthentication(x =>
+{
+	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+	var Key = Encoding.UTF8.GetBytes(AppSetting["JWT:Key"]);
+	o.SaveToken = true;
+	o.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = false,
+		ValidateAudience = false,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ValidIssuer = AppSetting["JWT:Issuer"],
+		ValidAudience = AppSetting["JWT:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Key)
+	};
+});
+
+
+
+
+services.AddScoped(typeof(IJWTManagerRepository), typeof(JWTManagerRepository));
 
 services.AddScoped(typeof(IGenericRepository<>), typeof(APIGenericRepository<>));
 services.AddScoped(typeof(ILoggerProject), typeof(LoggerProject));
@@ -48,8 +89,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
-
-
+app.UseAuthorization();
 
 app.UseEndpoints(x => x.MapControllers());
 

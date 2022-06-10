@@ -12,6 +12,7 @@
     <PackageReference Include="DSharpPlus" Version="4.3.0-nightly-01135" />
     <PackageReference Include="DSharpPlus.Lavalink" Version="4.3.0-nightly-01135" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.4.22229.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-preview.4.22229.2">
       <PrivateAssets>all</PrivateAssets>
@@ -30,5 +31,7 @@
     <ProjectReference Include="..\BotDTOClassLibrary\BotDTOClassLibrary.csproj" />
     <ProjectReference Include="..\ServiceClassLibrary\ServiceClassLibrary.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using BotClassLibrary;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReaderClassLibrary.Services;
 using System;
@@ -35,14 +36,26 @@ namespace BotApi.ApiTest
         [TestMethod]
         public void GetAllTicketsTest()
         {
+            Guid id = new Guid();
+            var result = TicketService.GetAll();
 
+            Assert.IsNotNull(result);
+            var entities = result as IEnumerable<Ticket>;
+            Assert.AreEqual(entities.Count(), 2);
 
         }
 
         [TestMethod]
         public void GetTicketTest()
         {
+            Guid id = new Guid();
+            var result =TicketService.Get(id).Result;
 
+
+
+            Assert.IsNotNull(result);
+            var entities = result as IEnumerable<Ticket>;
+            Assert.AreEqual(entities.Count(), 2);
 
 
         }
@@ -52,6 +65,13 @@ namespace BotApi.ApiTest
         public void AddTicketTest()
         {
 
+            Guid id = new Guid();
+            var result = TicketService.Get(id).Result;
+
+
+            Assert.IsNotNull(result);
+            var entities = result as IEnumerable<Ticket>;
+            Assert.AreEqual(entities.Count(), 0);
         }
 
 
@@ -60,12 +80,29 @@ namespace BotApi.ApiTest
         {
 
 
+            Guid id = new Guid();
+            var result = TicketService.Get(id).Result;
+
+            var sent = TicketService.Update(result);
+
+            //Assert
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result, 200);
         }
 
 
         [TestMethod]
         public void DeleteTicketMethod()
         {
+            Guid id = new Guid();
+
+            var result = TicketService.Delete(id).Result;
+
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(result, 200);
+
 
         }
     }
