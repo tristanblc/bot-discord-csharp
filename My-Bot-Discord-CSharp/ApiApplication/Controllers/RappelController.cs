@@ -20,12 +20,12 @@ namespace ApiApplication.Controllers
 
         private ILoggerProject LoggerProject { get; init; }
 
-        public RappelController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public RappelController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
             GenericRepository = new APIGenericRepository<Rappel>(context);
-            LoggerProject = loggerProject;
+            LoggerProject = new LoggerProject();
         }
 
 

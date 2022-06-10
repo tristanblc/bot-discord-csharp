@@ -23,13 +23,13 @@ namespace ApiApplication.Controllers
 
             private ILoggerProject  LoggerProject { get; init; }
 
-            public ArretController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+            public ArretController(IMapper mapper, ApplicationDbContext context)
             {
                 _mapper = mapper;
                 _context = context;
-                LoggerProject = loggerProject;
-                this.genericRepository = new APIGenericRepository<Arret>(context);
-                
+                 LoggerProject = new LoggerProject();
+                  this.genericRepository = new APIGenericRepository<Arret>(context);
+                 
             }
 
 

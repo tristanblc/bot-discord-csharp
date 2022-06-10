@@ -22,12 +22,12 @@ namespace ApiApplication.Controllers
         private ILoggerProject LoggerProject { get; init; }
 
 
-        public ShapeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public ShapeController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<Shape>(context);
-            LoggerProject = loggerProject;
+             LoggerProject = new LoggerProject(); ;
         }
 
 

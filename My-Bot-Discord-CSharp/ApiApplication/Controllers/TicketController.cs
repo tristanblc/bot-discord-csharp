@@ -20,12 +20,12 @@ namespace ApiApplication.Controllers
 
         private ILoggerProject LoggerProject { get; init; }
 
-        public TicketController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public TicketController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
             GenericRepository = new APIGenericRepository<Ticket>(context);
-            LoggerProject = loggerProject;
+            LoggerProject = new LoggerProject();
         }
 
 

@@ -21,12 +21,12 @@ namespace ApiApplication.Controllers
         private APIGenericRepository<Trip> genericRepository { get; set; }
         private ILoggerProject LoggerProject { get; init; }
 
-        public TripController(IMapper mapper, ApplicationDbContext context,LoggerProject loggerProject)
+        public TripController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<Trip>(context);
-            LoggerProject = loggerProject;
+            LoggerProject = new LoggerProject();
         }
 
 

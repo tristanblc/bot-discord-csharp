@@ -21,11 +21,11 @@ namespace ApiApplication.Controllers
         private readonly APIGenericRepository<Ligne> genericRepository;
         private ILoggerProject LoggerProject { get; init; }
 
-        public LigneController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public LigneController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             this.genericRepository = new APIGenericRepository<Ligne>(context);
-            LoggerProject = loggerProject;
+            LoggerProject = new LoggerProject(); 
         }
 
         //// GET api/<ProjectController>/GetAll

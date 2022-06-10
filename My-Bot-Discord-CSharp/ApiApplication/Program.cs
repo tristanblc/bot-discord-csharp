@@ -27,6 +27,7 @@ services.AddControllers();
 
 
 services.AddScoped(typeof(IGenericRepository<>), typeof(APIGenericRepository<>));
+services.AddScoped(typeof(ILoggerProject), typeof(LoggerProject));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

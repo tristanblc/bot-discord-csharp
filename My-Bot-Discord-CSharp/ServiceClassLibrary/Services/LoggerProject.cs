@@ -18,7 +18,6 @@ namespace ServiceClassLibrary.Services
         {
             Logger = new LoggerConfiguration()
                 .WriteTo.Console()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Month)
                 .CreateLogger();
         }
 

@@ -23,12 +23,12 @@ namespace ApiApplication.Controllers
 
         private ILoggerProject LoggerProject { get; init; }
 
-        public StopTimeController(IMapper mapper, ApplicationDbContext context, LoggerProject loggerProject)
+        public StopTimeController(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
             this.genericRepository = new APIGenericRepository<StopTimes>(context);
-            LoggerProject = loggerProject;
+            LoggerProject = new LoggerProject();
         }
 
 

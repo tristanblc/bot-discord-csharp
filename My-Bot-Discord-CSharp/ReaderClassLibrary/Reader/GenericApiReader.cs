@@ -55,6 +55,27 @@ namespace ReaderClassLibrary.Reader
 
         }
 
+        public virtual async Task<T> Get(Guid id)
+        {
+
+            try
+            {
+
+                var uri_get = uri + "id?=" + id.ToString();
+
+                var resultat = await _httpClient.GetFromJsonAsync<T>(uri_get);
+
+                return resultat;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+
+        }
+
 
         public virtual async Task<IEnumerable<T>> GetAll()
         {
