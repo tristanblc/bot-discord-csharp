@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Bot-discord-csharp is a discord bot , .NET discord bot using DSharpPlus library.
+Bot-discord-csharp is a .NET discord bot using DSharpPlus library.
 
 ## Features
 
-- Music (play/search) using Lavalink ( a Java discord music library)
+- Music (play/search) using Lavalink
 - Call API
-- Create Bus API 
+- Rappel & Ticket application tools
 - Picture Effect
 - Moderation commands -  (Voice & chat and server moderations commands)
 - Video Module (compress, get video info,extract audio)
