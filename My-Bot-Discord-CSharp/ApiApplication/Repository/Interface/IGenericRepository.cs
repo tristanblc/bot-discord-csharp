@@ -1,4 +1,5 @@
-﻿using BusClassLibrary;
+﻿using BotClassLibrary;
+
 
 namespace ApiApplication.Repository.Interface
 {
@@ -12,7 +13,7 @@ namespace ApiApplication.Repository.Interface
 
         void Update(T entity);
 
-        bool Delete(T entity);
+        bool Delete(Guid id);
 
     }
 }

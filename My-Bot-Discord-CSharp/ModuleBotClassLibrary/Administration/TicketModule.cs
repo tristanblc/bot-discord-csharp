@@ -67,15 +67,10 @@ namespace ModuleBotClassLibrary
 
             }
           
-
-
-
-
-
         }
 
         [RequirePermissions(Permissions.Administrator)]
-        [Command("delete-ticket")]
+        [Command("checked-ticket")]
         public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
 
@@ -84,15 +79,19 @@ namespace ModuleBotClassLibrary
             {
 
                 Guid guid = new Guid(id);
-                
-                Ticket ticket =  TicketService.Get(guid).Result;
 
-                TicketService.Delete(ticket);
+                var ticket = TicketService.Get(guid).Result;
+                ticket.IsRead = true;
 
+                var result = TicketService.Update(ticket).Result;
 
-                var builder = utilsService.CreateNewEmbed("Delete Ticket", DiscordColor.Azure, $"Your  Ticket is delete - Id: {id.ToString()} - See you later");
+                if (result != null)
+                {
+                    var builder = utilsService.CreateNewEmbed("Delete Ticket", DiscordColor.Azure, $"Your  Ticket is checked  - See you later");
 
-                await ctx.RespondAsync(builder.Build());
+                    await ctx.RespondAsync(builder.Build());
+                }
+               
 
             }
             catch (Exception ex)
@@ -112,6 +111,9 @@ namespace ModuleBotClassLibrary
         {
             try
             {
+
+              
+
                 var builder = utilsService.CreateNewEmbed("List of tickets", DiscordColor.Azure, "List of users tickets\n");
 
                 var tickets = TicketService.GetAll().Result;
@@ -121,8 +123,42 @@ namespace ModuleBotClassLibrary
                 tickets.ToList().ForEach(ticket =>
                 {
                     if(ticket.IsRead)
-                        builder.Description += $"Id: {ticket.Id} - Member : {ticket.DiscordMember}  -  Description : {ticket.Description} \n";
+                        builder.Description += $"Id: {ticket.Id} - Member : {ticket.DiscordMember}";
                 });           
+                await ctx.RespondAsync(builder.Build());
+
+            }
+            catch (Exception ex)
+            {
+                var builder = utilsService.CreateNewEmbed("Error List Ticket", DiscordColor.Red, "Try again");
+
+                await ctx.RespondAsync(builder.Build());
+
+
+            }
+
+        }
+
+        [RequirePermissions(Permissions.Administrator)]
+        [Command("read-ticket")]
+        public async Task HandleReadTicket(CommandContext ctx,  string id)
+        {
+            try
+            {
+                Guid guid = new Guid(id);
+
+                var builder = utilsService.CreateNewEmbed("Read a ticket", DiscordColor.Azure, "");
+
+                var ticket = TicketService.Get(guid).Result;    
+
+
+                    
+                builder.Description += $" - Id: {ticket.Id} ";
+                builder.Description += $" \n - Member: {ticket.DiscordMember}";
+                builder.Description += $" \n - Title: {ticket.Title} ";
+                builder.Description += $" \n - Description: {ticket.Description} ";
+            
+
                 await ctx.RespondAsync(builder.Build());
 
             }
@@ -139,7 +175,7 @@ namespace ModuleBotClassLibrary
 
 
         [RequirePermissions(Permissions.Administrator)]
-        [Command("deal-ticket")]
+        [Command("check-ticket")]
         public async Task HandleDealTicket(CommandContext ctx, string id)
         {
             try

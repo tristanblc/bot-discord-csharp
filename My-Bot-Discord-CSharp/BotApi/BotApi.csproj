@@ -26,4 +26,8 @@
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiTest\" />
+  </ItemGroup>
+
 </Project>

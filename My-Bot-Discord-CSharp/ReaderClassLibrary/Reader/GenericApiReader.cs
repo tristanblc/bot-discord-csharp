@@ -143,11 +143,13 @@ namespace ReaderClassLibrary.Reader
 
 
 
-        public virtual async Task<ActionResult> Delete(T item)
+        public virtual async Task<ActionResult> Delete(Guid id)
         {
             try
             {
-                var resultat = await _httpClient.DeleteAsync(uri);
+
+                var uri_delete = uri + "/id?id=" + id.ToString();
+                var resultat = await _httpClient.DeleteAsync(uri_delete);
                 if (resultat.StatusCode != System.Net.HttpStatusCode.OK)
                 {
 

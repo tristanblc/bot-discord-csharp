@@ -1,4 +1,4 @@
-﻿using BusClassLibrary;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,8 @@ namespace BotClassLibrary
 {
     public class Rappel : BaseEntity
     {
+      
+
         public string Name { get; init; }
 
         public string Description { get; init; }
@@ -18,14 +20,17 @@ namespace BotClassLibrary
         public DateTime RappelDate { get; set; }
 
 
-        public bool IsRead { get; set; }    
+        public ulong UserDiscordId { get; set; }
 
-        public Rappel(string name, string description, string discordMember, DateTime rappelDate)
+        public bool IsRead { get; set; }
+
+        public Rappel(string name, string description, string discordMember, DateTime rappelDate, ulong userDiscordId)
         {
             Name = name;
             Description = description;
             DiscordMember = discordMember;
             RappelDate = rappelDate;
+            UserDiscordId = userDiscordId;
             IsRead = false;
         }
 

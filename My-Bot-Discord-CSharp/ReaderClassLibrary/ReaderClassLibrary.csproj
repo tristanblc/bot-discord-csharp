@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ApiApplication\ApiApplication.csproj" />
     <ProjectReference Include="..\BotClassLibrary\BotClassLibrary.csproj" />
-    <ProjectReference Include="..\BusClassLibrary\BusClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

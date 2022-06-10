@@ -130,14 +130,15 @@ namespace ApiApplication.Controllers
 
 
         [HttpDelete]
-        public ActionResult Delete(Ticket entity)
+        public ActionResult Delete([FromQuery] Guid id)
         {
             try
             {
+   
 
-                var mapped = _mapper.Map<Ticket>(entity);
+               
 
-                var result = GenericRepository.Delete(mapped);
+                var result = GenericRepository.Delete(id);
                 if (result == true)
                 {
                     return Ok();
@@ -147,7 +148,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
-                LoggerProject.WriteLogErrorLog($"Error delete() - stoptime - {entity.ToString()} ");
+                LoggerProject.WriteLogErrorLog($"Error delete() - delete  ");
                 return BadRequest();
             }
         }
