@@ -61,11 +61,12 @@ namespace ReaderClassLibrary.Reader
             try
             {
 
-                var uri_get = uri + "id?=" + id.ToString();
+                var uri_get = uri + "/id?id=" + id.ToString();
 
                 var resultat = await _httpClient.GetFromJsonAsync<T>(uri_get);
 
                 return resultat;
+
             }
             catch (Exception ex)
             {
@@ -82,8 +83,8 @@ namespace ReaderClassLibrary.Reader
 
             try
             {
-
-                IEnumerable<T> resultat = await _httpClient.GetFromJsonAsync<IEnumerable<T>>(uri);
+                var uri_get = uri + "/all";
+                IEnumerable<T> resultat = await _httpClient.GetFromJsonAsync<IEnumerable<T>>(uri_get);
 
                 return resultat;
             }
@@ -102,7 +103,7 @@ namespace ReaderClassLibrary.Reader
             try
             {
                 var resultat = await _httpClient.PostAsJsonAsync<T>(uri, item); 
-                if(resultat.StatusCode != System.Net.HttpStatusCode.OK)
+                if(!resultat.IsSuccessStatusCode)
                 {
                     
                     return new BadRequestResult();

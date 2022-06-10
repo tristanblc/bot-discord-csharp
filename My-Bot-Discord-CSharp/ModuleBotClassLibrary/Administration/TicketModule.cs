@@ -27,12 +27,12 @@ namespace ModuleBotClassLibrary
             utilsService = new UtilsService();
 
             var builder = new ConfigurationBuilder()
-                                .AddJsonFile("config.json", optional: false, reloadOnChange: true)
+                                .AddJsonFile("app.json", optional: false, reloadOnChange: true)
                                 .AddEnvironmentVariables();
 
             IConfiguration config = builder.Build();
 
-            var url = config.GetSection("apiUrl").Value.ToString() + "Ticket";
+            var url = config.GetSection("apiUrl").Value.ToString() + "/Ticket";
 
             TicketService = new TicketService(new HttpClient(), url);
         
@@ -47,6 +47,8 @@ namespace ModuleBotClassLibrary
             try
             {
                 Ticket new_ticket = new Ticket(title, description, DateTime.Now, member.Username);
+
+                new_ticket.Id = new Guid();
 
                 TicketService.Add(new_ticket);
 
@@ -74,19 +76,21 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("delete-ticket")]
-        public async Task HandleDeleteTicket(CommandContext ctx, Guid id)
+        public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
 
 
             try
             {
 
-                Ticket ticket = await TicketService.Get(id);
+                Guid guid = new Guid(id);
+                
+                Ticket ticket =  TicketService.Get(guid).Result;
 
                 TicketService.Delete(ticket);
 
 
-                var builder = utilsService.CreateNewEmbed("New Ticket", DiscordColor.Azure, "Your new Ticket is save - See you later");
+                var builder = utilsService.CreateNewEmbed("Delete Ticket", DiscordColor.Azure, $"Your  Ticket is delete - Id: {id.ToString()} - See you later");
 
                 await ctx.RespondAsync(builder.Build());
 
@@ -104,18 +108,20 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("list-unread-ticket")]
-        public async Task HandleLisUnreadTicket(CommandContext ctx, string? filename)
+        public async Task HandleLisUnreadTicket(CommandContext ctx)
         {
             try
             {
-                var builder = utilsService.CreateNewEmbed("New Ticket", DiscordColor.Azure, "Your new Ticket is save - See you later");
+                var builder = utilsService.CreateNewEmbed("List of tickets", DiscordColor.Azure, "List of users tickets\n");
 
-                var tickets = await TicketService.GetAll();
+                var tickets = TicketService.GetAll().Result;
+
+              
 
                 tickets.ToList().ForEach(ticket =>
                 {
-                    if(ticket.IsRead  == false)
-                        builder.Description += $"Id: {ticket.Id} - Member : {ticket.DiscordMember}  -  Description : {ticket.Description}";
+                    if(ticket.IsRead)
+                        builder.Description += $"Id: {ticket.Id} - Member : {ticket.DiscordMember}  -  Description : {ticket.Description} \n";
                 });           
                 await ctx.RespondAsync(builder.Build());
 
@@ -134,12 +140,14 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("deal-ticket")]
-        public async Task HandleDealTicket(CommandContext ctx, Guid id)
+        public async Task HandleDealTicket(CommandContext ctx, string id)
         {
             try
             {
 
-                Ticket ticket = await TicketService.Get(id);
+                Guid guid = new Guid(id);
+
+                var ticket = TicketService.Get(guid).Result;
                 ticket.IsDeal = true;
                 ticket.IsRead = true;
 
