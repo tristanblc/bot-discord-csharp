@@ -1,4 +1,5 @@
-﻿using BusClassLibrary;
+﻿using BotClassLibrary;
+using BusClassLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiApplication
@@ -45,5 +46,10 @@ namespace ApiApplication
         public DbSet<StopTimes> _stopTimes { get; set; }
 
         public DbSet<Arret> _arrets { get; set; }
+
+
+        public DbSet<Ticket> _tickets { get; set; }
+
+        public DbSet<Rappel> _rappels { get; set; }
     }
 }

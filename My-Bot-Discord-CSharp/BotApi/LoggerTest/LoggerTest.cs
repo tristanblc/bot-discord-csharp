@@ -12,7 +12,7 @@ namespace BotApi.LoggerTest
     [TestClass]
     internal class ServiceBotTest 
     {
-        private ILoggerProject LoggerProject { get;init }
+        private ILoggerProject LoggerProject { get; init; }
         public ServiceBotTest()
         {
             LoggerProject = new LoggerProject();
