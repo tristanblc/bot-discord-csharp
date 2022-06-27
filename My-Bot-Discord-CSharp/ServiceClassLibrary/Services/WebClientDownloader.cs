@@ -1,7 +1,9 @@
 ﻿using DSharpPlus.Entities;
 using ExceptionClassLibrary;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PuppeteerSharp;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace ServiceClassLibrary.Services
 
         private ILoggerProject LoggerProject { get; init; }
 
+        private HtmlDocument HtmlDoc { get; init; }
+
 
         public WebClientDownloader(WebClient webClient)
         {
@@ -29,6 +33,7 @@ namespace ServiceClassLibrary.Services
             PathToSave = Path.Join (Directory.GetCurrentDirectory() , "video");
             UtilsService = new UtilsService();
             LoggerProject = new LoggerProject();
+            HtmlDoc =  new HtmlDocument();
 
         }
 
@@ -49,6 +54,23 @@ namespace ServiceClassLibrary.Services
             }       
         }
 
+        public void DownloadVideo(string url,string name)
+        {
+            UtilsService.DeleteDirectoryIfExist(PathToSave);
+            var path = Path.Join(PathToSave, name );
+            try
+            {
+                WebClient.DownloadFile(new Uri(url), path);
+                WebClient.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+                LoggerProject.WriteLogErrorLog($"Erreur dans le téléchargement du fichier {name}");
+                throw new FileDownloadException($"Erreur dans le téléchargement du fichier {name}");
+            }
+        }
+
         public FileStream ConvertVideoToStream(string path)
         {
 
@@ -63,5 +85,7 @@ namespace ServiceClassLibrary.Services
             }
            
         }
+
+     
     }
 }

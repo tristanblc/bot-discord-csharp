@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Extensions;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -104,6 +105,25 @@ namespace ModuleBotClassLibrary
 
         }
 
+        [Command("poll")]
+        [Description("poll")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandlePoll(CommandContext ctx, string question)
+        {
+            var builder = utilsService.CreateNewEmbed($"Poll ", DiscordColor.Green, $"{ question }");
+
+ 
+            var emoji = DiscordEmoji.FromName(ctx.Client, ":thumbup:");
+            var emoji2 = DiscordEmoji.FromName(ctx.Client, ":thumbdown:");
+
+            var message = await ctx.RespondAsync(builder.Build());
+            await message.CreateReactionAsync(emoji);
+            await message.CreateReactionAsync(emoji2);
+    
+
+        }
+
+      
 
         [Command("deaf")]
         [Description("deaf user")]

@@ -19,9 +19,11 @@ namespace ModuleBotClassLibrary
 
 
         private IUtilsService utilsService { get; init; }
+        private IScreenerSite ScreenerSite { get; init; }
         public OtherToolsModule()
         {
             utilsService = new UtilsService();
+            ScreenerSite = new ScreenerSite();
         }
 
 
@@ -42,6 +44,15 @@ namespace ModuleBotClassLibrary
             var url = member.GetAvatarUrl(DSharpPlus.ImageFormat.Auto);
             await ctx.RespondAsync(url);
         }
+
+        [Command("screensite")]
+        public async Task ScreenCommand(CommandContext ctx, string url)
+        {
+
+            var message = ScreenerSite.MakeFileOfSite(url);
+            message.SendAsync(ctx.Channel);
+        }
+
 
         [Command("duck")]
         public async Task DuckCommand(CommandContext ctx)

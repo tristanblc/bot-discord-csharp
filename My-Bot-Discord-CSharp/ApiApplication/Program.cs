@@ -1,5 +1,4 @@
 using ApiApplication;
-using ApiApplication;
 using ApiApplication.Authentification.Interface;
 using ApiApplication.Authentification.Manager;
 using ApiApplication.Repository;

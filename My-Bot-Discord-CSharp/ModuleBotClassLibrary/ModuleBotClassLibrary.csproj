@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="4.3.0-nightly-01135" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.3.0-nightly-01135" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.3.0-nightly-01135" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0" />
     <PackageReference Include="DSharpPlus.Lavalink" Version="4.3.0-nightly-01135" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="4.3.0-nightly-01135" />
     <PackageReference Include="ImageProcessor" Version="2.9.1" />
@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GamesClassLibrary\GamesClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
     <ProjectReference Include="..\ServiceClassLibrary\ServiceClassLibrary.csproj" />
   </ItemGroup>

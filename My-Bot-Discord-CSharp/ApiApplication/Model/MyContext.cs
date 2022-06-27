@@ -25,8 +25,6 @@ namespace ApiApplication
         }
 
 
-
-
         public override DbSet<TEntity> Set<TEntity>()
         {
 
@@ -35,7 +33,7 @@ namespace ApiApplication
 
 
         public DbSet<Users> _users { get; set; }
-        
+        public DbSet<Citation> _citations { get; set; }
         public DbSet<Tokens> _tokens { get; set; }
 
         public DbSet<Ticket> _tickets { get; set; }
