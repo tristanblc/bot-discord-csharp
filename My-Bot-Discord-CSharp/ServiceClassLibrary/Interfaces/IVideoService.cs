@@ -20,6 +20,6 @@ namespace ServiceClassLibrary.Interfaces
         string ExtractAudioFromVideo(DiscordAttachment discordAttachment);
 
         FileStream GetStream(string path);
-
+  
     }
 }

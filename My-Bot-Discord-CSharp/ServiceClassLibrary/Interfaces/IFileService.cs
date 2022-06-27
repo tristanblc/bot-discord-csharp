@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ServiceClassLibrary.Interfaces
     public interface IFileService
     {
         void SaveFile(string fileUrl, string filename);
+        void SavePDFFile(HtmlDocument doc,string filename);
 
         void DeleteFile(string filename);
 

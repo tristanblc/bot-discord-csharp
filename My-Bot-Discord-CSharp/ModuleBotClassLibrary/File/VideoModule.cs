@@ -131,8 +131,6 @@ namespace ModuleBotClassLibrary
 
         }
 
-       
-        
         [Command("videoinfo")]
         public async Task HandleSVideoInfoCommand(CommandContext ctx)
         {

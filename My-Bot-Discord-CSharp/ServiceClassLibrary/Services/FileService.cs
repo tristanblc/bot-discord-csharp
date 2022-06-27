@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -65,15 +66,30 @@ namespace ModuleBotClassLibrary.Services
                 LoggerProject.WriteLogErrorLog("Probleme fichier -> soit load soit filestream");
                 throw new FileLoadException("Error");
             }
-            
-         
-
-
-
-
+           
         }
 
+        public void SavePDFFile(HtmlDocument doc, string filename)
+        {
+            try
+            {          
+                var path = Path.Combine(DirectoryForSave, "documents");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
+                using (var fs = new FileStream("path", FileMode.OpenOrCreate))
+                {
+                    doc.Save(fs);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                LoggerProject.WriteLogErrorLog("Probleme fichier -> soit load soit filestream");
+                throw new FileLoadException("Error");
+            }
+        }
 
 
         public void DeleteFile(string filename)
@@ -256,6 +272,6 @@ namespace ModuleBotClassLibrary.Services
             return Directory.GetFiles(path).ToList();
         }
 
-    
+      
     }
 }
