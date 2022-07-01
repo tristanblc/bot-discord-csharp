@@ -1,0 +1,51 @@
+﻿@page "/rappels"
+@using BotClassLibrary
+
+@inject HttpClient Http
+
+<PageTitle>Rappels</PageTitle>
+
+<h1>Rappels</h1>
+
+
+@if (rappels == null)
+{
+    <p><em>Loading Data ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>DiscordMember</th>
+                <th>RappelDate</th>
+                <th>IsRead</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rappel in rappels)
+            {
+                <tr>
+                    <td>@rappel.Id</td>
+                    <td>@rappel.Description</td>
+                    <td>@rappel.DiscordMember</td>
+                    <td>@rappel.RappelDate</td>
+                    <td>@rappel.IsRead</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<BotClassLibrary.Rappel> rappels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rappels = await Http.GetFromJsonAsync<List<BotClassLibrary.Rappel>>("sample-data/weather.json");
+    }
+
+   
+}

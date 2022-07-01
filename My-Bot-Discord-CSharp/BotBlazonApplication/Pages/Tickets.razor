@@ -1,0 +1,52 @@
+﻿@page "/tickets"
+
+
+@inject HttpClient Http
+
+<PageTitle>Tickets</PageTitle>
+
+<h1>Tickets</h1>
+
+@if (tickets == null)
+{
+    <p><em>Loading Data ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>DiscordMember</th>
+                <th>Created at</th>
+                <th>IsRead</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in tickets)
+            {
+                <tr>
+                    <td>@ticket.Id</td>
+                    <td>@ticket.Title</td>
+                    <td>@ticket.Description</td>
+                    <td>@ticket.DiscordMember</td>
+                    <td>@ticket.Created</td>
+                    <td>@ticket.IsRead</td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Ticket> tickets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tickets = await Http.GetFromJsonAsync<List<Ticket>>("sample-data/weather.json");
+    }
+
+   
+}

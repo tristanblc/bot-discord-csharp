@@ -1,7 +1,13 @@
 ﻿@using BotBlazonApplication.Services.Interface
+@using BotBlazonApplication.Services.Service
+@using BotBlazonApplication.Services.Classes
+@using System.Net
+@using System.ComponentModel.DataAnnotations
 @inherits LayoutComponentBase
 
 @inject ILocalStorage LocalStorage
+ 
+@inject HttpClient Http
 
 <CascadingValue Value="this">
 
@@ -59,7 +65,7 @@
 				</div>
 				<div class="mb-3">
 					<label for="loginPassword" class="form-label">Password</label>
-					<input type="password" class="form-control" id="loginPassword" required />
+					<input type="password" class="form-control" id="loginPassword" required @bind-value="password" />
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -72,15 +78,21 @@
 
 
 @code {
+	private IAuthService authService;
 
 	private bool show, display;
 
 	internal static bool loggedIn;
 	internal string? user;
+	internal string? password;
+	internal string? token;
 
 	public string? GetUserName()
 	{
 		return loggedIn ? user : null;
+	}
+	public string? GetPassword(){
+		return loggedIn ? password : null;
 	}
 
 	public async Task OpenLogin()
@@ -95,6 +107,7 @@
 		user = null;
 		loggedIn = false;
 		await LocalStorage.RemoveAsync("user");
+		await LocalStorage.RemoveAsync("loggedAt");
 	}
 
 	private async Task Close()
@@ -106,13 +119,31 @@
 
 	private async Task Login()
 	{
-		if (!string.IsNullOrEmpty(user))
-		{
-			await Close();
-			loggedIn = true;
-			await LocalStorage.SaveStringAsync("user", user);
+		try{
+			authService = new AuthService();
+
+
+			if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+			{
+
+				var getUser = authService.Authentification(user,password).Result;
+				if (getUser == HttpStatusCode.OK)
+				{
+					await Close();
+					loggedIn = true;
+					await LocalStorage.SaveStringAsync("user", user);
+					await LocalStorage.SaveStringAsync("loggedAt", DateTime.Now.ToString());			
+				}
+
+			}
 		}
+		catch(Exception ex){
+			Console.WriteLine(ex);
+		}
+		
 	}
+
+
 
 	protected override async Task OnInitializedAsync()
 	{

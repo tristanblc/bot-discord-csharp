@@ -1,0 +1,48 @@
+﻿@page "/citations"
+@using BotClassLibrary
+
+
+@inject HttpClient Http
+
+
+<PageTitle>Citations</PageTitle>
+
+<h1>Citations</h1>
+
+@if (citations == null)
+{
+    <p><em>Loading Data ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Author</th>
+                <th>Citation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var citation in citations)
+            {
+                <tr>
+                    <td>@citation.Id</td>
+                    <td>@citation.auteur</td>
+                    <td>@citation.citation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Citation> citations;
+
+    protected override async Task OnInitializedAsync()
+    {
+        citations = await Http.GetFromJsonAsync<List<Citation>>("sample-data/weather.json");
+    }
+
+   
+}
