@@ -45,7 +45,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        tickets = await Http.GetFromJsonAsync<List<Ticket>>("sample-data/weather.json");
+        tickets = await Http.GetFromJsonAsync<List<Ticket>>("OpenAPIs/swagger.json");
     }
 
    

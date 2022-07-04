@@ -108,6 +108,7 @@
 		loggedIn = false;
 		await LocalStorage.RemoveAsync("user");
 		await LocalStorage.RemoveAsync("loggedAt");
+
 	}
 
 	private async Task Close()
@@ -126,19 +127,21 @@
 			if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
 			{
 
-				var getUser = authService.Authentification(user,password).Result;
+				var getUser = await authService.Authentification(user,password);
+				
 				if (getUser == HttpStatusCode.OK)
 				{
 					await Close();
 					loggedIn = true;
 					await LocalStorage.SaveStringAsync("user", user);
-					await LocalStorage.SaveStringAsync("loggedAt", DateTime.Now.ToString());			
+					await LocalStorage.SaveStringAsync("loggedAt", DateTime.Now.ToString());	
+					
 				}
 
 			}
 		}
 		catch(Exception ex){
-			Console.WriteLine(ex);
+			await Close();
 		}
 		
 	}

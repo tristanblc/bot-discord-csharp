@@ -46,9 +46,9 @@ namespace ApiApplication.Authentification.Manager
 
 			var user_password = PasswordHasher.GetPasswordHasher(users.Password);
 
-			if(PasswordHasher.GetPasswordHasher(users.Password) != user_password)
+			if(user.Password != user_password)
 			{
-				return null;
+				throw new Exception($"Not match password");
 			}
 
 			var tokenHandler = new JsonWebTokenHandler();
@@ -67,18 +67,16 @@ namespace ApiApplication.Authentification.Manager
 			string token = tokenHandler.CreateToken(jwt);
 		
 
-			var tokens =  new Tokens { Token = token , Email = user.Email, ExpireDate = (DateTime.Now).AddDays(30) };
-
+			var tokens =  new Tokens { Token = token , Email = email, ExpireDate = (DateTime.Now).AddYears(1) };
             try
             {
-				JWTRepository.Add(tokens);
-
-			}
-			catch (Exception ex)
-            {
 				JWTRepository.Update(tokens);
-            }
-
+			}
+			catch(Exception ex)
+            {
+				JWTRepository.Add(tokens);
+			}
+		
 			
 
 			return tokens;
