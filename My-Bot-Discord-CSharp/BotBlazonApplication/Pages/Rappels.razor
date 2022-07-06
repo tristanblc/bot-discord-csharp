@@ -40,11 +40,11 @@ else
 }
 
 @code {
-    private List<BotClassLibrary.Rappel> rappels;
+    private List<Rappel> rappels;
 
     protected override async Task OnInitializedAsync()
     {
-        rappels = await Http.GetFromJsonAsync<List<BotClassLibrary.Rappel>>("sample-data/weather.json");
+        rappels = await Http.GetFromJsonAsync<List<Rappel>>("sample-data/weather.json");
     }
 
    

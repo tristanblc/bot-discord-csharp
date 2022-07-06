@@ -11,22 +11,29 @@ namespace BotBlazonApplication.Services.Service
     {
 
         private HttpClient HttpClient { get;set; }
-        private  string uri { get; init; }
+        private IConfiguration Configuration { get; set; }
         private Users logUser { get; init; }
+        
+
+   
 
         public AuthService()
         {
             HttpClient = new HttpClient();
-           
+            var builder = new ConfigurationBuilder()
+                     .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true)
+                     .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
 
         }
-        public async Task<HttpStatusCode> Authentification(string email, string password)
+        public async Task<HttpResponseMessage> Authentification(string email, string password)
         {
 
 
                 BotClassLibrary.Users users = new BotClassLibrary.Users(email, password);
 
-                var uri = "https://localhost:7167/api/User/authenticate";
+                var uri = $"{Configuration["urlapi"]}User/authenticate";
 
                 StringContent content = new StringContent(
                           JsonConvert.SerializeObject(users),
@@ -44,16 +51,14 @@ namespace BotBlazonApplication.Services.Service
                 try
                  {
                      HttpResponseMessage response = await HttpClient.SendAsync(resultat);
+                     return response;
 
-                     return response.StatusCode;
-                
-                }
+                 }
                 catch(Exception ex)
                 {
-
-                      return HttpStatusCode.BadRequest;
+                      return null;
                  }
-                 return HttpStatusCode.BadRequest;
+                 
         }
     }
 }

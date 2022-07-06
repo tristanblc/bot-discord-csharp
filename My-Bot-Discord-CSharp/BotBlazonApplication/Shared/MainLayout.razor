@@ -3,6 +3,7 @@
 @using BotBlazonApplication.Services.Classes
 @using System.Net
 @using System.ComponentModel.DataAnnotations
+@using Newtonsoft.Json
 @inherits LayoutComponentBase
 
 @inject ILocalStorage LocalStorage
@@ -86,6 +87,7 @@
 	internal string? user;
 	internal string? password;
 	internal string? token;
+	internal User? User;
 
 	public string? GetUserName()
 	{
@@ -93,6 +95,20 @@
 	}
 	public string? GetPassword(){
 		return loggedIn ? password : null;
+	}
+
+
+	public User? GetUser(){
+		return loggedIn ? User : null;
+	}
+
+	internal void SetUser(User? user_){
+		User = user_;
+	}
+
+
+	internal string? GetToken(){
+		return this.User.Token;
 	}
 
 	public async Task OpenLogin()
@@ -121,21 +137,25 @@
 	private async Task Login()
 	{
 		try{
+
 			authService = new AuthService();
 
 
 			if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
 			{
 
-				var getUser = await authService.Authentification(user,password);
-				
-				if (getUser == HttpStatusCode.OK)
+				var request = await  authService.Authentification(user,password);
+
+				if (request.StatusCode == HttpStatusCode.OK)
 				{
-					await Close();
+					var responseBody = await request.Content.ReadAsStringAsync();
+					var reponseUser = JsonConvert.DeserializeObject<User>(responseBody);
+					this.SetUser(reponseUser);					
 					loggedIn = true;
 					await LocalStorage.SaveStringAsync("user", user);
-					await LocalStorage.SaveStringAsync("loggedAt", DateTime.Now.ToString());	
-					
+					await LocalStorage.SaveStringAsync("loggedAt", DateTime.Now.ToString());
+					await Close();
+
 				}
 
 			}

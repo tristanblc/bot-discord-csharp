@@ -42,9 +42,11 @@ else
 
 @code {
     private List<Ticket> tickets;
+    
 
     protected override async Task OnInitializedAsync()
     {
+
         tickets = await Http.GetFromJsonAsync<List<Ticket>>("OpenAPIs/swagger.json");
     }
 

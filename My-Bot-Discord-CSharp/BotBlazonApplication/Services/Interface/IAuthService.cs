@@ -4,7 +4,7 @@ namespace BotBlazonApplication.Services.Interface
 {
     public interface IAuthService
     {
-        Task<HttpStatusCode> Authentification(string username, string password);    
+        Task<HttpResponseMessage> Authentification(string username, string password);    
     
     }
 }

@@ -5,22 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotClassLibrary
+namespace BotBlazonApplication.Services.Classes
 {
-    public class Users
+    public class User
     {
 
         [Key]
         public string Email { get; init; }
         public string Password { get; init; }
+        public string Token { get; init; }
 
-        public Users(string email, string password)
+        public User(string email, string password, string token)
         {
             Email = email;
-            Password = password;;
+            Password = password;
+            Token = token;
         }
 
-        public Users()
+        public User()
         {
         }
     }

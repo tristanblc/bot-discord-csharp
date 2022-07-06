@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace BotClassLibrary
+namespace BotBlazonApplication.Services.Classes
 {
     public class Citation : BaseEntity
     {
