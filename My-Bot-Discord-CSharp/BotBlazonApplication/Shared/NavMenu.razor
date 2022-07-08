@@ -1,0 +1,54 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BotBlazonApplication</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        @if (MainLayout.loggedIn)
+        {
+       
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="citations">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Citation Data Fetch
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="rappels">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Rappel Data Fetch
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="tickets">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Ticket data Fetch
+            </NavLink>
+        </div>
+        }
+        <div class="nav-item px-3">
+			<NavLink class="nav-link" href="account">
+				<span class="oi oi-key" aria-hidden="true"></span> Account
+			</NavLink>
+		</div>
+
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

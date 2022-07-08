@@ -1,0 +1,63 @@
+﻿@page "/citations"
+@using BotBlazonApplication.Services.Classes
+@using BotBlazonApplication.Shared
+@using BotClassLibrary
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+@using Newtonsoft.Json
+
+
+@inject HttpClient ClientFactory
+
+
+<PageTitle>Citations</PageTitle>
+
+<h1>Citations</h1>
+
+@if (citations == null)
+{
+    <p><em>Loading Data ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Author</th>
+                <th>Citation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var citation in citations)
+            {
+                <tr>
+                    <td>@citation.Id</td>
+                    <td>@citation.auteur</td>s
+                    <td>@citation.citation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Citation> citations;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token =  MainLayout.GetToken();
+        
+        ClientFactory.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await ClientFactory.GetAsync("https://localhost:7167/api/Citation/all");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            citations = JsonConvert.DeserializeObject<List<Citation>>(responseStream);
+        }
+    }
+
+   
+}

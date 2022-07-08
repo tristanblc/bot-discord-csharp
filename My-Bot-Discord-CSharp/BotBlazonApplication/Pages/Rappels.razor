@@ -1,0 +1,68 @@
+﻿@page "/rappels"
+@using BotClassLibrary
+@using System.Net.Http.Headers
+@using Newtonsoft.Json
+
+@inject HttpClient ClientFactory
+<PageTitle>Rappels</PageTitle>
+
+<h1>Rappels</h1>
+
+
+@if (rappels == null)
+{
+    <p><em>Loading Data ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>DiscordMember</th>
+                <th>RappelDate</th>
+                <th>IsRead</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rappel in rappels)
+            {
+                <tr>
+                    <td>@rappel.Id</td>
+                    <td>@rappel.Description</td>
+                    <td>@rappel.DiscordMember</td>
+                    <td>@rappel.RappelDate</td>
+                    <td>@rappel.IsRead</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Rappel> rappels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get,
+            "");
+
+        var token =  MainLayout.GetToken();
+
+
+        ClientFactory.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await ClientFactory.GetAsync("https://localhost:7167/api/Rappel/all");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            rappels = JsonConvert.DeserializeObject<List<Rappel>>(responseStream);
+        }
+     
+
+    }
+
+   
+}
