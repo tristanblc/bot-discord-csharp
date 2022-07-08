@@ -32,7 +32,6 @@ namespace ApiApplication.Controllers
 
 
 
-
         //// GET api/<ProjectController>/GetAll
         [Authorize]
         [HttpGet("all")]

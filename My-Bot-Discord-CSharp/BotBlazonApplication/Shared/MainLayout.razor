@@ -87,7 +87,7 @@
 	internal string? user;
 	internal string? password;
 	internal string? token;
-	internal User? User;
+	internal static User? User;
 
 	public string? GetUserName()
 	{
@@ -107,8 +107,8 @@
 	}
 
 
-	internal string? GetToken(){
-		return this.User.Token;
+	internal static string? GetToken(){
+		return User.Token;
 	}
 
 	public async Task OpenLogin()

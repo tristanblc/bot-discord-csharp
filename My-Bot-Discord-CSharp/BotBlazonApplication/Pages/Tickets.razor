@@ -1,7 +1,9 @@
 ﻿@page "/tickets"
+@using System.Net.Http.Headers
+@using Newtonsoft.Json
 
 
-@inject HttpClient Http
+@inject HttpClient ClientFactory
 
 <PageTitle>Tickets</PageTitle>
 
@@ -46,8 +48,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+ 
 
-        tickets = await Http.GetFromJsonAsync<List<Ticket>>("OpenAPIs/swagger.json");
+        var token =  MainLayout.GetToken();
+        
+        ClientFactory.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await ClientFactory.GetAsync("https://localhost:7167/api/Ticket/all");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            tickets = JsonConvert.DeserializeObject<List<Ticket>>(responseStream);
+        }
     }
 
    

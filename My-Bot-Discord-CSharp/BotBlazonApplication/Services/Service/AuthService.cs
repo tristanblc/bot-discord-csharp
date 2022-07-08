@@ -20,12 +20,6 @@ namespace BotBlazonApplication.Services.Service
         public AuthService()
         {
             HttpClient = new HttpClient();
-            var builder = new ConfigurationBuilder()
-                     .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true)
-                     .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
-
         }
         public async Task<HttpResponseMessage> Authentification(string email, string password)
         {
@@ -33,7 +27,7 @@ namespace BotBlazonApplication.Services.Service
 
                 BotClassLibrary.Users users = new BotClassLibrary.Users(email, password);
 
-                var uri = $"{Configuration["urlapi"]}User/authenticate";
+                var uri = $"https://localhost:7167/api/User/authenticate";
 
                 StringContent content = new StringContent(
                           JsonConvert.SerializeObject(users),
