@@ -13,7 +13,7 @@ using ModuleBotClassLibrary;
 using My_Bot_Discord_CSharp.Services;
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.ServiceBot;
-;
+
 
 static void Main(string[] args)
 {
@@ -36,26 +36,23 @@ static async Task MainAsync()
         };
 
         var lavalinkConfig = new LavalinkConfiguration
-        {
-            Password = "", // From your server configuration.
+        {           
+            Password = "motdepasse", // From your server configuration.
             RestEndpoint = endpoint,
             SocketEndpoint = endpoint
         };
 
 
-        var lavalink = discord.UseLavalink();
 
         var act = new DiscordActivity("temporiser sur COD Black Ops II",ActivityType.Playing);
         act.Name = "temporiser sur COD Black Ops II . Je campe pas, je temporise. Bien sur.";
-       
-    
+
+        var lavalink = discord.UseLavalink();
+
         await discord.ConnectAsync(act);
         lavalink.ConnectAsync(lavalinkConfig);
 
-        await Task.Delay(-1);
-
-
-      
+        await Task.Delay(-1);      
 
     }
     catch(Exception ex)
