@@ -5,6 +5,12 @@
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "Token": "",
-  "AllowedHosts": "*"
+  "Token": {{ TOKEN_BOT }},
+  "AllowedHosts": "*",
+  "apiUrl": "https://localhost:7167/api",
+  "Twitter": {
+    "Key": "",
+    "Secret": "",
+    "Bearer": ""
+  }
 }
