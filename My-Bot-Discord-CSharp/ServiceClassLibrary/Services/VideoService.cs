@@ -45,9 +45,6 @@ namespace ServiceClassLibrary.Services
             try
             {
                  _downloader.DownloadVideoFromDiscord(discordAttachement);
-              
-
-
                 try
                 {
                    FFMpegArguments
@@ -127,7 +124,7 @@ namespace ServiceClassLibrary.Services
                     UtilsService.DeleteFile(PathVideoAudio_extract);
 
                     UtilsService.DeleteDirectoryIfExist(PathVideoAudio);
-                FFMpeg.ExtractAudio(path_filename, PathVideoAudio_extract);
+                    FFMpeg.ExtractAudio(path_filename, PathVideoAudio_extract);
              
 
                     return PathVideoAudio_extract;
