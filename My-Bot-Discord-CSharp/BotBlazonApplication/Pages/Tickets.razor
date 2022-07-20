@@ -49,7 +49,6 @@ else
     protected override async Task OnInitializedAsync()
     {
  
-
         var token =  MainLayout.GetToken();
         
         ClientFactory.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", token);

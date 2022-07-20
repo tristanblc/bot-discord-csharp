@@ -7,11 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.3.0-nightly-01135" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.3.0-nightly-01135" />
+    <PackageReference Include="DSharpPlus" Version="4.2.0" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.3.0-nightly-01135" />
-    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.3.0-nightly-01135" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0" />
     <PackageReference Include="ImageProcessor" Version="2.9.1" />
     <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />

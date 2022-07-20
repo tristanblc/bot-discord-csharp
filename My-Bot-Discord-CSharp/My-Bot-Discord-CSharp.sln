@@ -11,19 +11,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotClassLibrary", "BotClass
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderClassLibrary", "ReaderClassLibrary\ReaderClassLibrary.csproj", "{1FFC5D7D-DE9A-49CE-84CF-F822DCDE16DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusClassLibrary", "BusClassLibrary\BusClassLibrary.csproj", "{7A2FBB2D-6504-4DE1-9D61-C374E0D60999}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiApplication", "ApiApplication\ApiApplication.csproj", "{17148760-A97B-4D65-83A6-54FF3AF109C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotDTOClassLibrary", "BotDTOClassLibrary\BotDTOClassLibrary.csproj", "{48A45467-576D-4213-AA1C-871B01F0A83F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EffectClassLibrary", "EffectClassLibrary\EffectClassLibrary.csproj", "{0ABBECC7-91EA-4D6C-BA72-D4C9140A3891}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotApi", "BotApi\BotApi.csproj", "{CEAA6AC7-6AB2-461B-B5E6-F0590D1F02BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkApiProject", "BenchmarkApiProject\BenchmarkApiProject.csproj", "{20B1175C-9AF0-4529-8631-0AAD816744D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionClassLibrary", "ExceptionClassLibrary\ExceptionClassLibrary.csproj", "{99F04E85-355B-45B3-ABEE-C658A5B8E0FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionClassLibrary", "ExceptionClassLibrary\ExceptionClassLibrary.csproj", "{99F04E85-355B-45B3-ABEE-C658A5B8E0FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceClassLibrary", "ServiceClassLibrary\ServiceClassLibrary.csproj", "{6588A98E-4A0C-4F98-98E4-9D789203ECE8}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BotSetup", "BotSetup\BotSetup.vdproj", "{001F8B93-30E0-43E6-8473-9F1667AC3DC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesClassLibrary", "GamesClassLibrary\GamesClassLibrary.csproj", "{FCCED6C9-23E1-4BD4-99DE-7FFA8BCEC447}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotBlazonApplication", "BotBlazonApplication\BotBlazonApplication.csproj", "{D22F3B5F-460C-46B8-8C3E-71D53F2CCFA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +51,6 @@ Global
 		{1FFC5D7D-DE9A-49CE-84CF-F822DCDE16DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FFC5D7D-DE9A-49CE-84CF-F822DCDE16DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FFC5D7D-DE9A-49CE-84CF-F822DCDE16DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A2FBB2D-6504-4DE1-9D61-C374E0D60999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A2FBB2D-6504-4DE1-9D61-C374E0D60999}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A2FBB2D-6504-4DE1-9D61-C374E0D60999}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A2FBB2D-6504-4DE1-9D61-C374E0D60999}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17148760-A97B-4D65-83A6-54FF3AF109C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17148760-A97B-4D65-83A6-54FF3AF109C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17148760-A97B-4D65-83A6-54FF3AF109C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,10 +59,6 @@ Global
 		{48A45467-576D-4213-AA1C-871B01F0A83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48A45467-576D-4213-AA1C-871B01F0A83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48A45467-576D-4213-AA1C-871B01F0A83F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0ABBECC7-91EA-4D6C-BA72-D4C9140A3891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0ABBECC7-91EA-4D6C-BA72-D4C9140A3891}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0ABBECC7-91EA-4D6C-BA72-D4C9140A3891}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0ABBECC7-91EA-4D6C-BA72-D4C9140A3891}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEAA6AC7-6AB2-461B-B5E6-F0590D1F02BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CEAA6AC7-6AB2-461B-B5E6-F0590D1F02BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEAA6AC7-6AB2-461B-B5E6-F0590D1F02BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,20 @@ Global
 		{99F04E85-355B-45B3-ABEE-C658A5B8E0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F04E85-355B-45B3-ABEE-C658A5B8E0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F04E85-355B-45B3-ABEE-C658A5B8E0FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6588A98E-4A0C-4F98-98E4-9D789203ECE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6588A98E-4A0C-4F98-98E4-9D789203ECE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6588A98E-4A0C-4F98-98E4-9D789203ECE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6588A98E-4A0C-4F98-98E4-9D789203ECE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001F8B93-30E0-43E6-8473-9F1667AC3DC8}.Debug|Any CPU.ActiveCfg = Debug
+		{001F8B93-30E0-43E6-8473-9F1667AC3DC8}.Release|Any CPU.ActiveCfg = Release
+		{FCCED6C9-23E1-4BD4-99DE-7FFA8BCEC447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCED6C9-23E1-4BD4-99DE-7FFA8BCEC447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCED6C9-23E1-4BD4-99DE-7FFA8BCEC447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCED6C9-23E1-4BD4-99DE-7FFA8BCEC447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D22F3B5F-460C-46B8-8C3E-71D53F2CCFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22F3B5F-460C-46B8-8C3E-71D53F2CCFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22F3B5F-460C-46B8-8C3E-71D53F2CCFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22F3B5F-460C-46B8-8C3E-71D53F2CCFA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

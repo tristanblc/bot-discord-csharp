@@ -2,10 +2,12 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
-
 using My_Bot_Discord_CSharp.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -41,21 +43,17 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
                 StringPrefixes = new[] { "!" }
             };
 
+            discord.UseInteractivity(new InteractivityConfiguration()
+            {
+                PollBehaviour = PollBehaviour.KeepEmojis,
+                Timeout = TimeSpan.FromSeconds(30)
+            });
 
             var commands = discord.UseCommandsNext(command_configuration);
-
-
-
-
 
             DiscordActivity discordActivity = new DiscordActivity();
             discordActivity.StreamUrl = "https://github.com/tristanblc"; 
         
-            
-
-
-
-
             commands.RegisterCommands<InfoModule>();
             commands.RegisterCommands<OtherToolsModule>();
             commands.RegisterCommands<AdminModule>();          
@@ -65,18 +63,13 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<ImageModule>();
             commands.RegisterCommands<GamesModule>();
             commands.RegisterCommands<VideoModule>();
-
+            commands.RegisterCommands<TicketModule>();
+            commands.RegisterCommands<RappelModule>();
+         
             discord.UpdateStatusAsync(discordActivity);
 
             return discord;
         }
-
-
-
-
-
-   
-
 
     }
 }
