@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+using ReaderClassLibrary.Interfaces;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -20,10 +21,13 @@ namespace ModuleBotClassLibrary
 
         private IUtilsService utilsService { get; init; }
         private IScreenerSite ScreenerSite { get; init; }
+
+        private ILaposteApi LaposteService { get; init; }
         public OtherToolsModule()
         {
             utilsService = new UtilsService();
             ScreenerSite = new ScreenerSite();
+            LaposteService = new LaposteService(new HttpClient());
         }
 
 
@@ -115,7 +119,27 @@ namespace ModuleBotClassLibrary
 
 
         }
-    
+
+        [Command("laposte")]
+        public async Task TrackPackageCommand(CommandContext ctx, string idShip)
+        {
+
+            try
+            {
+                var reponse = LaposteService.Get(idShip);
+
+                await ctx.RespondAsync(reponse.Result.ToString());
+            }
+            catch(Exception ex)
+            {
+                await ctx.RespondAsync("ok");
+            }
+           
+       
+
+
+
+        }
 
 
 
