@@ -127,8 +127,9 @@ namespace ModuleBotClassLibrary
             try
             {
                 var reponse = LaposteService.Get(idShip);
+                var response = reponse.Result; 
 
-                await ctx.RespondAsync(reponse.Result.ToString());
+                await ctx.RespondAsync(response.ToString());
             }
             catch(Exception ex)
             {

@@ -37,7 +37,7 @@ namespace ReaderClassLibrary.Reader
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", AppSetting["bearer_api_consumer:token_laposte_api"]);
             HttpClient.DefaultRequestHeaders.Accept.Clear();
 
-            uri = AppSetting["url_api:laposte_api"];
+            uri = "https://api.laposte.fr/suivi/v2/idships/";
 
             HttpClient.BaseAddress = new Uri(uri);
 
@@ -50,7 +50,9 @@ namespace ReaderClassLibrary.Reader
             try
             {
                 var url = HttpClient.BaseAddress.ToString() + idShip + "?lang = fr_FR";
-                var resultat =  HttpClient.GetFromJsonAsync<ReturnMessage>(uri);
+                HttpClient.BaseAddress = new Uri(url);
+                
+                var resultat = HttpClient.GetFromJsonAsync<ReturnMessage>(uri);
 
                 return resultat;
             }
