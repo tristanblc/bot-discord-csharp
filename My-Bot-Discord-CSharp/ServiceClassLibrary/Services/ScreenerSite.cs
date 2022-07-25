@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using ExceptionClassLibrary;
 using HtmlAgilityPack;
 using ModuleBotClassLibrary.Services;
 using OpenQA.Selenium;
@@ -20,13 +21,13 @@ namespace ServiceClassLibrary.Services
         public IUtilsService UtilsService { get; init; }
 
         public IFileService FileService { get; init; }
-        private string DirectoryForSave { get; init; } = Path.Join(Directory.GetCurrentDirectory(), "document");
+        private string DirectoryForSave { get; init; } = Path.Join(Directory.GetCurrentDirectory(), "documents");
         public ScreenerSite()
         {
             UtilsService = new UtilsService();
             FileService = new FileService();
         }
-        public DiscordMessageBuilder MakeFileOfSite(string url)
+        public DiscordEmbedBuilder MakeFileOfSite(string url)
         {
 
             try
@@ -35,19 +36,32 @@ namespace ServiceClassLibrary.Services
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load(Url);
 
-                var docname = $"pdf_{DateTime.Now}";
+                var docname = $"pdf_test.html";
 
-                FileService.SavePDFFile(doc, docname);             
+                try
+                {
 
-              
+                    FileService.SavePDFFile(doc, docname);
+                }
+                catch (Exception ex) {
 
-                var message = UtilsService.CreateNewEmbed("Screenshot", DiscordColor.Azure, $"take screenshot of {url}");
 
-         
-                return UtilsService.SendImage(docname);
+                    throw new FileDownloadException("Exception");                
+                
+                }
+
+
+                var message = UtilsService.CreateNewEmbed("Screenshot", DiscordColor.Azure, $"Take screenshot");
+           
+
+                return message;
 
             }
-            catch(Exception ex)
+            catch(FileDownloadException fileexception)
+            {
+                throw new FileDownloadException($"Error : can't save file");
+            } 
+             catch(Exception ex)
             {
                 throw new Exception($"Error : can't take a screenshot from url :{ url }");
             }

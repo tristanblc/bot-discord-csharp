@@ -77,10 +77,32 @@ namespace ModuleBotClassLibrary.Services
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                using (var fs = new FileStream("path", FileMode.OpenOrCreate))
-                {
-                    doc.Save(fs);
-                }
+   
+
+                var pageContent = doc.Text;
+
+
+                var filePath = Path.Combine(path, filename);
+
+
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(pageContent));
+
+           
+                stream.Seek(0, SeekOrigin.Begin);
+
+
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+
+                var file = File.Create(filePath);
+                var bytes = pageContent.Select(x => (byte)x).ToArray();
+
+                file.Write(bytes);
+                file.Close();
+          
+
+
 
             }
             catch (Exception ex)
