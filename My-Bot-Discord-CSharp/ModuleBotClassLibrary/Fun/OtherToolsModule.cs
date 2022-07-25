@@ -1,9 +1,11 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+
 using ExceptionClassLibrary;
+
 using ReaderClassLibrary.Interfaces;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -26,6 +28,7 @@ namespace ModuleBotClassLibrary
         private ILaposteApi LaposteService { get; init; }
 
         private string DirectoryForSave { get; init; } = Path.Join(Directory.GetCurrentDirectory(), "documents");
+
         public OtherToolsModule()
         {
             utilsService = new UtilsService();
@@ -142,6 +145,7 @@ namespace ModuleBotClassLibrary
 
 
         }
+
 
         [Command("laposte")]
         public async Task TrackPackageCommand(CommandContext ctx, string idShip)
