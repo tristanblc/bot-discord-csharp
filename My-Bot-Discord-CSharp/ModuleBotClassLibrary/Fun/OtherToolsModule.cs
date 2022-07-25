@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+
+using ExceptionClassLibrary;
+
 using ReaderClassLibrary.Interfaces;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -23,6 +26,9 @@ namespace ModuleBotClassLibrary
         private IScreenerSite ScreenerSite { get; init; }
 
         private ILaposteApi LaposteService { get; init; }
+
+        private string DirectoryForSave { get; init; } = Path.Join(Directory.GetCurrentDirectory(), "documents");
+
         public OtherToolsModule()
         {
             utilsService = new UtilsService();
@@ -49,12 +55,31 @@ namespace ModuleBotClassLibrary
             await ctx.RespondAsync(url);
         }
 
-        [Command("screensite")]
+        [Command("site2html")]
         public async Task ScreenCommand(CommandContext ctx, string url)
         {
+            try
+            {
 
-            var message = ScreenerSite.MakeFileOfSite(url);
-            message.SendAsync(ctx.Channel);
+                var docname = $"pdf_test.html";
+
+
+                var message = ScreenerSite.MakeFileOfSite(url);
+                await ctx.RespondAsync(message.Build());
+
+
+                var path = Path.Join(DirectoryForSave, docname);
+                DiscordMessageBuilder discordMessage = utilsService.SendImage(path);
+             
+
+                discordMessage.SendAsync(ctx.Channel);
+            }
+            catch(FileDownloadException exe)
+            {
+                await ctx.RespondAsync("File downloader error");
+            }
+           
+           
         }
 
 
@@ -70,6 +95,7 @@ namespace ModuleBotClassLibrary
                 var animal = await service.Get();
                 builder.Description = animal.url.ToString();
             }
+         
             catch (Exception ex)
             {
                 builder.Description = "error";
@@ -120,6 +146,7 @@ namespace ModuleBotClassLibrary
 
         }
 
+
         [Command("laposte")]
         public async Task TrackPackageCommand(CommandContext ctx, string idShip)
         {
@@ -141,10 +168,6 @@ namespace ModuleBotClassLibrary
 
 
         }
-
-
-
-
 
     }
 }

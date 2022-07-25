@@ -9,6 +9,6 @@ namespace ServiceClassLibrary.Interfaces
 {
     public interface IScreenerSite
     {
-        DiscordMessageBuilder MakeFileOfSite(string url);
+        DiscordEmbedBuilder MakeFileOfSite(string url);
     }
 }
