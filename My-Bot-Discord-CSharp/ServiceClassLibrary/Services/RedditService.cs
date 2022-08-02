@@ -28,12 +28,6 @@ namespace ServiceClassLibrary.Services
             UtilsService = new UtilsService();
         }
 
-        public void Connect(string appId, string refreshedToken)
-        {
-            
-        }
-
-
         public List<Post> GetPostsFromSubRedditName(string name)
         {
             try
