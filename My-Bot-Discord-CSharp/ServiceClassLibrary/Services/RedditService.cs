@@ -24,13 +24,13 @@ namespace ServiceClassLibrary.Services
 
         public RedditService(string appId,string token)
         {
-            this.Connect(appId,token);
+            RedditClient = new RedditClient(appId,token);
             UtilsService = new UtilsService();
         }
 
-        internal void Connect(string appId, string refreshedToken)
+        public void Connect(string appId, string refreshedToken)
         {
-            RedditClient = new RedditClient(appId, refreshedToken);
+            
         }
 
 
@@ -38,6 +38,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
+
                 return RedditClient.Subreddit(name).Posts.New;
             }
           

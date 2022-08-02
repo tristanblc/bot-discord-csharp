@@ -11,13 +11,13 @@ namespace ServiceClassLibrary.Interfaces
 {
     internal interface IRedditService
     {
-        internal void Connect(string appId,string refreshedToken);
 
         List<Post>  GetPostsFromSubRedditName(string name);
 
         Post GetLatestPostFromSubReddit(string subname);
 
         DiscordEmbedBuilder ConvertPostToDiscordEmbed(Post post);
+
 
     }
 }
