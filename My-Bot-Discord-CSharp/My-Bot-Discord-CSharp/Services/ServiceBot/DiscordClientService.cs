@@ -8,6 +8,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
+using ModuleBotClassLibrary.Fun;
 using My_Bot_Discord_CSharp.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<VideoModule>();
             commands.RegisterCommands<TicketModule>();
             commands.RegisterCommands<RappelModule>();
+            commands.RegisterCommands<RedditModule>();
          
             discord.UpdateStatusAsync(discordActivity);
 
