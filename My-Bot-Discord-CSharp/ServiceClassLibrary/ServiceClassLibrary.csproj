@@ -19,6 +19,7 @@
     <PackageReference Include="PDFsharp" Version="1.50.5147" />
     <PackageReference Include="PuppeteerSharp" Version="7.0.0" />
     <PackageReference Include="Reddit" Version="1.5.2" />
+    <PackageReference Include="Reddit.AuthTokenRetrieverLib" Version="1.5.2" />
     <PackageReference Include="Selenium.WebDriver" Version="4.2.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="103.0.5060.2400-beta" />
     <PackageReference Include="Serilog" Version="2.11.1-dev-01397" />

@@ -3,10 +3,12 @@ using DSharpPlus.Entities;
 using ExceptionClassLibrary;
 using Microsoft.Extensions.Configuration;
 using Reddit;
+using Reddit.AuthTokenRetriever;
 using Reddit.Controllers;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +24,18 @@ namespace ServiceClassLibrary.Services
 
         private IMapper Mapper { get; set; }
 
-        public RedditService(string appId,string token)
+        private string BrowserPath { get; init; }
+
+        public RedditService(string appId,string appSecret,string browserPath)
+
         {
-            RedditClient = new RedditClient(appId,token);
+            BrowserPath = browserPath;
+
+            var token = this.GetAuthorizationToken(appId, appSecret, "8080");
+
+
+         //ssedditClient = new RedditClient(appId,token);
+
             UtilsService = new UtilsService();
         }
 
@@ -72,6 +83,57 @@ namespace ServiceClassLibrary.Services
                 throw new RedditException("cannot convert to discordembed");
             }
            
+        }
+
+        public string GetAuthorizationToken(string appId, string appSecret, string port)
+        {
+            try
+            {
+
+
+                AuthTokenRetrieverLib authTokenRetrieverLib = new AuthTokenRetrieverLib(appId, appSecret);
+  
+                authTokenRetrieverLib.AwaitCallback();
+
+                // Open the browser to the Reddit authentication page.  Once the user clicks "accept", Reddit will redirect the browser to localhost:8080, where AwaitCallback will take over.  --Kris
+                OpenBrowser(authTokenRetrieverLib.AuthURL());
+
+                // Replace this with whatever you want the app to do while it waits for the user to load the auth page and click Accept.  --Kris
+                while (true) {
+
+                    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
+
+
+
+                }
+
+                // Cleanup.  --Kris
+                authTokenRetrieverLib.StopListening();
+
+                return authTokenRetrieverLib.RefreshToken;
+            }
+            catch(Exception ex)
+            {
+                throw new RedditException("cannot get refresh token");
+            }
+            throw new NotImplementedException();
+        }
+
+        public static void OpenBrowser(string authUrl)
+        {
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe")
+                {
+                    Arguments = authUrl
+
+                };
+                Process.Start(processStartInfo);
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                throw new Exception("erroe");
+            }
         }
     }
 }
