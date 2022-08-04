@@ -39,6 +39,10 @@ namespace ServiceClassLibrary.Services
             UtilsService = new UtilsService();
         }
 
+        public RedditService()
+        {
+        }
+
         public List<Post> GetPostsFromSubRedditName(string name)
         {
             try
@@ -92,34 +96,34 @@ namespace ServiceClassLibrary.Services
 
 
                 AuthTokenRetrieverLib authTokenRetrieverLib = new AuthTokenRetrieverLib(appId, appSecret);
-  
-                authTokenRetrieverLib.AwaitCallback();
 
-                // Open the browser to the Reddit authentication page.  Once the user clicks "accept", Reddit will redirect the browser to localhost:8080, where AwaitCallback will take over.  --Kris
+                authTokenRetrieverLib.AwaitCallback(false);
+
+
                 OpenBrowser(authTokenRetrieverLib.AuthURL());
 
                 // Replace this with whatever you want the app to do while it waits for the user to load the auth page and click Accept.  --Kris
-                while (true) {
+                //while (true) {
 
-                    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
+                //    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
 
 
 
-                }
+                //}
 
                 // Cleanup.  --Kris
                 authTokenRetrieverLib.StopListening();
 
                 return authTokenRetrieverLib.RefreshToken;
             }
-            catch(Exception ex)
+            catch(Exception ex)s
             {
                 throw new RedditException("cannot get refresh token");
             }
             throw new NotImplementedException();
         }
 
-        public static void OpenBrowser(string authUrl)
+        public void OpenBrowser(string authUrl)
         {
             try
             {

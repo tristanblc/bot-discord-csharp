@@ -21,6 +21,5 @@ namespace ServiceClassLibrary.Interfaces
 
 
         void OpenBrowser(string authUrl);
-
     }
 }
