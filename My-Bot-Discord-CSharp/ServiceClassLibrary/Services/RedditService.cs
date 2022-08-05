@@ -95,28 +95,27 @@ namespace ServiceClassLibrary.Services
             {
 
 
-                AuthTokenRetrieverLib authTokenRetrieverLib = new AuthTokenRetrieverLib(appId, appSecret);
 
-                authTokenRetrieverLib.AwaitCallback(false);
+                AuthTokenRetrieverLib authTokenRetrieverLib = new AuthTokenRetrieverLib(appId, appSecret, 800);
 
+
+                authTokenRetrieverLib.AwaitCallback();
+           
 
                 OpenBrowser(authTokenRetrieverLib.AuthURL());
-
                 // Replace this with whatever you want the app to do while it waits for the user to load the auth page and click Accept.  --Kris
-                //while (true) {
-
-                //    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
-
-
-
-                //}
+                while (authTokenRetrieverLib.RefreshToken == null)
+                {
+                    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
+                }
+                
 
                 // Cleanup.  --Kris
                 authTokenRetrieverLib.StopListening();
 
                 return authTokenRetrieverLib.RefreshToken;
             }
-            catch(Exception ex)s
+            catch(Exception ex)
             {
                 throw new RedditException("cannot get refresh token");
             }

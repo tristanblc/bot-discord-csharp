@@ -6,6 +6,7 @@
     <RootNamespace>My_Bot_Discord_CSharp</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,5 +46,5 @@
     <ProjectReference Include="..\ModuleBotClassLibrary\ModuleBotClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
   </ItemGroup>
-
+   
 </Project>
