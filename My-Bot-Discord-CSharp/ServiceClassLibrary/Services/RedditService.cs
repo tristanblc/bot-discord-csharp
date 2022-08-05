@@ -72,9 +72,10 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                var contents = $"Author: {post.Author} Comments: {post.Comments} Created at : {post.Created}";
-
-                return UtilsService.CreateNewEmbed($"{post.Title}",DiscordColor.Aquamarine,contents);
+                var contents = $"Author: {post.Author} - Created at : {post.Created} \n";
+                contents += $"https://www.reddit.com/{post.Permalink}";
+                var embed  = UtilsService.CreateNewEmbed($"{post.Title}",DiscordColor.Aquamarine,contents);
+                return embed;
        
 
             }
@@ -99,14 +100,13 @@ namespace ServiceClassLibrary.Services
            
 
                 OpenBrowser(authTokenRetrieverLib.AuthURL());
-                // Replace this with whatever you want the app to do while it waits for the user to load the auth page and click Accept.  --Kris
+
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {
-                    //Console.WriteLine(authTokenRetrieverLib.RefreshToken);
-                }
-                
+                  
+                }                
 
-                // Cleanup.  --Kris
+             
                 authTokenRetrieverLib.StopListening();
 
                 return authTokenRetrieverLib.RefreshToken;
@@ -131,7 +131,7 @@ namespace ServiceClassLibrary.Services
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                throw new Exception("erroe");
+                throw new Exception("error browser");
             }
         }
     }
