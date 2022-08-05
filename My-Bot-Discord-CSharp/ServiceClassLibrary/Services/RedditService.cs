@@ -34,13 +34,9 @@ namespace ServiceClassLibrary.Services
             var token = this.GetAuthorizationToken(appId, appSecret, "8080");
 
 
-         //ssedditClient = new RedditClient(appId,token);
+            RedditClient = new RedditClient(appId, token,appSecret);
 
             UtilsService = new UtilsService();
-        }
-
-        public RedditService()
-        {
         }
 
         public List<Post> GetPostsFromSubRedditName(string name)
@@ -106,7 +102,7 @@ namespace ServiceClassLibrary.Services
                 // Replace this with whatever you want the app to do while it waits for the user to load the auth page and click Accept.  --Kris
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {
-                    Console.WriteLine(authTokenRetrieverLib.RefreshToken);
+                    //Console.WriteLine(authTokenRetrieverLib.RefreshToken);
                 }
                 
 
