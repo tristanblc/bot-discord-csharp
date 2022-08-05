@@ -12,6 +12,7 @@ namespace ServiceClassLibrary.Interfaces
     internal interface IRedditService
     {
 
+        string GetAuthorizationToken(string appId, string appSecret, string port);
         List<Post>  GetPostsFromSubRedditName(string name);
 
         Post GetLatestPostFromSubReddit(string subname);
@@ -19,5 +20,6 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertPostToDiscordEmbed(Post post);
 
 
+        void OpenBrowser(string authUrl);
     }
 }

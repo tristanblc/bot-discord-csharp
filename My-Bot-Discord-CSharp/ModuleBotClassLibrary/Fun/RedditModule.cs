@@ -23,7 +23,7 @@ namespace ModuleBotClassLibrary.Fun
 
             IConfiguration AppSetting = builder.Build();
 
-            RedditService = new RedditService(AppSetting["Reddit:appId"], AppSetting["Reddit:token"]);
+            RedditService = new RedditService(AppSetting["Reddit:appId"], AppSetting["Reddit:appSecret"], AppSetting["Reddit:browse"]);
             UtilsService = new UtilsService();
         }
 

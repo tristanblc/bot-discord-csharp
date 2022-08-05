@@ -6,6 +6,7 @@
     <RootNamespace>My_Bot_Discord_CSharp</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +37,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
+    <PackageReference Include="Reddit" Version="1.5.2" />
+    <PackageReference Include="Reddit.AuthTokenRetrieverLib" Version="1.5.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,5 +46,5 @@
     <ProjectReference Include="..\ModuleBotClassLibrary\ModuleBotClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
   </ItemGroup>
-
+   
 </Project>
