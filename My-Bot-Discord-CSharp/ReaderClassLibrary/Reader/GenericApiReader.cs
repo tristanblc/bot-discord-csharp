@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace ReaderClassLibrary.Reader
         private string uri { get; set; }
 
         private IMapper Mapper { get; set; }
+
+        private ILoggerProject LoggerProject { get; init; }
 
         public GenericApiReader(HttpClient httpClient, string baseuri)
         {
@@ -55,6 +58,7 @@ namespace ReaderClassLibrary.Reader
                 return resultat;
             }
             catch (Exception ex){
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return null;
             }
       
@@ -77,6 +81,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return null;
             }
 
@@ -97,6 +102,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return null;
             }
 
@@ -112,8 +118,7 @@ namespace ReaderClassLibrary.Reader
                 var resultat = await _httpClient.PostAsJsonAsync<T>(uri, item); 
                 if(!resultat.IsSuccessStatusCode)
                 {
-                    
-                    return new BadRequestResult();
+                                    return new BadRequestResult();
                 }
                
                 return new OkResult();
@@ -122,6 +127,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return new BadRequestResult();
             }
 
@@ -144,6 +150,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return new BadRequestResult();
             }
         }
@@ -167,6 +174,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch(Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return new BadRequestResult();
             }
         }

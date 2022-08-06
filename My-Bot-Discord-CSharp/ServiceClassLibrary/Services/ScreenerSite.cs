@@ -21,11 +21,14 @@ namespace ServiceClassLibrary.Services
         public IUtilsService UtilsService { get; init; }
 
         public IFileService FileService { get; init; }
+
+        private ILoggerProject LoggerProject { get; init; }
         private string DirectoryForSave { get; init; } = Path.Join(Directory.GetCurrentDirectory(), "documents");
         public ScreenerSite()
         {
             UtilsService = new UtilsService();
             FileService = new FileService();
+            LoggerProject = new LoggerProject();
         }
         public DiscordEmbedBuilder MakeFileOfSite(string url)
         {
@@ -45,8 +48,11 @@ namespace ServiceClassLibrary.Services
                 }
                 catch (Exception ex) {
 
+                    var exception_message = "cannot convert to HTML File";
+                    LoggerProject.WriteLogErrorLog(exception_message);
+      
 
-                    throw new FileDownloadException("Exception");                
+                    throw new FileDownloadException(exception_message);                
                 
                 }
 
@@ -59,11 +65,18 @@ namespace ServiceClassLibrary.Services
             }
             catch(FileDownloadException fileexception)
             {
-                throw new FileDownloadException($"Error : can't save file");
+                var exception_message = "cannot save file";
+                LoggerProject.WriteLogErrorLog(exception_message);
+
+
+                throw new FileDownloadException(exception_message);
+    
             } 
              catch(Exception ex)
             {
-                throw new Exception($"Error : can't take a screenshot from url :{ url }");
+                var exception_message = $"Error : can't take a screenshot from url :{url}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new Exception(exception_message);
             }
           
         }

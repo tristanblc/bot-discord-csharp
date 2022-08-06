@@ -10,6 +10,8 @@ using DSharpPlus.Net;
 using ModuleBotClassLibrary;
 using ModuleBotClassLibrary.Fun;
 using My_Bot_Discord_CSharp.Services.Interface;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +22,16 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
 {
     public class DiscordClientService: IDiscordClientService
     {
+        private ILoggerProject LoggerProject { get; init; }
         public DiscordClientService()
         {
-
+            LoggerProject = new LoggerProject();
         }
         public DiscordClient CreateDiscordClient()
         {
 
             Startup startup = new Startup();
+            LoggerProject.WriteInformationLog("Discord client initialize..");
 
             var discord = new DiscordClient(new DiscordConfiguration()
             {
@@ -69,6 +73,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<RedditModule>();
          
             discord.UpdateStatusAsync(discordActivity);
+            LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;
         }

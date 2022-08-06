@@ -6,6 +6,8 @@ using AutoMapper;
 using BotClassLibrary;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 
 namespace ApiApplication.Controllers
 {
@@ -20,12 +22,14 @@ namespace ApiApplication.Controllers
         private readonly ApplicationDbContext Context;
 
         private readonly IGenericRepository<Citation> CitationRepository;
+        private ILoggerProject LoggerProject { get; init; }
 
         public CitationController(IMapper mapper, ApplicationDbContext context, IGenericRepository<Citation> citationRepository)
         {
             Mapper = mapper;
             Context = context;
             CitationRepository = citationRepository;
+            LoggerProject = new LoggerProject();
         }
 
         [Authorize]
@@ -43,8 +47,8 @@ namespace ApiApplication.Controllers
 
             }
             catch (Exception ex)
-
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -68,6 +72,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return NotFound();
             }
         }
@@ -94,7 +99,8 @@ namespace ApiApplication.Controllers
 
             }
             catch (Exception ex)
-            {          
+            {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
@@ -124,6 +130,7 @@ namespace ApiApplication.Controllers
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
