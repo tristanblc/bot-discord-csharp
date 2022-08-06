@@ -3,6 +3,8 @@ using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using My_Bot_Discord_CSharp.Services.Interface;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,8 @@ namespace My_Bot_Discord_CSharp.Services.Utils
 
         public int Port { get; private set; }
         public string HostName { get; private set; }
+
+        private ILoggerProject LoggerProject { get; init; }
 
         public void ConfigureServices()
         {
@@ -46,12 +50,15 @@ namespace My_Bot_Discord_CSharp.Services.Utils
 
         public ConfigurationSettings()
         {
+            LoggerProject = new LoggerProject();
             try
-            {    
+            {                                
                 ConfigureServices();
+                LoggerProject.WriteInformationLog("Configuration services initialized");
             }
             catch(ProjectConfigurationException ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);                
                 throw ex;
             }
            

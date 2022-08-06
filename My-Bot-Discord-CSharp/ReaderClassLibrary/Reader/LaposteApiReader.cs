@@ -2,6 +2,8 @@
 using BotClassLibrary.Package;
 using Microsoft.Extensions.Configuration;
 using ReaderClassLibrary.Interfaces;
+using ServiceClassLibrary.Interfaces;
+using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,8 @@ namespace ReaderClassLibrary.Reader
         private string uri { get; set; }
 
         private IMapper Mapper { get; set; }
+
+        private ILoggerProject LoggerProject { get; init; }
 
         public LaposteApiReader(HttpClient httpClient)
         {
@@ -41,6 +45,9 @@ namespace ReaderClassLibrary.Reader
 
             HttpClient.BaseAddress = new Uri(uri);
 
+
+            LoggerProject = new LoggerProject();
+
         }
 
 
@@ -58,6 +65,7 @@ namespace ReaderClassLibrary.Reader
             }
             catch (Exception ex)
             {
+                LoggerProject.WriteLogErrorLog(ex.Message);
                 return null;
             }
         }
