@@ -51,6 +51,7 @@ namespace ServiceClassLibrary.Services
                 return RedditClient.Subreddit(name).Posts.New;
             }
           
+
             catch(Exception ex)
             {
                 throw new RedditException($"Error cannot get from sub reddit named r/{name}");
