@@ -51,14 +51,12 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             discord.UseInteractivity(new InteractivityConfiguration()
             {
                 PollBehaviour = PollBehaviour.KeepEmojis,
-                Timeout = TimeSpan.FromSeconds(30)
+                Timeout = TimeSpan.FromDays(25)
             });
 
             var commands = discord.UseCommandsNext(command_configuration);
 
-            DiscordActivity discordActivity = new DiscordActivity();
-            discordActivity.StreamUrl = "https://github.com/tristanblc"; 
-        
+
             commands.RegisterCommands<InfoModule>();
             commands.RegisterCommands<OtherToolsModule>();
             commands.RegisterCommands<AdminModule>();          
@@ -72,7 +70,6 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<RappelModule>();
             commands.RegisterCommands<RedditModule>();
          
-            discord.UpdateStatusAsync(discordActivity);
             LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;

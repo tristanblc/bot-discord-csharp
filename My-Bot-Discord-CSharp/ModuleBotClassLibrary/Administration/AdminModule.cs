@@ -36,6 +36,50 @@ namespace ModuleBotClassLibrary
         }
 
 
+
+
+
+        [Command("changebotstatus")]
+        [Description("Bot Status")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleBotStatus(CommandContext ctx, string reason,string? media)
+        {
+
+            var builder = utilsService.CreateNewEmbed("Set bot status", DiscordColor.Green, $"Set discord bot activity");
+         
+            try
+            {
+                DiscordActivity activity = null;
+                switch (media.ToLower())
+                {
+                    case "play":
+                        activity = new DiscordActivity(reason, ActivityType.ListeningTo);
+                        break;
+                    case "stream":
+                        activity = new DiscordActivity(reason, ActivityType.Streaming);
+                        break;
+
+                    case "watch":
+                        activity = new DiscordActivity(reason, ActivityType.Watching);
+                        break;
+                    default:
+                        activity = new DiscordActivity(reason, ActivityType.Playing);
+                        break;
+
+                }
+       
+                await ctx.Client.UpdateStatusAsync(activity);
+
+                await ctx.RespondAsync(builder.Build());
+
+            }
+            catch(Exception ex)
+            {
+                await ctx.RespondAsync(builder.Build());
+            }
+        
+        }
+
         [Command("unban")]
         [Description("unban user")]
         [RequirePermissions(Permissions.Administrator)]
