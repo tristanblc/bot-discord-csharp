@@ -43,9 +43,8 @@ static async Task MainAsync()
         };
 
 
-
-        var act = new DiscordActivity("temporiser sur COD Black Ops II",ActivityType.Playing);
-        act.Name = "temporiser sur COD Black Ops II . Je campe pas, je temporise. Bien sur.";
+        var act = new DiscordActivity("Les tutos de chef michel - !help",ActivityType.Watching);
+       
 
         var lavalink = discord.UseLavalink();
 
