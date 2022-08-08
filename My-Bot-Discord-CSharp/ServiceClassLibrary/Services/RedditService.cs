@@ -38,6 +38,8 @@ namespace ServiceClassLibrary.Services
 
             BrowserPath = browserPath;
 
+            var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
+
 
             var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
 
@@ -118,10 +120,9 @@ namespace ServiceClassLibrary.Services
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {                  
                   
-
                 }              
 
-                  
+
                 }              
 
              
