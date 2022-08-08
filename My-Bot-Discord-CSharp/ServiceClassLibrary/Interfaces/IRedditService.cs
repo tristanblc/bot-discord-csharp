@@ -30,6 +30,9 @@ namespace ServiceClassLibrary.Interfaces
 
         List<Post> GetBestPostSubReddit(string subreddit);
 
+
+        public List<Post> GetHotPostFromSub(string subname);
+
         void UpdateBotPreferenceNSFW(bool allowNSFW);
     }
 }

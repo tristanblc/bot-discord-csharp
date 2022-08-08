@@ -31,17 +31,17 @@ namespace ServiceClassLibrary.Services
 
         private string pId { get; set; }
 
-        public RedditService(string appId,string appSecret,string browserPath)
+        public RedditService(string appId, string appSecret, string browserPath)
         {
             BrowserPath = browserPath;
             LoggerProject = new LoggerProject();
 
             BrowserPath = browserPath;
 
-            var token = this.GetAuthorizationToken(appId, appSecret, "8080",browserPath);
+            var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
 
 
-            RedditClient = new RedditClient(appId, token,appSecret);
+            RedditClient = new RedditClient(appId, token, appSecret);
 
             UtilsService = new UtilsService();
         }
@@ -83,7 +83,7 @@ namespace ServiceClassLibrary.Services
             try
             {
                 var contents = $"Author: {post.Author} - Created at : {post.Created} \n";
-                contents += $"https://www.reddit.com/{post.Permalink}";
+                contents += $"https://www.reddit.com{post.Permalink}";
                 var embed  = UtilsService.CreateNewEmbed($"{post.Title}",DiscordColor.Aquamarine,contents);
                 return embed;
        
@@ -116,8 +116,7 @@ namespace ServiceClassLibrary.Services
                 LoggerProject.WriteInformationLog($"Finding reddit token");
 
                 while (authTokenRetrieverLib.RefreshToken == null)
-                {
-                   
+                {                  
                   
                 }              
              
@@ -216,14 +215,7 @@ namespace ServiceClassLibrary.Services
             try
             {
 
-                sub.Posts.GetTop(subreddit, "", "", 50, false).ToList().ForEach(post =>
-                {
-                    if (post.Created >= today && post.Created < today.AddDays(1))
-                    {
-                        posts.Add(post);
-
-                    }
-                });
+                return sub.Posts.GetTop(subreddit, "", "", 50, false).ToList();
                    
 
             }
@@ -246,24 +238,13 @@ namespace ServiceClassLibrary.Services
         public List<Post> GetBestPostSubReddit(string subreddit)
         {
             var sub = RedditClient.Subreddit(subreddit);
-            var today = DateTime.Now;
 
             List<Post> posts = new List<Post>();
 
 
             try
             {
-
-                sub.Posts.GetBest(subreddit,"",25,false).ToList().ForEach(post => 
-                {
-                    if (post.Created >= today && post.Created < today.AddDays(1))
-                    {
-                        posts.Add(post);
-
-                    }
-                });
-
-
+                return sub.Posts.GetBest(subreddit, "", 10, false).ToList();
             }
             catch (Exception ex)
             {
@@ -274,6 +255,8 @@ namespace ServiceClassLibrary.Services
             
             return posts;
         }
+
+       
 
         public void UpdateBotPreferenceNSFW(bool allowNSFW)
         {
@@ -289,6 +272,24 @@ namespace ServiceClassLibrary.Services
                 LoggerProject.WriteLogErrorLog(exception_message);
                 throw new RedditException(exception_message);
       
+            }
+        }
+
+        public List<Post> GetHotPostFromSub(string subname)
+        {
+            var sub = RedditClient.Subreddit(subname);
+
+            
+            try
+            {
+                return sub.Posts.GetHot(subname, "", "", 10, false);
+            }
+            catch(Exception ex)
+            {
+                var exception_message = "cannot get hot posts from /r{subname}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+
             }
         }
     }

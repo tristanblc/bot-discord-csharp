@@ -68,8 +68,6 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
 
             }
-
-
         }
     
 
@@ -80,10 +78,10 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var posts = RedditService.GetBestPostSubReddit(subname);
 
-                posts.ToList().ForEach(async post =>
+                posts.ToList().ForEach( post =>
                 {
                     var builder = RedditService.ConvertPostToDiscordEmbed(post);
-                    await ctx.RespondAsync(builder.Build());
+                    ctx.RespondAsync(builder.Build());
 
                 });
 
@@ -100,6 +98,51 @@ namespace ModuleBotClassLibrary.Fun
 
         }
 
+        [Command("gettopdaily")]
+        public async Task HandleGetTopDaily(CommandContext ctx, string subname)
+        {
+            try
+            {
+
+                var posts = RedditService.GetTopDailyPost(subname);
+                posts.ToList().ForEach(post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+                }
+               );
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+
+
+            }
+        }
+
+        [Command("gethotsreddit")]
+        public async Task HandleGetHotsReddit(CommandContext ctx, string subname)
+        {
+            try
+            {
+                var posts = RedditService.GetHotPostFromSub(subname);
+                posts.ToList().ForEach(post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+
+                });
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
 
 
         [Command("changeNSFW")]
