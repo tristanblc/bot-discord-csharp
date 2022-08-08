@@ -41,8 +41,6 @@ namespace ServiceClassLibrary.Services
             var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
 
 
-            var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
-
             RedditClient = new RedditClient(appId, token, appSecret);
 
             UtilsService = new UtilsService();
@@ -123,7 +121,7 @@ namespace ServiceClassLibrary.Services
                 }              
 
 
-                }              
+                         
 
              
                 authTokenRetrieverLib.StopListening();
@@ -145,7 +143,7 @@ namespace ServiceClassLibrary.Services
                 throw new RedditException("cannot get refresh token");
 
             }
-            throw new NotImplementedException();
+          
         }
 
         public void OpenBrowser(string authUrl,string browser)
