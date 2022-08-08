@@ -21,5 +21,15 @@ namespace ServiceClassLibrary.Interfaces
 
 
         void OpenBrowser(string authUrl,string browserpath);
+
+
+        void CloseBrowser();
+        List<Post> SearchPostFromSubAndPassPhrase(string subreddit, string passPhrase);
+
+        List<Post> GetTopDailyPost(string subreddit);
+
+        List<Post> GetBestPostSubReddit(string subreddit);
+
+        void UpdateBotPreferenceNSFW(bool allowNSFW);
     }
 }

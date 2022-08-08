@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Reddit;
 using Reddit.AuthTokenRetriever;
 using Reddit.Controllers;
+using Reddit.Inputs.Search;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace ServiceClassLibrary.Services
         private string BrowserPath { get; init; }
 
         private ILoggerProject LoggerProject { get; init; }
+
+        private string pId { get; set; }
 
         public RedditService(string appId,string appSecret,string browserPath)
         {
@@ -114,12 +117,13 @@ namespace ServiceClassLibrary.Services
 
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {
-                  
+                   
                   
                 }              
-
              
                 authTokenRetrieverLib.StopListening();
+                
+                CloseBrowser();
 
                 LoggerProject.WriteInformationLog($"Program have reddit token - token : {authTokenRetrieverLib.RefreshToken}");
 
@@ -143,12 +147,16 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                ProcessStartInfo processStartInfo = new ProcessStartInfo("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe")
+                ProcessStartInfo processStartInfo = new ProcessStartInfo(browser)
                 {
                     Arguments = authUrl
 
                 };
-                Process.Start(processStartInfo);
+
+                var process = Process.Start(processStartInfo);
+
+                pId = process.Id.ToString();
+               
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -158,6 +166,129 @@ namespace ServiceClassLibrary.Services
                 throw new RedditException(exception_message);
               
 
+            }
+        }
+
+        public void CloseBrowser()
+        {
+            try
+            {
+                var process = Process.GetProcessById(int.Parse(pId));
+                process.CloseMainWindow();
+                process.Close();
+               
+
+            }
+            catch(Exception ex)
+            {
+                throw new RedditException("Cannot stop browse process");
+            }
+        }
+
+        public List<Post> SearchPostFromSubAndPassPhrase(string subreddit, string passPhrase)
+        {
+            var posts = new List<Post>();
+
+            try
+            {
+
+                return RedditClient.Subreddit(subreddit).Search(new SearchGetSearchInput(passPhrase));
+               
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot load search on r/{subreddit} & pass phrase : {passPhrase}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+            
+            return posts;
+        }
+
+        public List<Post> GetTopDailyPost(string subreddit)
+        {
+            var sub = RedditClient.Subreddit(subreddit);
+            var today = DateTime.Now;
+
+            List<Post> posts = new List<Post>();
+
+
+            try
+            {
+
+                sub.Posts.GetTop(subreddit, "", "", 50, false).ToList().ForEach(post =>
+                {
+                    if (post.Created >= today && post.Created < today.AddDays(1))
+                    {
+                        posts.Add(post);
+
+                    }
+                });
+                   
+
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot load top of subreddit r/{subreddit}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+       
+         
+
+            return posts;
+
+            
+            
+
+        }
+
+        public List<Post> GetBestPostSubReddit(string subreddit)
+        {
+            var sub = RedditClient.Subreddit(subreddit);
+            var today = DateTime.Now;
+
+            List<Post> posts = new List<Post>();
+
+
+            try
+            {
+
+                sub.Posts.GetBest(subreddit,"",25,false).ToList().ForEach(post => 
+                {
+                    if (post.Created >= today && post.Created < today.AddDays(1))
+                    {
+                        posts.Add(post);
+
+                    }
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception_message = $"cannot load top of subreddit r/{subreddit}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+            
+            return posts;
+        }
+
+        public void UpdateBotPreferenceNSFW(bool allowNSFW)
+        {
+            try
+            {
+                var pref = RedditClient.Account.Prefs();
+                pref.LabelNSFW  = allowNSFW;
+                RedditClient.Account.UpdatePrefs(new Reddit.Things.AccountPrefsSubmit(pref, null, false, null));
+            }
+            catch(Exception ex)
+            {
+                var exception_message = "cannot change nsfw status on reddit preference";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+      
             }
         }
     }
