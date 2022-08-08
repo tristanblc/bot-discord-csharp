@@ -38,8 +38,8 @@ namespace ServiceClassLibrary.Services
 
             BrowserPath = browserPath;
 
-            var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
 
+            var token = this.GetAuthorizationToken(appId, appSecret, "8080", browserPath);
 
             RedditClient = new RedditClient(appId, token, appSecret);
 
@@ -118,7 +118,12 @@ namespace ServiceClassLibrary.Services
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {                  
                   
+
                 }              
+
+                  
+                }              
+
              
                 authTokenRetrieverLib.StopListening();
 
