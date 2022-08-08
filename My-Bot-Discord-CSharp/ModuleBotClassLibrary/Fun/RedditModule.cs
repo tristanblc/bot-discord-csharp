@@ -50,29 +50,140 @@ namespace ModuleBotClassLibrary.Fun
 
             }
         }
-        
+
         [Command("getlatestpost")]
         public async Task HandleGetLatestPost(CommandContext ctx, string subname)
         {
             try
-                {
-                    var post  = RedditService.GetLatestPostFromSubReddit(subname);
-                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
-                    await ctx.RespondAsync(builder.Build());
+            {
+                var post = RedditService.GetLatestPostFromSubReddit(subname);
+                var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                await ctx.RespondAsync(builder.Build());
 
             }
-                catch (Exception ex)
-                {
-                    var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
                 await ctx.RespondAsync(exception.Build());
 
-                }
+            }
+        }
+    
+
+        [Command("getbest")]
+        public async Task HandleGetBestPostFromSub(CommandContext ctx, string subname)
+        {
+            try
+            {
+                var posts = RedditService.GetBestPostSubReddit(subname);
+
+                posts.ToList().ForEach( post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+
+                });
+
+                
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
 
 
             }
 
-
         }
+
+        [Command("gettopdaily")]
+        public async Task HandleGetTopDaily(CommandContext ctx, string subname)
+        {
+            try
+            {
+
+                var posts = RedditService.GetTopDailyPost(subname);
+                posts.ToList().ForEach(post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+                }
+               );
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+
+
+            }
+        }
+
+        [Command("gethotsreddit")]
+        public async Task HandleGetHotsReddit(CommandContext ctx, string subname)
+        {
+            try
+            {
+                var posts = RedditService.GetHotPostFromSub(subname);
+                posts.ToList().ForEach(post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+
+                });
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+
+        [Command("changeNSFW")]
+        public async Task HandleUserRedditPreference(CommandContext ctx, string setterbool)
+        {
+            try
+            {
+                bool isSet = false;
+                switch (setterbool.ToLower())
+                {
+                    case "false":
+                        isSet = false;
+                        break;
+                      
+                    case "true":
+                        isSet = true;
+                        break;
+                   default:
+                        var breakerMessage = UtilsService.CreateNewEmbed($"Impossible choice", DiscordColor.Red, $"You have to choice false or true");
+                        await ctx.RespondAsync(breakerMessage.Build());
+
+                        break;
+
+
+                }
+                RedditService.UpdateBotPreferenceNSFW(isSet);
+                var clientMessage = UtilsService.CreateNewEmbed($"Reddit policy changed",DiscordColor.Green, $"NFSW is set to {isSet.ToString()}");
+                await ctx.RespondAsync(clientMessage.Build());
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+    
+    
     }
+
+    
+
+}
 
