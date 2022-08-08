@@ -23,7 +23,6 @@ namespace ServiceClassLibrary.Interfaces
         void CloseBrowser(string browser);
         List<Post> SearchPostFromSubAndPassPhrase(string subreddit, string passPhrase);
 
-<<<<<<< HEAD
         List<Post> GetTopDailyPost(string subreddit);
 
         List<Post> GetBestPostSubReddit(string subreddit);
@@ -32,8 +31,6 @@ namespace ServiceClassLibrary.Interfaces
         public List<Post> GetHotPostFromSub(string subname);
 
         void UpdateBotPreferenceNSFW(bool allowNSFW);
-=======
-        void OpenBrowser(string authUrl,string browserpath);
->>>>>>> 492d0f75bf9c3d638721c92bf3a4e81b64c99a36
+
     }
 }
