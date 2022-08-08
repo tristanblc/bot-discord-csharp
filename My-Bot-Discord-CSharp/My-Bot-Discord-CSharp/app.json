@@ -5,12 +5,26 @@
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "Token": {{ TOKEN_BOT }},
+  "Token": "",
   "AllowedHosts": "*",
   "apiUrl": "https://localhost:7167/api",
   "Twitter": {
     "Key": "",
     "Secret": "",
     "Bearer": ""
+
+  },
+  "bearer_api_consumer": {
+    "token_laposte_api": ""
+  },
+
+  "url_api": {
+    "laposte_api": "https://api.laposte.fr/suivi/v2/idships/"
+  },
+  "Reddit": {
+    "appSecret": "",
+    "appId": "",
+    "browse": ""
+
   }
 }
