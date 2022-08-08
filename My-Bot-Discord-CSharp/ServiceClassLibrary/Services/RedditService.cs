@@ -121,8 +121,8 @@ namespace ServiceClassLibrary.Services
                 }              
              
                 authTokenRetrieverLib.StopListening();
-                
-                CloseBrowser();
+
+                CloseBrowser(browserpath);
 
                 LoggerProject.WriteInformationLog($"Program have reddit token - token : {authTokenRetrieverLib.RefreshToken}");
 
@@ -168,15 +168,25 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public void CloseBrowser()
+        public void CloseBrowser(string browser)
         {
+
+            string filename = browser.Split("\\").Last();
+            filename = filename.Substring(0,filename.Length - 4);
+
+
             try
             {
-                var process = Process.GetProcessById(int.Parse(pId));
-                process.CloseMainWindow();
-                process.Close();
-               
-
+                Process[] runningProcesses = Process.GetProcesses();
+                foreach (Process process in runningProcesses)
+                {
+                    if(process.ProcessName == filename)
+                    {
+                        process.Kill();
+                        LoggerProject.WriteInformationLog($"Kill browser process Id: {process.Id} - {process.ProcessName}");
+                    }
+                       
+                }
             }
             catch(Exception ex)
             {
@@ -229,9 +239,6 @@ namespace ServiceClassLibrary.Services
          
 
             return posts;
-
-            
-            
 
         }
 

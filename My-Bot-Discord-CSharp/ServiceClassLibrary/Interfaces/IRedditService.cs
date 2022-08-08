@@ -19,11 +19,8 @@ namespace ServiceClassLibrary.Interfaces
 
         DiscordEmbedBuilder ConvertPostToDiscordEmbed(Post post);
 
-
         void OpenBrowser(string authUrl,string browserpath);
-
-
-        void CloseBrowser();
+        void CloseBrowser(string browser);
         List<Post> SearchPostFromSubAndPassPhrase(string subreddit, string passPhrase);
 
         List<Post> GetTopDailyPost(string subreddit);
