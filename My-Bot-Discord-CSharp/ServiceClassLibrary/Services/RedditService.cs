@@ -121,8 +121,6 @@ namespace ServiceClassLibrary.Services
                 }              
 
 
-                         
-
              
                 authTokenRetrieverLib.StopListening();
 
