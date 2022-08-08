@@ -35,7 +35,7 @@ namespace ServiceClassLibrary.Services
 
             BrowserPath = browserPath;
 
-            var token = this.GetAuthorizationToken(appId, appSecret, "8080");
+            var token = this.GetAuthorizationToken(appId, appSecret, "8080",browserPath);
 
 
             RedditClient = new RedditClient(appId, token,appSecret);
@@ -95,7 +95,7 @@ namespace ServiceClassLibrary.Services
            
         }
 
-        public string GetAuthorizationToken(string appId, string appSecret, string port)
+        public string GetAuthorizationToken(string appId, string appSecret, string port,string browserpath)
         {
             try
             {
@@ -108,14 +108,15 @@ namespace ServiceClassLibrary.Services
                 authTokenRetrieverLib.AwaitCallback();
            
 
-                OpenBrowser(authTokenRetrieverLib.AuthURL());
+                OpenBrowser(authTokenRetrieverLib.AuthURL(),browserpath);
 
                 LoggerProject.WriteInformationLog($"Finding reddit token");
 
                 while (authTokenRetrieverLib.RefreshToken == null)
                 {
                   
-                }                
+                  
+                }              
 
              
                 authTokenRetrieverLib.StopListening();
@@ -138,7 +139,7 @@ namespace ServiceClassLibrary.Services
             throw new NotImplementedException();
         }
 
-        public void OpenBrowser(string authUrl)
+        public void OpenBrowser(string authUrl,string browser)
         {
             try
             {
