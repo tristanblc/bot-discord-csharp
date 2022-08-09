@@ -124,7 +124,7 @@ namespace ServiceClassLibrary.Services
              
                 authTokenRetrieverLib.StopListening();
 
-                CloseBrowser(browserpath);
+               // CloseBrowser(browserpath);
 
                 LoggerProject.WriteInformationLog($"Program have reddit token - token : {authTokenRetrieverLib.RefreshToken}");
 

@@ -261,33 +261,36 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("availableusername")]
-        public async Task HandleAvailableUser(CommandContext ctx, string username)
-        {
-            try
-            {
-                var isAvailable = RedditService.IsNotUsedUsername(username);
-                var response = new DiscordEmbedBuilder();
-                if (isAvailable)
-                {
-                   response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White,$"Username {username } is available " + DiscordEmoji.FromName(ctx.Client,":white_check_mark:"));
-                }
-                if (!isAvailable)
-                {
-                    response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White, $"Username {username} is not available  " + DiscordEmoji.FromName(ctx.Client,":x:"));
+        /*
+         * NEED TO PATCH
+         */
+        //[Command("availableusername")]
+        //public async Task HandleAvailableUser(CommandContext ctx, string username)
+        //{
+        //    try
+        //    {
+        //        var isAvailable = RedditService.IsNotUsedUsername(username);
+        //        var response = new DiscordEmbedBuilder();
+        //        if (isAvailable)
+        //        {
+        //           response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White,$"Username {username } is available " + DiscordEmoji.FromName(ctx.Client,":white_check_mark:"));
+        //        }
+        //        if (!isAvailable)
+        //        {
+        //            response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White, $"Username {username} is not available  " + DiscordEmoji.FromName(ctx.Client,":x:"));
                     
-                }
-                await ctx.RespondAsync(response.Build());
+        //        }
+        //        await ctx.RespondAsync(response.Build());
 
-            }
-            catch(Exception ex)
-            {
-                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.Build());
+        //        await ctx.RespondAsync(exception.Build());
                
-            }
-        }
+        //    }
+        //}
     }
 
 
