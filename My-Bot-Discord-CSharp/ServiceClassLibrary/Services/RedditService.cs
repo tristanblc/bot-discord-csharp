@@ -301,5 +301,71 @@ namespace ServiceClassLibrary.Services
 
             }
         }
+
+        public Post GetPostFromSub(string title, string subreddit)
+        {
+            var sub = RedditClient.Subreddit(subreddit);
+            try
+            {
+                return RedditClient.Subreddit(subreddit).Posts.New.Where(post => post.Title.CompareTo(title) >= 0).First();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                var exception_message =$"can't get from subreddit r/{subreddit} & title { title}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+
+            }
+
+
+        }
+
+        public List<Comment> GetCommentsFromPost(Post post)
+        {
+            return post.Comments.GetRandom().ToList();
+
+        }
+
+        public DiscordEmbedBuilder ConvertCommmentToDiscordEmbed(Comment commment)
+        {
+            try
+            {
+                var contents = $"Author: {commment.Author}";
+                contents += $"    {commment.Body}";
+                var embed = UtilsService.CreateNewEmbed($"{commment.ParentFullname}", DiscordColor.Aquamarine, contents);
+                return embed;
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception_message = "cannot convert to discordembed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+        }
+
+        public DiscordEmbedBuilder GetCountReplies(Post post)
+        {
+            try
+            {
+
+                var count =  post.Comments.GetComments("").Count;
+
+                var embed = UtilsService.CreateNewEmbed($"Number of replies on {post.Title}", DiscordColor.Aquamarine, count.ToString());
+
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot count post : {post.Fullname} replies";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);          
+            }
+        }
     }
 }

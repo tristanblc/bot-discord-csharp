@@ -32,5 +32,18 @@ namespace ServiceClassLibrary.Interfaces
 
         void UpdateBotPreferenceNSFW(bool allowNSFW);
 
+
+        Post GetPostFromSub(string title, string subreddit);
+
+        List<Comment> GetCommentsFromPost(Post post);
+
+        DiscordEmbedBuilder ConvertCommmentToDiscordEmbed(Comment comment);
+
+
+        DiscordEmbedBuilder GetCountReplies(Post post);
+
+        
+
+
     }
 }

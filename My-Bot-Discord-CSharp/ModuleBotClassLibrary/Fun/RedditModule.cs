@@ -179,7 +179,46 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
-    
+
+        [Command("getcomments")]  
+        public async Task HandleGetCommentsFromPost(CommandContext ctx,string subname,string title)
+        {
+            try
+            {
+
+                var post = RedditService.GetPostFromSub(title, subname);
+                var comments = RedditService.GetCommentsFromPost(post);
+                comments.ToList().ForEach(comment =>
+                {
+                    var builder = RedditService.ConvertCommmentToDiscordEmbed(comment);
+                    ctx.RespondAsync(builder.Build());
+                    
+                });
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getcountreplies")]
+        public async Task HandleGetCountReplies(CommandContext ctx, string subname,string title)
+        {
+            try
+            {
+                var post = RedditService.GetPostFromSub(title, subname);
+                var embed = RedditService.GetCountReplies(post);
+                await ctx.RespondAsync(embed.Build());
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
     
     }
 
