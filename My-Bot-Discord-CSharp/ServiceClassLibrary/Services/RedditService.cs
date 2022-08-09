@@ -301,5 +301,136 @@ namespace ServiceClassLibrary.Services
 
             }
         }
+
+        public Post GetPostFromSub(string title, string subreddit)
+        {
+            var sub = RedditClient.Subreddit(subreddit);
+            try
+            {
+                return RedditClient.Subreddit(subreddit).Posts.New.Where(post => post.Title.CompareTo(title) >= 0).First();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                var exception_message =$"can't get from subreddit r/{subreddit} & title { title}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+
+            }
+
+
+        }
+
+        public List<Comment> GetCommentsFromPost(Post post)
+        {
+            return post.Comments.GetRandom().ToList();
+
+        }
+
+        public DiscordEmbedBuilder ConvertCommmentToDiscordEmbed(Comment commment)
+        {
+            try
+            {
+                var contents = $"Author: {commment.Author}";
+                contents += $"    {commment.Body}";
+                var embed = UtilsService.CreateNewEmbed($"{commment.ParentFullname}", DiscordColor.Aquamarine, contents);
+                return embed;
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception_message = "cannot convert to discordembed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+        }
+
+        public DiscordEmbedBuilder GetCountReplies(Post post)
+        {
+            try
+            {
+
+                var count =  post.Comments.GetComments("").Count;
+
+                var embed = UtilsService.CreateNewEmbed($"Number of replies on {post.Title}", DiscordColor.Aquamarine, count.ToString());
+
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot count post : {post.Fullname} replies";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);          
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertUserInfoToEmbed(User user)
+        {
+            try
+            {
+                var contents = $"Username :  {user.Name}";
+                contents += $"Friend number : {user.NumFriends}";
+                contents += $"Karma link : {user.LinkKarma}";
+                contents += $"{user.Created.ToString()}";
+                var embed = UtilsService.CreateNewEmbed($"User data user {user.Name}", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot convert to discord embed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+         
+        }
+
+        public User GetUser(string username)
+        {
+            try
+            {
+                    return RedditClient.SearchUsers(new SearchGetSearchInput(username)).ToList().First();
+
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot return user from username : {username}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+          
+        }
+
+        public bool IsNotUsedUsername(string username)
+        {
+            try
+            {
+                return RedditClient.SearchUsers(new SearchGetSearchInput(username)).Count() != 0 ? false : true;
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot convert to discord embed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                return false;
+            }
+           
+        }
+
+        public List<Post> GetUserPosts(User user)
+        {
+            try
+            {
+                return user.PostHistory.ToList();
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot return uuser posts";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+        }
     }
 }

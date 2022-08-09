@@ -179,9 +179,117 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
-    
-    
+
+        [Command("getcomments")]  
+        public async Task HandleGetCommentsFromPost(CommandContext ctx,string subname,string title)
+        {
+            try
+            {
+
+                var post = RedditService.GetPostFromSub(title, subname);
+                var comments = RedditService.GetCommentsFromPost(post);
+                comments.ToList().ForEach(comment =>
+                {
+                    var builder = RedditService.ConvertCommmentToDiscordEmbed(comment);
+                    ctx.RespondAsync(builder.Build());
+                    
+                });
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getcountreplies")]
+        public async Task HandleGetCountReplies(CommandContext ctx, string subname,string title)
+        {
+            try
+            {
+                var post = RedditService.GetPostFromSub(title, subname);
+                var embed = RedditService.GetCountReplies(post);
+                await ctx.RespondAsync(embed.Build());
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getuserdate")]
+        public async Task HandleGetUserInfo(CommandContext ctx, string username)
+        {
+            try
+            {
+                var user = RedditService.GetUser(username);
+                var embed = RedditService.ConvertUserInfoToEmbed(user);
+                await ctx.RespondAsync(embed.Build());
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+
+            }
+        }
+
+        [Command("getuserposts")]
+        public async Task HandleGetUsersInfo(CommandContext ctx, string username)
+        {
+            try
+            {
+                var user = RedditService.GetUser(username);
+                var posts = RedditService.GetUserPosts(user);
+
+                posts.ToList().ForEach(post =>
+                {
+                    var builder = RedditService.ConvertPostToDiscordEmbed(post);
+                    ctx.RespondAsync(builder.Build());
+                });
+
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("availableusername")]
+        public async Task HandleAvailableUser(CommandContext ctx, string username)
+        {
+            try
+            {
+                var isAvailable = RedditService.IsNotUsedUsername(username);
+                var response = new DiscordEmbedBuilder();
+                if (isAvailable)
+                {
+                   response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White,$"Username {username } is available " + DiscordEmoji.FromName(ctx.Client,":white_check_mark:"));
+                }
+                if (!isAvailable)
+                {
+                    response = UtilsService.CreateNewEmbed("Check available username ", DiscordColor.White, $"Username {username} is not available  " + DiscordEmoji.FromName(ctx.Client,":x:"));
+                    
+                }
+                await ctx.RespondAsync(response.Build());
+
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+               
+            }
+        }
     }
+
 
     
 
