@@ -42,8 +42,14 @@ namespace ServiceClassLibrary.Interfaces
 
         DiscordEmbedBuilder GetCountReplies(Post post);
 
-        
+        DiscordEmbedBuilder ConvertUserInfoToEmbed(User user);
 
+
+        User GetUser(string username);
+
+        bool IsNotUsedUsername(string username);
+
+        List<Post> GetUserPosts(User user);
 
     }
 }

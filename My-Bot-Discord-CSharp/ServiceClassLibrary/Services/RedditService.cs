@@ -367,5 +367,73 @@ namespace ServiceClassLibrary.Services
                 throw new RedditException(exception_message);          
             }
         }
+
+        public DiscordEmbedBuilder ConvertUserInfoToEmbed(User user)
+        {
+            try
+            {
+                var contents = $"Username :  {user.Name}";
+                contents += $"Friend number : {user.NumFriends}";
+                contents += $"Karma link : {user.LinkKarma}";
+                contents += $"{user.Created.ToString()}";
+                var embed = UtilsService.CreateNewEmbed($"User data user {user.Name}", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot convert to discord embed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+         
+        }
+
+        public User GetUser(string username)
+        {
+            try
+            {
+                if (this.IsNotUsedUsername(username))
+                    return RedditClient.SearchUsers(new SearchGetSearchInput(username)).ToList().First();
+                else
+                    throw new RedditException($"Not user exists on reddit");
+
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot return user from username : {username}";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+          
+        }
+
+        public bool IsNotUsedUsername(string username)
+        {
+            try
+            {
+                return RedditClient.SearchUsers(new SearchGetSearchInput(username)) != null ? true : false;
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot convert to discord embed";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                return false;
+            }
+           
+        }
+
+        public List<Post> GetUserPosts(User user)
+        {
+            try
+            {
+                return user.PostHistory.ToList();
+            }
+            catch(Exception ex)
+            {
+                var exception_message = $"cannot return uuser posts";
+                LoggerProject.WriteLogErrorLog(exception_message);
+                throw new RedditException(exception_message);
+            }
+        }
     }
 }
