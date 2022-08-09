@@ -50,6 +50,8 @@ namespace ServiceClassLibrary.Interfaces
         bool IsNotUsedUsername(string username);
 
         List<Post> GetUserPosts(User user);
+        
+        
 
     }
 }

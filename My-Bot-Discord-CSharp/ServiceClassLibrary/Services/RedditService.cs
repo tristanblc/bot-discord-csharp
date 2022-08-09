@@ -392,10 +392,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                if (this.IsNotUsedUsername(username))
                     return RedditClient.SearchUsers(new SearchGetSearchInput(username)).ToList().First();
-                else
-                    throw new RedditException($"Not user exists on reddit");
 
             }
             catch(Exception ex)
@@ -411,7 +408,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                return RedditClient.SearchUsers(new SearchGetSearchInput(username)) != null ? true : false;
+                return RedditClient.SearchUsers(new SearchGetSearchInput(username)).Count() != 0 ? false : true;
             }
             catch(Exception ex)
             {
