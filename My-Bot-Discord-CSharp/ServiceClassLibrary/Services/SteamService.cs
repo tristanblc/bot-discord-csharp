@@ -57,7 +57,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                return  SteamWebInterface.CreateSteamWebInterface<SteamUser>(new HttpClient());
+                return SteamWebInterface.CreateSteamWebInterface<SteamUser>(new HttpClient());
             }
             catch(Exception ex)
             {
@@ -130,9 +130,30 @@ namespace ServiceClassLibrary.Services
        
         }
 
-        public DiscordEmbedBuilder ConvertSteamUsetToEmbed(SteamUser steamUser)
+        public DiscordEmbedBuilder ConvertSteamUsetToEmbed(PlayerSummaryModel player)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var contents = $"Nickname : {player.Nickname} ";
+                contents += $"\nSteam id : {player.SteamId}";
+                contents += $"\nStatus : {player.UserStatus}";
+                if (player.PlayingGameId != null)
+                {
+                    var games = this.GetSteamAppsById(ulong.Parse(player.PlayingGameId));
+                    games.ForEach(game =>
+                    {
+                        contents += $"\nGame : {game.Name}";
+                    });
+                }
+                var embed = UtilsService.CreateNewEmbed($"{player.Nickname}", DiscordColor.Purple,contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot get steam apps interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
         }
 
         public ISteamApps GetISteamApps(HttpClient httpClient)
@@ -166,11 +187,6 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public List<SteamAppModel> GetSteamAppsByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<SteamAppModel> GetSteamApps()
         {
             try
@@ -185,34 +201,6 @@ namespace ServiceClassLibrary.Services
             }
       
         }
-
-        public List<SteamAppModel> GetSteamAppsByIdASC()
-        {
-            try
-            {
-                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderBy(x => x.AppId).ToList();
-            }
-            catch (Exception ex)
-            {
-                var message = $"Cannot get lists apps games asc";
-                LoggerProject.WriteLogErrorLog(message);
-                throw new SteamException(message);
-            }
-        }
-
-        public List<SteamAppModel> GetSteamAppsByDateDesc(string date)
-        {
-            try
-            {
-                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderByDescending(x => x.AppId).ToList();
-            }
-            catch(Exception ex)
-            {
-                var message = $"Cannot get lists apps games desc";
-                LoggerProject.WriteLogErrorLog(message);
-                throw new SteamException(message);
-            }
-         }
 
         public DiscordEmbedBuilder ConvertSteamAppToEmbed(SteamAppModel steamAppModel)
         {
@@ -230,6 +218,124 @@ namespace ServiceClassLibrary.Services
                 throw new SteamException(message);
             }
                 
+        }
+
+        public List<SteamAppModel> GetSteamAppsByName(string name)
+        {
+
+            try
+            {
+                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderByDescending(x => x.AppId).ToList();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Cannot get lists apps games desc";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public List<SteamAppModel> GetSteamAppsByDateAsc(string date)
+        {
+            try
+            {
+                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderBy(x => x.AppId).ToList();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Cannot get lists apps games asc";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public List<SteamAppModel> GetSteamAppsByDateDesc(string date)
+        {
+
+            try
+            {
+                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderByDescending(x => x.AppId).ToList();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Cannot get lists apps games asc";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertFriendModelToEmbed(FriendModel friendModel)
+        {
+            try
+            {
+                var friend = this.GetListsSteamUser(friendModel.SteamId).First();
+                
+
+
+                var contents = $"Steam id : {friendModel.SteamId}";
+                contents += $"\nRelationship : {friend.Nickname}";
+                contents += $"\nDate:{friendModel.FriendSince.ToString()}";
+                contents += $"\nStatus: {friend.UserStatus}";
+                if (friend.PlayingGameId != null)
+                {
+                    var games = this.GetSteamAppsById(ulong.Parse(friend.PlayingGameId));
+                    games.ForEach(game =>
+                    {
+                        contents += $"\nGame : {game.Name}";
+                    });                   
+                }
+
+                var embed = UtilsService.CreateNewEmbed($"Friend named {friendModel.SteamId}", DiscordColor.Aquamarine, contents);
+                return embed;
+
+
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot convert friendmodel to embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+          
+        }
+
+        public DiscordEmbedBuilder ConvertPlayerBans(PlayerBansModel playerBans)
+        {
+            try
+            {
+                var embed = UtilsService.CreateNewEmbed($"Is vac?", DiscordColor.Aquamarine, "No");
+                if (playerBans.VACBanned == true)
+                {
+                    var contents = $"Yes. Why?";
+                    contents += $"\nLast Ban Date {playerBans.DaysSinceLastBan}";
+                    contents += $"\nNumber of bans games : {playerBans.NumberOfGameBans}";
+                    contents += $"\nIs community bans? : {playerBans.CommunityBanned}";
+                    embed.Description = contents;
+                }
+
+                return embed;
+
+            }
+            catch(Exception ex) {
+                var message = $"Cannot convert friendmodel to embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+            throw new NotImplementedException();
+        }
+
+        public List<SteamAppModel> GetSteamAppsById(ulong appId)
+        {
+            try
+            {
+                return SteamApps.GetAppListAsync().Result.Data.ToList().Where(x => x.AppId == appId).ToList();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Cannot get lists apps games asc";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
         }
     }
 }
