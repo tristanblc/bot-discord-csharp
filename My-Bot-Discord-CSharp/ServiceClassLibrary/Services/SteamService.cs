@@ -175,7 +175,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                return SteamApps.GetAppListAsync().Result.Data.ToList();s
+                return SteamApps.GetAppListAsync().Result.Data.ToList();
             }
             catch(Exception ex)
             {
@@ -190,11 +190,11 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                return SteamApps.GetAppListAsync().Result.Data.ToList().Sort();
+                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderBy(x => x.AppId).ToList();
             }
             catch (Exception ex)
             {
-                var message = $"Cannot get owned games";
+                var message = $"Cannot get lists apps games asc";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
@@ -202,12 +202,34 @@ namespace ServiceClassLibrary.Services
 
         public List<SteamAppModel> GetSteamAppsByDateDesc(string date)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                return SteamApps.GetAppListAsync().Result.Data.ToList().OrderByDescending(x => x.AppId).ToList();
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot get lists apps games desc";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+         }
 
         public DiscordEmbedBuilder ConvertSteamAppToEmbed(SteamAppModel steamAppModel)
         {
-            throw new NotImplementedException();
+           try
+            {
+                var contents = $"{steamAppModel.AppId} - {steamAppModel.Name}";
+                contents += $"Link : https://store.steampowered.com/app/{steamAppModel.AppId}/{steamAppModel.Name}/";
+                var embed = UtilsService.CreateNewEmbed($"{steamAppModel.Name}", DiscordColor.Purple, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot convert to embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+                
         }
     }
 }
