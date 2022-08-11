@@ -39,6 +39,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
     <PackageReference Include="Reddit" Version="1.5.2" />
     <PackageReference Include="Reddit.AuthTokenRetrieverLib" Version="1.5.2" />
+    <PackageReference Include="SteamWebAPI2" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
