@@ -427,7 +427,8 @@ namespace ServiceClassLibrary.Services
             }
             catch(Exception ex)
             {
-                var exception_message = $"cannot return uuser posts";
+                var 
+                    exception_message = $"cannot return uuser posts";
                 LoggerProject.WriteLogErrorLog(exception_message);
                 throw new RedditException(exception_message);
             }
