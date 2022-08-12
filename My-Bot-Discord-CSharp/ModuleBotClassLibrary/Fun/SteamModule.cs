@@ -50,7 +50,7 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
 
             }
         }
@@ -74,11 +74,12 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
+
         [Command("checkVAC")]
-        public async Task HandleCheckVAC(CommandContext ctx,ulong steamUserId)
+        public async Task HandleCheckVAC(CommandContext ctx, ulong steamUserId)
         {
             try
             {
@@ -87,34 +88,36 @@ namespace ModuleBotClassLibrary.Fun
                 ctx.RespondAsync(embed.Build());
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
+
+
 
         [Command("getapp")]
         public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)
         {
-            try {
+            try
+            {
                 var app = SteamService.GetSteamAppByName(appname);
                 app.ForEach(ap =>
                 {
                     var embed = SteamService.ConvertSteamAppToEmbed(ap);
                     ctx.RespondAsync(embed.Build());
                 });
-                                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
-
         [Command("getapps")]
         public async Task HandleGetApps(CommandContext ctx)
         {
@@ -132,7 +135,7 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
 
@@ -142,7 +145,7 @@ namespace ModuleBotClassLibrary.Fun
         {
             try
             {
-                var apps = SteamService.GetSteamAppsByName(appname);
+                var apps = SteamService.GetSteamAppByName(appname);
                 apps.ToList().ForEach(app =>
                 {
                     var embed = SteamService.ConvertSteamAppToEmbed(app);
@@ -154,7 +157,7 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
 
@@ -175,7 +178,7 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
 
@@ -196,9 +199,31 @@ namespace ModuleBotClassLibrary.Fun
             {
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
-                await ctx.RespondAsync(exception.ToString());
+                await ctx.RespondAsync(exception.Build());
             }
         }
 
+        [Command("getnewsforapp")]
+        public async Task HandleGetNewsForApp(CommandContext ctx,uint appId)
+        {
+            try
+            {
+
+                var news = SteamService.GetSteamNewsForApp(appId);
+                news.NewsItems.ToList().ForEach(lastNews =>
+                {
+                  ctx.RespondAsync("```" +lastNews.Contents.ToLower()+ "```");
+                });
+            
+              
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
     }
 }

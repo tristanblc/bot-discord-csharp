@@ -39,7 +39,15 @@ namespace ServiceClassLibrary.Interfaces
 
         List<SteamAppModel> GetSteamAppsByDateDesc(string date);
         DiscordEmbedBuilder ConvertSteamAppToEmbed(SteamAppModel steamAppModel);
-        
 
+        SteamServerInfoModel GetSteamServerModel(string name);
+
+        DiscordEmbedBuilder ConvertSteamServerToEmbed(SteamServerInfoModel steamServerModel);
+
+        ISteamNews GetISteamNews(HttpClient httpClient);
+
+        SteamNewsResultModel GetSteamNewsForApp(uint appId);
+
+        DiscordEmbedBuilder ConvertSteamNewsToEmbed(SteamNewsResultModel SteamNewsModel);
     }
 }

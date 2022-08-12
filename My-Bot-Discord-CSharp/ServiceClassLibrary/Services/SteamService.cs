@@ -25,6 +25,7 @@ namespace ServiceClassLibrary.Services
         private HttpClient HttpClient { get; init; }
         private ISteamUser SteamUser { get; init; }
         private ISteamApps SteamApps { get; init; }
+        private ISteamNews SteamNews { get; init; }
             
         public SteamService(string apikey)
         {
@@ -34,6 +35,7 @@ namespace ServiceClassLibrary.Services
             HttpClient = new HttpClient();
             SteamApps = this.GetISteamApps(HttpClient);
             SteamUser = this.GetISteamUser(HttpClient);
+            SteamNews = this.GetISteamNews(HttpClient);
         }
         public SteamWebInterfaceFactory GetClient(string apikey)
         {
@@ -176,7 +178,19 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                return SteamApps.GetAppListAsync().Result.Data.ToList().TakeWhile(x => x.Name == name).ToList();
+                var list =  SteamApps.GetAppListAsync().Result.Data.Where(x => x.Name == name).ToList();
+                var apps = new List<SteamAppModel>();
+                list.ToList().ForEach(app =>
+                {
+                    if (app.Name.ToLower() != name.ToLower())
+                    {
+                        list.Remove(app);
+                       
+                    }
+                       
+                });
+
+                return list;
 
             }
             catch(Exception ex)
@@ -336,6 +350,65 @@ namespace ServiceClassLibrary.Services
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
+        }
+
+        public SteamServerInfoModel GetSteamServerModel(string name)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertSteamServerToEmbed(SteamServerInfoModel steamServerModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SteamNewsResultModel GetSteamNewsForApp(uint appId)
+        {
+            try
+            {
+                return SteamNews.GetNewsForAppAsync(appId).Result.Data;
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot get lists of news from steam";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertSteamNewsToEmbed(SteamNewsResultModel SteamNewsModel)
+        {
+            try
+            {
+                var contents = $"AppId : {SteamNewsModel.AppId}";
+                SteamNewsModel.NewsItems.ToList().ForEach(news =>
+                {
+                    contents += $"Author : {news.Author}";
+                    contents += $"Date :{news.Date}";
+                    contents += $"\nFeed Name : {news.Feedname}";
+                    contents += $"\nNumber of tags :{news.Tags.Length}";
+                    contents += $"{news.Contents}";
+
+                });
+                var embed = UtilsService.CreateNewEmbed($"News", DiscordColor.Aquamarine, contents);
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot create embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+            throw new NotImplementedException();
+        }
+
+        public ISteamNews GetISteamNews(HttpClient httpClient)
+        {
+            return SteamWebInterface.CreateSteamWebInterface<SteamNews>(new HttpClient());
         }
     }
 }
