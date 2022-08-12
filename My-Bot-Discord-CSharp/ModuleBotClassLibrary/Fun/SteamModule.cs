@@ -94,6 +94,111 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.ToString());
             }
         }
-               
+
+        [Command("getapp")]
+        public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)
+        {
+            try {
+                var app = SteamService.GetSteamAppByName(appname);
+                app.ForEach(ap =>
+                {
+                    var embed = SteamService.ConvertSteamAppToEmbed(ap);
+                    ctx.RespondAsync(embed.Build());
+                });
+                                
+            }
+            catch(Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.ToString());
+            }
+        }
+
+        [Command("getapps")]
+        public async Task HandleGetApps(CommandContext ctx)
+        {
+            try
+            {
+                var apps = SteamService.GetSteamApps();
+                apps.ToList().ForEach(app =>
+                {
+                    var embed = SteamService.ConvertSteamAppToEmbed(app);
+                    ctx.RespondAsync(embed.Build());
+                });
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.ToString());
+            }
+        }
+
+
+        [Command("getappsname")]
+        public async Task HandleGetAppByName(CommandContext ctx, string appname)
+        {
+            try
+            {
+                var apps = SteamService.GetSteamAppsByName(appname);
+                apps.ToList().ForEach(app =>
+                {
+                    var embed = SteamService.ConvertSteamAppToEmbed(app);
+                    ctx.RespondAsync(embed.Build());
+                });
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.ToString());
+            }
+        }
+
+        [Command("getappsbydateasc")]
+        public async Task HandleGetAppsByDateAsc(CommandContext ctx, DateTime date)
+        {
+            try
+            {
+                var apps = SteamService.GetSteamAppsByDateAsc(date.ToString());
+                apps.ToList().ForEach(app =>
+                {
+                    var embed = SteamService.ConvertSteamAppToEmbed(app);
+                    ctx.RespondAsync(embed.Build());
+                });
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.ToString());
+            }
+        }
+
+        [Command("getappsbydatedesc")]
+        public async Task HandleGetAppsByDateDesc(CommandContext ctx, DateTime date)
+        {
+            try
+            {
+                var apps = SteamService.GetSteamAppsByDateDesc(date.ToString());
+                apps.ToList().ForEach(app =>
+                {
+                    var embed = SteamService.ConvertSteamAppToEmbed(app);
+                    ctx.RespondAsync(embed.Build());
+                });
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.ToString());
+            }
+        }
+
     }
 }
