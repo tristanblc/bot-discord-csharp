@@ -41,6 +41,7 @@ namespace ModuleBotClassLibrary
 
  
         [Command("create-ticket")]
+        [Description("Create a ticket")]
         public async Task HandleCreateTicket(CommandContext ctx,DiscordMember member,string title,string description)
         {
 
@@ -71,6 +72,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("checked-ticket")]
+        [Description("Set a ticket checked")]
         public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
 
@@ -107,6 +109,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("list-unread-ticket")]
+        [Description("List all of tickets")]
         public async Task HandleLisUnreadTicket(CommandContext ctx)
         {
             try

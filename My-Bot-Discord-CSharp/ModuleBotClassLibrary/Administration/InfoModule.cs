@@ -31,6 +31,8 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ping")]
+        [Description("Ping sender")]
+
         public async Task PingCommand(CommandContext ctx)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
@@ -64,6 +66,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("pingweb")]
+        [Description("Ping sender for web")]
         public async Task PingWebsiteCommand(CommandContext ctx, string url)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");

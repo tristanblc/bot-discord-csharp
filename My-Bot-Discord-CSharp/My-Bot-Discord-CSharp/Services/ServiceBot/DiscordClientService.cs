@@ -69,7 +69,9 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<TicketModule>();
             commands.RegisterCommands<RappelModule>();
             commands.RegisterCommands<RedditModule>();
+            commands.RegisterCommands<SteamModule>();
          
+
             LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;

@@ -28,4 +28,4 @@ Use librarys :
 - [DsharpPlus](https://github.com/DSharpPlus/DSharpPlus) - .Net Discord Api Wrapper
 - [FFMPEGCore](https://github.com/rosenbjerg/FFMpegCore)- A .NET Standard FFMpeg/FFProbe wrapper
 - [Reddit.Net](https://github.com/sirkris/Reddit.NET)- A .NET Standard Reddit Api Wrapper
-
+-[SteamWebAPI2](https://github.com/babelshift/SteamWebAPI2) - A .NET Steam Web Api Scraper
