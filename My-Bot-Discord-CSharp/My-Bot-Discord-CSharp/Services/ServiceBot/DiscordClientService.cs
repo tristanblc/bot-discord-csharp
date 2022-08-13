@@ -9,6 +9,7 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
 using ModuleBotClassLibrary.Fun;
+using My_Bot_Discord_CSharp.Formatter;
 using My_Bot_Discord_CSharp.Services.Interface;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -70,8 +71,10 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<RappelModule>();
             commands.RegisterCommands<RedditModule>();
             commands.RegisterCommands<SteamModule>();
-         
 
+            commands.SetHelpFormatter<BotHelpFormatter>();
+
+         
             LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;
