@@ -74,6 +74,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
 
             commands.SetHelpFormatter<BotHelpFormatter>();
 
+         
             LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;

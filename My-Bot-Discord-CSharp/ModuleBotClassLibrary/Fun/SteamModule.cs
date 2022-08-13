@@ -78,8 +78,6 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-       
-
         [Command("getapp")]
         public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)
         {
