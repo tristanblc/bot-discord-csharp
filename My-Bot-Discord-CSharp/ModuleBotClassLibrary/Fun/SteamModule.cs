@@ -78,25 +78,7 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("checkVAC")]
-        public async Task HandleCheckVAC(CommandContext ctx, ulong steamUserId)
-        {
-            try
-            {
-                var user = SteamService.GetBansSteamUser(steamUserId).First();
-                var embed = SteamService.ConvertPlayerBans(user);
-                ctx.RespondAsync(embed.Build());
-
-            }
-            catch (Exception ex)
-            {
-                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
-
-                await ctx.RespondAsync(exception.Build());
-            }
-        }
-
-
+       
 
         [Command("getapp")]
         public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)

@@ -9,6 +9,7 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
 using ModuleBotClassLibrary.Fun;
+using My_Bot_Discord_CSharp.Formatter;
 using My_Bot_Discord_CSharp.Services.Interface;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
