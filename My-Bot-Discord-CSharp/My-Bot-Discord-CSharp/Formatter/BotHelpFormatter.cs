@@ -43,10 +43,7 @@ namespace My_Bot_Discord_CSharp.Formatter
             _embed.Color = DiscordColor.Chartreuse;
             cmds.ToList().ForEach(cmd =>
             {
-                if (cmd.Description == null)
-                    _embed.Description += $"\n{cmd.Name} - This command doesn't have a description";
-                else
-                    _embed.Description += $"\n{cmd.Name} - {cmd.Description}";
+                _embed.Description += $"\n{cmd.Name}";
 
             });
             return this;

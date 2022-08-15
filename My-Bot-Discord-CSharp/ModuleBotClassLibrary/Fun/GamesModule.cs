@@ -11,8 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Resources;
-using ModuleBotClassLibrary.Description;
-
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
