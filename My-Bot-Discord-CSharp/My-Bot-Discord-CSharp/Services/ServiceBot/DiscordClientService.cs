@@ -71,6 +71,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<RappelModule>();
             commands.RegisterCommands<RedditModule>();
             commands.RegisterCommands<SteamModule>();
+            commands.RegisterCommands<TwitchModule>();
 
             commands.SetHelpFormatter<BotHelpFormatter>();
 

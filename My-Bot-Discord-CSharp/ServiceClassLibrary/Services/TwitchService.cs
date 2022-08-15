@@ -81,11 +81,13 @@ namespace ServiceClassLibrary.Services
 
         }
 
-        public List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string broadcasterId)
+        public List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string username)
         {
             try
             {
-                return TwitchClient.Helix.Streams.GetStreamsAsync(null, null, 20, null, null, "all", new List<string>() { broadcasterId }, null).Result.Streams.ToList();
+               
+
+                return TwitchClient.Helix.Streams.GetStreamsAsync(null, null, 20, null, null, "all", new List<string>() { username}, null).Result.Streams.ToList();
             }
             catch (Exception ex)
             {
@@ -239,5 +241,7 @@ namespace ServiceClassLibrary.Services
                 throw new TwitchAPIException(exception);
             }
         }
+
+       
     }
 }

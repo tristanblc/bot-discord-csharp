@@ -18,8 +18,6 @@ namespace ServiceClassLibrary.Interfaces
 
         List<TwitchLib.Api.Helix.Models.Users.GetUserFollows.Follow> GetFollowedUser(string id);
 
-        List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string broadcasterId);
-
         TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream GetStreamById(string broadcasterId);
 
         List<TwitchLib.Api.Helix.Models.Analytics.GameAnalytics> GetAnalyticsForGame(string gamename);
