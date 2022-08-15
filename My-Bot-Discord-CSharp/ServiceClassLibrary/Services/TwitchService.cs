@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TwitchLib.Api;
+using TwitchLib.Api.Helix.Models.Analytics;
+using TwitchLib.Api.Helix.Models.Games;
 using TwitchLib.Api.Helix.Models.Users;
 using TwitchLib.Api.Helix.Models.Users.GetUserFollows;
 using TwitchLib.Api.Helix.Models.Users.GetUsers;
@@ -17,7 +19,7 @@ namespace ServiceClassLibrary.Services
     {
         private TwitchAPI TwitchClient { get; init; }
 
-        private ILoggerProject Logger { get; init;}
+        private ILoggerProject Logger { get; init; }
 
         private IUtilsService UtilsService { get; init; }
 
@@ -28,7 +30,7 @@ namespace ServiceClassLibrary.Services
             Logger = new LoggerProject();
             UtilsService = new UtilsService();
             TwitchClient = this.ConnectToTwitch(clientId, accesstoken);
-                
+
         }
 
         public TwitchAPI ConnectToTwitch(string clientid, string accessToken)
@@ -42,11 +44,11 @@ namespace ServiceClassLibrary.Services
 
 
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 var exception = $"Cannot connect to twitch service  with client id {clientid} & access token {accessToken}";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
-            
+
             }
         }
 
@@ -54,9 +56,9 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-              return TwitchClient.Helix.Users.GetUsersAsync(new List<string>() { id }, null, null).Result.Users.ToList().First();
+                return TwitchClient.Helix.Users.GetUsersAsync(new List<string>() { id }, null, null).Result.Users.ToList().First();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get user by id";
                 Logger.WriteLogErrorLog(exception);
@@ -70,13 +72,13 @@ namespace ServiceClassLibrary.Services
             {
                 return TwitchClient.Helix.Users.GetUsersFollowsAsync(null, null, 20, id, null).Result.Follows.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get follewed users";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
             }
-          
+
         }
 
         public List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string broadcasterId)
@@ -85,7 +87,7 @@ namespace ServiceClassLibrary.Services
             {
                 return TwitchClient.Helix.Streams.GetStreamsAsync(null, null, 20, null, null, "all", new List<string>() { broadcasterId }, null).Result.Streams.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get stream";
                 Logger.WriteLogErrorLog(exception);
@@ -99,13 +101,13 @@ namespace ServiceClassLibrary.Services
             {
                 return this.GetStreams(broadcasterId).First();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get stream by id";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
-            } 
-           
+            }
+
         }
 
         public DiscordEmbedBuilder ConvertTwitchUserToEmbed(User user)
@@ -121,13 +123,13 @@ namespace ServiceClassLibrary.Services
                 return embed;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot to convert to discord embed";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
             }
-         
+
         }
 
         public DiscordEmbedBuilder ConvertFollowersTwitchToEmbed(Follow follower)
@@ -136,16 +138,16 @@ namespace ServiceClassLibrary.Services
             {
                 var contents = $"Username {follower.FromUserName}";
                 contents += $"{follower.FollowedAt.ToLocalTime().ToString()}";
-                var embed = UtilsService.CreateNewEmbed($"{follower.FromUserName}", DiscordColor.Azure, contents);   
+                var embed = UtilsService.CreateNewEmbed($"{follower.FromUserName}", DiscordColor.Azure, contents);
                 return embed;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot to convert to discord embed";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
             }
-           
+
         }
 
         public DiscordEmbedBuilder ConvertStreamTwitchToEmbed(TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream stream)
@@ -163,13 +165,79 @@ namespace ServiceClassLibrary.Services
                 return embed;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot to convert to discord embed";
                 Logger.WriteLogErrorLog(exception);
                 throw new TwitchAPIException(exception);
             }
-           
+
+        }
+
+        public List<GameAnalytics> GetAnalyticsForGame(string gamename)
+        {
+            try
+            {
+                var game = this.GetGameFromName(gamename);
+                return TwitchClient.Helix.Analytics.GetGameAnalyticsAsync(game.Id).Result.Data.ToList();
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot to convert to discord embed";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+
+        }
+
+        public Game GetGameFromName(string name)
+        {
+            try
+            {
+                return this.GetGames(new List<string>() { name }).First();
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot to convert to discord embed";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public List<Game> GetGames(List<string> gamesNames)
+        {
+            try
+            {
+                return TwitchClient.Helix.Games.GetGamesAsync(null, gamesNames).Result.Games.ToList();
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot get games";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+          
+        }
+
+        public DiscordEmbedBuilder ConvertGameStatTwitchToEmbed(GameAnalytics gameAnalytics)
+        {
+            try
+            {
+                var contents = $"{gameAnalytics.GameId}";
+                contents += $"{gameAnalytics.DateRange.StartedAt} - ended at {gameAnalytics.DateRange.EndedAt}";
+                contents += $"{gameAnalytics.Url}";
+
+                var embed = UtilsService.CreateNewEmbed($"Game analysis from game id {gameAnalytics.GameId}", DiscordColor.Azure, contents);
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot convert to discord embed";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
         }
     }
 }

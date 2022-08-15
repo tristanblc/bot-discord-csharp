@@ -22,10 +22,18 @@ namespace ServiceClassLibrary.Interfaces
 
         TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream GetStreamById(string broadcasterId);
 
+        List<TwitchLib.Api.Helix.Models.Analytics.GameAnalytics> GetAnalyticsForGame(string gamename);
+       
+        TwitchLib.Api.Helix.Models.Games.Game GetGameFromName(string name);
+
+
+        List<TwitchLib.Api.Helix.Models.Games.Game> GetGames(List<string> gamesNames);
+
         DiscordEmbedBuilder ConvertTwitchUserToEmbed(TwitchLib.Api.Helix.Models.Users.GetUsers.User user);
         DiscordEmbedBuilder ConvertFollowersTwitchToEmbed(TwitchLib.Api.Helix.Models.Users.GetUserFollows.Follow follower);
 
         DiscordEmbedBuilder ConvertStreamTwitchToEmbed(TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream stream);
 
+        DiscordEmbedBuilder ConvertGameStatTwitchToEmbed(TwitchLib.Api.Helix.Models.Analytics.GameAnalytics gameAnalytics);
     }
 }
