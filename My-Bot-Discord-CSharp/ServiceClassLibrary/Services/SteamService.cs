@@ -358,17 +358,6 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public SteamServerInfoModel GetSteamServerModel(string name)
-        {
-
-            throw new NotImplementedException();
-        }
-
-        public DiscordEmbedBuilder ConvertSteamServerToEmbed(SteamServerInfoModel steamServerModel)
-        {
-            throw new NotImplementedException();
-        }
-
         public SteamNewsResultModel GetSteamNewsForApp(uint appId)
         {
             try
