@@ -172,17 +172,39 @@ namespace ServiceClassLibrary.Services
 
         public DiscordEmbedBuilder ConvertServerStatusToEmbed(ServerStatusModel serverStatus)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var contents = $"Get status f servers";
+                contents += $"\nNumber of datacenters : {serverStatus.Datacenters.Count}";
+                contents += $"\nNumber of steam community server :{serverStatus.Services.SteamCommunity.Length}";
+                var embed = UtilsService.CreateNewEmbed($"Server", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch (Exception ex)
+            {
+                var message = "Cannot get embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
         }
 
-        public DiscordEmbedBuilder ConvertAssetPriceResultToEmbed(AssetPriceResultModel asset)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         public DiscordEmbedBuilder ConvertAssetClassToEmbed(AssetClassInfoResultModel asset)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var contents = $"Get assets";
+                contents += $"\nNumber of assets : {asset.AssetClasses.Count}";
+                var embed = UtilsService.CreateNewEmbed($"asset", DiscordColor.Aquamarine, contents);
+                return embed;
+
+            }
+            catch (Exception ex)
+            {
+                var message = "Cannot get embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
         }
     }
 }

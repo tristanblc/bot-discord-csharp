@@ -30,7 +30,5 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertServerStatusToEmbed(ServerStatusModel serverStatus);
 
         DiscordEmbedBuilder ConvertAssetClassToEmbed(AssetClassInfoResultModel asset);
-
-        DiscordEmbedBuilder ConvertAssetPriceResultToEmbed(AssetPriceResultModel asset);
     }
 }
