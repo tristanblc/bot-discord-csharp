@@ -52,7 +52,7 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public TwitchLib.Api.Helix.Models.Users.GetUsers.User GetUserById(string id)
+        public User GetUserById(string id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public List<TwitchLib.Api.Helix.Models.Users.GetUserFollows.Follow> GetFollowedUser(string id)
+        public List<Follow> GetFollowedUser(string id)
         {
             try
             {

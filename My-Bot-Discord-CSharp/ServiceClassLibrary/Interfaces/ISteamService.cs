@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using Steam.Models;
 using Steam.Models.SteamCommunity;
+using Steam.Models.SteamPlayer;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
 using System;
@@ -49,5 +50,28 @@ namespace ServiceClassLibrary.Interfaces
         SteamNewsResultModel GetSteamNewsForApp(uint appId);
 
         DiscordEmbedBuilder ConvertSteamNewsToEmbed(SteamNewsResultModel SteamNewsModel);
+
+        ISteamUserStats GetISteamUserStats(HttpClient httpClient);
+
+        UserStatsForGameResultModel GetUserStatsForGame(string gameName,uint userId);
+
+        SchemaForGameResultModel GetSchemaForGame(string gameName);
+
+        uint GetCurrentUserOnlineForGame(string gameName);
+
+        List<GlobalStatModel> GetGlobalGameStats(string gameName, DateTime startDate, DateTime? endDatetime);
+
+        List<PlayerAchievementModel> GetUserAchievementForUser(string gameName, uint userId);
+
+        DiscordEmbedBuilder ConvertPlayerAchivementsModelToEmbed(PlayerAchievementModel achievementModel);
+
+        DiscordEmbedBuilder ConvertGlobalStatModelToEmbed(GlobalStatModel globalStatModel);
+
+        DiscordEmbedBuilder ConvertUserStatsForGameToeEmbed(UserStatsForGameResultModel userStatsModel);
+
+        DiscordEmbedBuilder ConvertSchemaGameModeToEmbed(SchemaForGameResultModel schemaModel);
+
+
+
     }
 }

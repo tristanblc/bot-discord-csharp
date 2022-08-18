@@ -3,6 +3,7 @@ using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
 using Steam.Models;
 using Steam.Models.SteamCommunity;
+using Steam.Models.SteamPlayer;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
 using System;
@@ -26,6 +27,8 @@ namespace ServiceClassLibrary.Services
         private ISteamUser SteamUser { get; init; }
         private ISteamApps SteamApps { get; init; }
         private ISteamNews SteamNews { get; init; }
+
+        private ISteamUserStats SteamUserStats { get; init; }
             
         public SteamService(string apikey)
         {
@@ -36,6 +39,9 @@ namespace ServiceClassLibrary.Services
             SteamApps = this.GetISteamApps(HttpClient);
             SteamUser = this.GetISteamUser(HttpClient);
             SteamNews = this.GetISteamNews(HttpClient);
+            SteamUserStats = this.GetISteamUserStats(HttpClient);
+        
+        
         }
         public SteamWebInterfaceFactory GetClient(string apikey)
         {
@@ -376,7 +382,7 @@ namespace ServiceClassLibrary.Services
                 throw new SteamException(message);
             }
 
-            throw new NotImplementedException();
+         
         }
 
         public DiscordEmbedBuilder ConvertSteamNewsToEmbed(SteamNewsResultModel SteamNewsModel)
@@ -403,12 +409,193 @@ namespace ServiceClassLibrary.Services
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-            throw new NotImplementedException();
+
         }
 
         public ISteamNews GetISteamNews(HttpClient httpClient)
         {
             return SteamWebInterface.CreateSteamWebInterface<SteamNews>(new HttpClient());
+        }
+
+    
+
+        public UserStatsForGameResultModel GetUserStatsForGame(string gameName,uint userId)
+        {
+            try
+            {
+                var game = this.GetSteamAppByName(gameName).First();
+                return SteamUserStats.GetUserStatsForGameAsync(userId, game.AppId).Result.Data;
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot get user stats for game {gameName}";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+           
+        }
+
+        public SchemaForGameResultModel GetSchemaForGame(string gameName)
+        {
+            try
+            {
+                var language = "english";
+                var game = this.GetSteamAppByName(gameName).First();
+                return SteamUserStats.GetSchemaForGameAsync(game.AppId, language).Result.Data;
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot get schema for game {gameName}";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            };
+        }
+
+        public uint GetCurrentUserOnlineForGame(string gameName)
+        {
+            try
+            {
+
+                var game = this.GetSteamAppByName(gameName).First();
+                return SteamUserStats.GetNumberOfCurrentPlayersForGameAsync(game.AppId).Result.Data;
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get current user online";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+              
+            }
+        }
+
+        public List<GlobalStatModel> GetGlobalGameStats(string gameName, DateTime startDate, DateTime? endDatetime)
+        {
+            try
+            {
+                var game = this.GetSteamAppsByName(gameName).First();
+                var stats = SteamUserStats.GetGlobalStatsForGameAsync(game.AppId, new List<string>() { "count", "name" }, startDate, endDatetime).Result.Data.ToList();
+                return stats;
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get game  {gameName} global stats";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+
+            }
+        }
+
+        public List<PlayerAchievementModel> GetUserAchievementForUser(string gameName,uint userId)
+        {
+            try
+            {
+                var game = this.GetSteamAppByName(gameName).First();
+                return SteamUserStats.GetPlayerAchievementsAsync(game.AppId, userId, "english").Result.Data.Achievements.ToList();
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot get user achievement for user for game {gameName}";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+        }
+
+        public ISteamUserStats GetISteamUserStats(HttpClient httpClient)
+        {
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<SteamUserStats>();
+            }
+            catch(Exception ex) {
+                var exception = $"Cannot get interface IsteamUserStats";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+
+            }
+          
+        }
+
+        public DiscordEmbedBuilder ConvertPlayerAchivementsModelToEmbed(PlayerAchievementModel achievementModel)
+        {
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get interface IsteamUserStats";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+
+            }
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertGlobalStatModelToEmbed(GlobalStatModel globalStatModel)
+        {
+            try
+            {
+                var contents = $"{globalStatModel.Name}";
+                contents += $"\nTotal: {globalStatModel.Total}";
+                var embed = UtilsService.CreateNewEmbed($"Stats for app {globalStatModel.Name}", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get embed";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+
+
+        }
+
+        public DiscordEmbedBuilder ConvertUserStatsForGameToeEmbed(UserStatsForGameResultModel userStatsModel)
+        {
+            try
+            {
+                var contents = $"{userStatsModel.GameName}";
+                userStatsModel.Stats.ToList().ForEach(stat =>
+                {
+                    contents += $"\nStat Name :{stat.Name}  - Value :{stat.Value}";
+                });
+                var embed = UtilsService.CreateNewEmbed($" User Stats for app {userStatsModel.GameName}", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch (Exception)
+            {
+                var exception = $"Cannot get embed";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+
+        }
+
+        public DiscordEmbedBuilder ConvertSchemaGameModeToEmbed(SchemaForGameResultModel schemaModel)
+        {
+            try
+            {
+                var contents = $"{schemaModel.GameName}";
+                contents += "Game achievement :";
+                schemaModel.AvailableGameStats.Achievements.ToList().ForEach(achievemement =>
+                {
+                    contents += $"\nName : {achievemement.DisplayName} -  Default value : {achievemement.DefaultValue}";
+
+                });
+
+                contents += $"\n Game version : {schemaModel.GameVersion}";
+                var embed = UtilsService.CreateNewEmbed($" Game {schemaModel.GameName} schema", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot get embed";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+
         }
     }
 }
