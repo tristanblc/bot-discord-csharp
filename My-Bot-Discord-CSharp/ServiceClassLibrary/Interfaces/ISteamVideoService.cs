@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace ServiceClassLibrary.Interfaces
 {
-    internal interface ISteamStoreService
+    internal interface ISteamVideoService
     {
-        SteamStore GetISteamStore(HttpClient httpClient);
+        ISteamUser GetISteamUser(HttpClient httpClient);
+
+        string GetReplayURL(string videoId);
+
+        
 
     }
 }

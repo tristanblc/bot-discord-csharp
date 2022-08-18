@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServiceClassLibrary.Services
 {
-    internal class SteamStoreService : ISteamStoreService
+    internal class SteamVideoService : ISteamVideoService
     {
 
         private SteamWebInterfaceFactory SteamWebInterface { get; init; }
@@ -20,15 +20,15 @@ namespace ServiceClassLibrary.Services
         private IUtilsService UtilsService { get; init; }
         private HttpClient HttpClient { get; init; }
 
-        public SteamStore SteamStore { get; init; }
+        public  ISteamUser SteamUser { get; init; }
 
-        public SteamStoreService(string apikey)
+        public SteamVideoService(string apikey)
         {
             SteamWebInterface = this.GetClient(apikey);
             LoggerProject = new LoggerProject();
             UtilsService = new UtilsService();
             HttpClient = new HttpClient();
-            SteamStore = this.GetISteamStore(HttpClient);
+            SteamUser = this.GetISteamUser(HttpClient);
 
 
         }
@@ -51,17 +51,32 @@ namespace ServiceClassLibrary.Services
 
         }
 
-        public SteamStore GetISteamStore(HttpClient httpClient)
+        public ISteamUser GetISteamUser(HttpClient httpClient)
         {
             try
             {
-                return SteamWebInterface.CreateSteamStoreInterface(httpClient);
+                return SteamWebInterface.CreateSteamWebInterface<SteamUser>(httpClient);
 
 
             }
             catch (Exception ex)
             {
 
+                var message = $"Cannot get ISteamStore";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public string GetReplayURL(string videoId,string userId)
+        {
+            try
+            {
+                return SteamUser.GetCommunityProfileAsync(userId)
+
+            }
+            catch(Exception ex)
+            {
                 var message = $"Cannot get ISteamStore";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
