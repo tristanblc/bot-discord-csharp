@@ -1,5 +1,9 @@
-﻿using ExceptionClassLibrary;
+﻿using DSharpPlus.Entities;
+using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
+using Steam.Models.CSGO;
+using Steam.Models.SteamEconomy;
+using Steam.Models.TF2;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
 using System;
@@ -21,9 +25,12 @@ namespace ServiceClassLibrary.Services
         private HttpClient HttpClient { get; init; }
 
         public ICSGOServers SteamCSGOServers { get; init; }
-        public IDOTA2Match DotaMatchStats { get; init; }
-        public ISteamEconomy ICSGOServers { get; init; }
+        public ISteamEconomy SteamEconomy{ get; init; }
+
         public ITFItems TFItems { get; init; }
+
+        public SteamService SteamService { get; init; }
+
 
         public SteamGameService(string apikey)
         {
@@ -31,8 +38,9 @@ namespace ServiceClassLibrary.Services
             LoggerProject = new LoggerProject();
             UtilsService = new UtilsService();
             HttpClient = new HttpClient();
-       
-
+            SteamCSGOServers = this.GetCSGOServer(HttpClient);
+            SteamEconomy = this.GetISteamEconomy(HttpClient);       
+            SteamService = new SteamService(apikey);
         }
 
         public SteamWebInterfaceFactory GetClient(string apikey)
@@ -53,20 +61,7 @@ namespace ServiceClassLibrary.Services
 
         }
 
-        public IDOTA2Match GetIDota(HttpClient httpClient)
-        {
-            try
-            {
-                return SteamWebInterface.CreateSteamWebInterface<DOTA2Match>(httpClient);
-            }
-            catch(Exception ex)
-            {
-                var message = "Cannot get dota match server interface";
-                LoggerProject.WriteLogErrorLog(message);
-                throw new SteamException(message);
-            }
-   
-        }
+ 
 
         public ICSGOServers GetCSGOServer(HttpClient httpClient)
         {
@@ -90,6 +85,7 @@ namespace ServiceClassLibrary.Services
                 return SteamWebInterface.CreateSteamWebInterface<SteamEconomy>(httpClient);
             }
             catch (Exception ex)
+
             {
                 var message = "Cannot get steam economy interface";
                 LoggerProject.WriteLogErrorLog(message);
@@ -98,19 +94,95 @@ namespace ServiceClassLibrary.Services
    
         }
 
-        public ITFItems GetITFItems(HttpClient httpClient)
+        public ITFItems GetITFitems(HttpClient httpClient)
         {
             try
             {
                 return SteamWebInterface.CreateSteamWebInterface<TFItems>(httpClient);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                var message = "Cannot get steam econmy";
+                var message = "Cannot get steam economy interface";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-          
+        }
+
+        public ServerStatusModel GetServerStatus()
+        {
+            try
+            {
+                return SteamCSGOServers.GetGameServerStatusAsync().Result.Data;
+            }
+            catch (Exception ex)
+            {
+
+                var message = "Cannot get steam economy interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+       
+        }
+
+        public AssetClassInfoResultModel GetAssetInfo(string appname)
+        {
+            try
+            {
+                var app = SteamService.GetSteamAppByName(appname).First();
+                return SteamEconomy.GetAssetClassInfoAsync(app.AppId, new List<ulong>() { }, "en").Result.Data;
+            }
+            catch (Exception)
+            {
+                var message = "Cannot get  get price";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public AssetPriceResultModel GetPriceAssset(string appname, string currency)
+        {
+            try
+            {
+                var app = SteamService.GetSteamAppByName(appname).First();
+                return SteamEconomy.GetAssetPricesAsync(app.AppId,currency,"en").Result.Data;
+            }
+            catch (Exception)
+            {
+                var message = "Cannot get  get price";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+      
+        }
+
+        public List<GoldenWrenchModel> GetGoldenWrenchModels()
+        {
+            try
+            {
+                return TFItems.GetGoldenWrenchesAsync().Result.Data.ToList();
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get wrenchs models";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+
+        }
+
+        public DiscordEmbedBuilder ConvertServerStatusToEmbed(ServerStatusModel serverStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertAssetPriceResultToEmbed(AssetPriceResultModel asset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertAssetClassToEmbed(AssetClassInfoResultModel asset)
+        {
+            throw new NotImplementedException();
         }
     }
 }
