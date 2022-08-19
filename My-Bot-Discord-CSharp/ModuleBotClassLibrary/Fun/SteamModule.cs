@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace ModuleBotClassLibrary.Fun
 {
-    public  class SteamModule : BaseCommandModule
+    public class SteamModule : BaseCommandModule
     {
         private SteamService SteamService { get; init; }
+        private SteamGameService SteamGameService { get; init; }
         private IUtilsService UtilsService { get; init; }
 
 
@@ -27,12 +28,13 @@ namespace ModuleBotClassLibrary.Fun
             IConfiguration AppSetting = builder.Build();
 
             SteamService = new SteamService(AppSetting["Steam:apikey"]);
+            SteamGameService = new SteamGameService(AppSetting["Steam:apikey"]);
             UtilsService = new UtilsService();
         }
 
 
 
-       [Command("userSteam")]
+        [Command("userSteam")]
         public async Task HandleGetPostsFromSub(CommandContext ctx, ulong steamUserId)
         {
             try
@@ -184,7 +186,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getnewsforapp")]
-        public async Task HandleGetNewsForApp(CommandContext ctx,uint appId)
+        public async Task HandleGetNewsForApp(CommandContext ctx, uint appId)
         {
             try
             {
@@ -192,14 +194,73 @@ namespace ModuleBotClassLibrary.Fun
                 var news = SteamService.GetSteamNewsForApp(appId);
                 news.NewsItems.ToList().ForEach(lastNews =>
                 {
-                  ctx.RespondAsync("```" +lastNews.Contents.ToLower()+ "```");
+                    ctx.RespondAsync("```" + lastNews.Contents.ToLower() + "```");
                 });
-            
-              
+
+
 
             }
             catch (Exception ex)
             {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("csgoserver")]
+        public async Task HandleGetCsgoServerStatus(CommandContext ctx, int number)
+        {
+            try
+            {
+                var server = SteamGameService.GetServerStatus();
+                var embed = SteamGameService.ConvertServerStatusToEmbed(server);
+                await ctx.RespondAsync(embed.Build());
+
+            }
+            catch (Exception ex)
+            {
+
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getasset")]
+        public async Task HandleGetAssetInfo(CommandContext ctx, string appname)
+        {
+            try
+            {
+                var app = SteamGameService.GetAssetInfo(appname);
+                var embed = SteamGameService.ConvertAssetClassToEmbed(app);
+                await ctx.RespondAsync(embed.Build());
+
+            }
+            catch (Exception ex)
+            {
+
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getGoldenWrench")]
+        public async Task HandleGetGoldenWrench(CommandContext ctx,string appname)
+        {
+            try
+            {
+                SteamGameService.GetGoldenWrenchModels().ForEach(wrench =>
+                {
+                    var embed = SteamGameService.ConvertGoldenWrenchToEmbed(wrench);
+                    ctx.RespondAsync(embed.Build());
+                });    
+
+            }
+            catch (Exception ex)
+            {
+
                 var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
 
                 await ctx.RespondAsync(exception.Build());

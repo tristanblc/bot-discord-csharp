@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ServiceClassLibrary.Services
 {
-    internal class SteamGameService : ISteamGameService
+    public  class SteamGameService : ISteamGameService
     {
 
         private SteamWebInterfaceFactory SteamWebInterface { get; init; }
@@ -200,6 +200,25 @@ namespace ServiceClassLibrary.Services
 
             }
             catch (Exception ex)
+            {
+                var message = "Cannot get embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertGoldenWrenchToEmbed(GoldenWrenchModel goldenWrench)
+        {
+            try
+            {
+                var contents = $"Get golden wrench info :";
+                contents += $"\nsSteamId {goldenWrench.SteamId}";
+                contents += $"\nNumber : {goldenWrench.WrenchNumber}";
+                contents += $"\nsItemId {goldenWrench.ItemId}";
+                var embed = UtilsService.CreateNewEmbed($"asset", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch (Exception)
             {
                 var message = "Cannot get embed";
                 LoggerProject.WriteLogErrorLog(message);
