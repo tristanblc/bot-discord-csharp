@@ -59,10 +59,12 @@ namespace My_Bot_Discord_CSharp.Formatter
             _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
             cmds.ToList().ForEach(cmd =>
             {
+
                 if(String.IsNullOrEmpty(cmd.Description))
                     _strBuilder += $"\n{cmd.Name} - This command don't have a description";
                 else
                     _strBuilder += $"\n{cmd.Name} - {cmd.Description}";
+
             });
             return this;
         }
