@@ -16,34 +16,54 @@ namespace My_Bot_Discord_CSharp.Formatter
         protected DiscordEmbedBuilder _embed { get; set; }
 
         protected string _commandList { get; set; }
-        protected StringBuilder _strBuilder { get; set; }
+        protected string _strBuilder { get; set; }
         protected CommandContext _ctx { get; set; }
 
         public BotHelpFormatter(CommandContext ctx) : base(ctx)
         {
             _embed = new DiscordEmbedBuilder();
-             _strBuilder = new StringBuilder();
+            _embed.Color = DiscordColor.Cyan;
+            _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
+             _strBuilder = "";
             _commandList = "";
             _ctx = ctx;
         }
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            _embed.AddField(command.Name, command.Description);            
-            _strBuilder.AppendLine($"{command.Name} - {command.Description}");
+            _embed.Title = $"Command {command.Name} Help";
 
+            var commandHelpString = "";
+            if (String.IsNullOrEmpty(command.Description))
+                _strBuilder += $"\n{command.Name} - This command don't have a description";
+            else
+                _strBuilder += $"\n{command.Name} - {command.Description}";
+
+            if (command.Aliases != null)
+            {
+                _strBuilder += $"\nAlias - {command.Aliases.Count} number of alias";
+                command.Aliases.ToList().ForEach(alias =>
+                {
+                    _strBuilder += $"\n{alias}";
+                });
+            }
+
+            _strBuilder += $"\n Command from module {command.Module.ModuleType.Name}";
+               
             return this;
         }
 
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> cmds)
         {
-            _embed = new DiscordEmbedBuilder();
-            _embed.Title = $"Bot Command - Use ! prefix";
-            _embed.Color = DiscordColor.Chartreuse;
+            _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
             cmds.ToList().ForEach(cmd =>
             {
-                _embed.Description += $"\n{cmd.Name}";
+
+                if(String.IsNullOrEmpty(cmd.Description))
+                    _strBuilder += $"\n{cmd.Name} - This command don't have a description";
+                else
+                    _strBuilder += $"\n{cmd.Name} - {cmd.Description}";
 
             });
             return this;
@@ -51,10 +71,18 @@ namespace My_Bot_Discord_CSharp.Formatter
 
         public override CommandHelpMessage Build()
         {
-             return new CommandHelpMessage(embed: _embed);
+            var helpStringFormatter = _strBuilder;
+
+            var interactivity = _ctx.Client.GetInteractivity();
+            
+            var pages = interactivity.GeneratePagesInEmbed(helpStringFormatter,DSharpPlus.Interactivity.Enums.SplitType.Line,_embed);
+
+            var  emned = _ctx.Channel.SendPaginatedMessageAsync(_ctx.Member, pages);
+            return new CommandHelpMessage();
   
         }
-
-   
+        
+        
+        
      }
 }

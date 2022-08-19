@@ -14,7 +14,7 @@
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0" />
     <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.4.22229.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-preview.4.22229.2">
       <PrivateAssets>all</PrivateAssets>
@@ -25,7 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
