@@ -76,8 +76,8 @@ namespace My_Bot_Discord_CSharp.Formatter
             var interactivity = _ctx.Client.GetInteractivity();
             
             var pages = interactivity.GeneratePagesInEmbed(helpStringFormatter,DSharpPlus.Interactivity.Enums.SplitType.Line,_embed);
-
             _ctx.Channel.SendPaginatedMessageAsync(_ctx.Member, pages);
+
 
             return new CommandHelpMessage();
   
