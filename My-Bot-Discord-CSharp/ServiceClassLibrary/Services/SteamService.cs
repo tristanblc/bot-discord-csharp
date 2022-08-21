@@ -29,7 +29,7 @@ namespace ServiceClassLibrary.Services
         private ISteamNews SteamNews { get; init; }
 
         private ISteamUserStats SteamUserStats { get; init; }
-            
+
         public SteamService(string apikey)
         {
             SteamWebInterface = this.GetClient(apikey);
@@ -40,17 +40,17 @@ namespace ServiceClassLibrary.Services
             SteamUser = this.GetISteamUser(HttpClient);
             SteamNews = this.GetISteamNews(HttpClient);
             SteamUserStats = this.GetISteamUserStats(HttpClient);
-        
-        
+
+
         }
         public SteamWebInterfaceFactory GetClient(string apikey)
         {
             try
             {
                 return new SteamWebInterfaceFactory(apikey);
-          
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 var message = "Cannot get construct client";
@@ -67,7 +67,7 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamWebInterface.CreateSteamWebInterface<SteamUser>(new HttpClient());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = "Cannot get interface Steam User";
                 LoggerProject.WriteLogErrorLog(message);
@@ -98,13 +98,13 @@ namespace ServiceClassLibrary.Services
                 return SteamUser.GetPlayerSummariesAsync(new List<ulong>() { SteamUserId }).Result.Data.ToList();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = "Cannot get e Steam User";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-     
+
         }
 
         public List<FriendModel> GetFriendsListBySteamUserId(ulong steamUserId)
@@ -113,13 +113,13 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamUser.GetFriendsListAsync(steamUserId).Result.Data.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get friends user from user  with id {steamUserId.ToString()}";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-        
+
         }
 
         public List<PlayerBansModel> GetBansSteamUser(ulong steamUserId)
@@ -128,14 +128,14 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamUser.GetPlayerBansAsync(steamUserId).Result.Data.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 var message = $"Cannot get ban user from user  with id {steamUserId.ToString()}";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-       
+
         }
 
         public DiscordEmbedBuilder ConvertSteamUsetToEmbed(PlayerSummaryModel player)
@@ -153,10 +153,10 @@ namespace ServiceClassLibrary.Services
                         contents += $"\nGame : {game.Name}";
                     });
                 }
-                var embed = UtilsService.CreateNewEmbed($"{player.Nickname}", DiscordColor.Purple,contents);
+                var embed = UtilsService.CreateNewEmbed($"{player.Nickname}", DiscordColor.Purple, contents);
                 return embed;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get steam apps interface";
                 LoggerProject.WriteLogErrorLog(message);
@@ -171,35 +171,35 @@ namespace ServiceClassLibrary.Services
                 return SteamWebInterface.CreateSteamWebInterface<SteamApps>(httpClient);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get steam apps interface";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-           
+
         }
 
         public List<SteamAppModel> GetSteamAppByName(string name)
         {
             try
             {
-                var list =  SteamApps.GetAppListAsync().Result.Data.Where(x => x.Name == name).ToList();
+                var list = SteamApps.GetAppListAsync().Result.Data.Where(x => x.Name == name).ToList();
                 var apps = new List<SteamAppModel>();
                 list.ToList().ForEach(app =>
                 {
                     if (app.Name.ToLower() != name.ToLower())
                     {
                         list.Remove(app);
-                       
+
                     }
-                       
+
                 });
 
                 return list;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get owned games";
                 LoggerProject.WriteLogErrorLog(message);
@@ -213,31 +213,31 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamApps.GetAppListAsync().Result.Data.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get owned games";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-      
+
         }
 
         public DiscordEmbedBuilder ConvertSteamAppToEmbed(SteamAppModel steamAppModel)
         {
-           try
+            try
             {
                 var contents = $"{steamAppModel.AppId} - {steamAppModel.Name}";
                 contents += $"Link : https://store.steampowered.com/app/{steamAppModel.AppId}/{steamAppModel.Name}/";
                 var embed = UtilsService.CreateNewEmbed($"{steamAppModel.Name}", DiscordColor.Purple, contents);
                 return embed;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot convert to embed";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-                
+
         }
 
         public List<SteamAppModel> GetSteamAppsByName(string name)
@@ -289,7 +289,7 @@ namespace ServiceClassLibrary.Services
             try
             {
                 var friend = this.GetListsSteamUser(friendModel.SteamId).First();
-                
+
 
 
                 var contents = $"Steam id : {friendModel.SteamId}";
@@ -302,7 +302,7 @@ namespace ServiceClassLibrary.Services
                     games.ForEach(game =>
                     {
                         contents += $"\nGame : {game.Name}";
-                    });                   
+                    });
                 }
 
                 var embed = UtilsService.CreateNewEmbed($"Friend named {friendModel.SteamId}", DiscordColor.Aquamarine, contents);
@@ -310,13 +310,13 @@ namespace ServiceClassLibrary.Services
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot convert friendmodel to embed";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
-          
+
         }
 
         public DiscordEmbedBuilder ConvertPlayerBans(PlayerBansModel playerBans)
@@ -336,7 +336,8 @@ namespace ServiceClassLibrary.Services
                 return embed;
 
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 var message = $"Cannot convert friendmodel to embed";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
@@ -364,14 +365,14 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamNews.GetNewsForAppAsync(appId).Result.Data;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot get lists of news from steam";
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
 
-         
+
         }
 
         public DiscordEmbedBuilder ConvertSteamNewsToEmbed(SteamNewsResultModel SteamNewsModel)
@@ -392,7 +393,7 @@ namespace ServiceClassLibrary.Services
                 return embed;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = $"Cannot create embed";
                 LoggerProject.WriteLogErrorLog(message);
@@ -406,22 +407,22 @@ namespace ServiceClassLibrary.Services
             return SteamWebInterface.CreateSteamWebInterface<SteamNews>(new HttpClient());
         }
 
-    
 
-        public UserStatsForGameResultModel GetUserStatsForGame(string gameName,uint userId)
+
+        public UserStatsForGameResultModel GetUserStatsForGame(string gameName, uint userId)
         {
             try
             {
                 var game = this.GetSteamAppByName(gameName).First();
                 return SteamUserStats.GetUserStatsForGameAsync(userId, game.AppId).Result.Data;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get user stats for game {gameName}";
                 LoggerProject.WriteLogErrorLog(exception);
                 throw new SteamException(exception);
             }
-           
+
         }
 
         public SchemaForGameResultModel GetSchemaForGame(string gameName)
@@ -432,7 +433,7 @@ namespace ServiceClassLibrary.Services
                 var game = this.GetSteamAppByName(gameName).First();
                 return SteamUserStats.GetSchemaForGameAsync(game.AppId, language).Result.Data;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get schema for game {gameName}";
                 LoggerProject.WriteLogErrorLog(exception);
@@ -454,7 +455,7 @@ namespace ServiceClassLibrary.Services
                 var exception = $"Cannot get current user online";
                 LoggerProject.WriteLogErrorLog(exception);
                 throw new SteamException(exception);
-              
+
             }
         }
 
@@ -476,14 +477,14 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public List<PlayerAchievementModel> GetUserAchievementForUser(string gameName,uint userId)
+        public List<PlayerAchievementModel> GetUserAchievementForUser(string gameName, uint userId)
         {
             try
             {
                 var game = this.GetSteamAppByName(gameName).First();
                 return SteamUserStats.GetPlayerAchievementsAsync(game.AppId, userId, "english").Result.Data.Achievements.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get user achievement for user for game {gameName}";
                 LoggerProject.WriteLogErrorLog(exception);
@@ -497,20 +498,31 @@ namespace ServiceClassLibrary.Services
             {
                 return SteamWebInterface.CreateSteamWebInterface<SteamUserStats>();
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 var exception = $"Cannot get interface IsteamUserStats";
                 LoggerProject.WriteLogErrorLog(exception);
                 throw new SteamException(exception);
 
             }
-          
+
         }
 
         public DiscordEmbedBuilder ConvertPlayerAchivementsModelToEmbed(PlayerAchievementModel achievementModel)
         {
             try
             {
-                
+                var contents = $" when : {achievementModel.UnlockTime.ToLocalTime()}";
+                contents += $"\nDescription: {achievementModel.Description}";
+                if(achievementModel.Achieved != 0) 
+                  contents = $" Achivement lock : Unlock";
+                else
+                {
+                    contents = $" Achivement lock : lock";
+                }
+                var embed = UtilsService.CreateNewEmbed($"Name {achievementModel.Name}", DiscordColor.Aquamarine, contents);
+                return embed;
+
             }
             catch (Exception ex)
             {
@@ -519,7 +531,7 @@ namespace ServiceClassLibrary.Services
                 throw new SteamException(exception);
 
             }
-            throw new NotImplementedException();
+
         }
 
         public DiscordEmbedBuilder ConvertGlobalStatModelToEmbed(GlobalStatModel globalStatModel)
@@ -578,7 +590,7 @@ namespace ServiceClassLibrary.Services
                 var embed = UtilsService.CreateNewEmbed($" Game {schemaModel.GameName} schema", DiscordColor.Aquamarine, contents);
                 return embed;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var exception = $"Cannot get embed";
                 LoggerProject.WriteLogErrorLog(exception);
@@ -587,4 +599,6 @@ namespace ServiceClassLibrary.Services
 
         }
     }
+
+     
 }

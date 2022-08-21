@@ -77,7 +77,8 @@ namespace My_Bot_Discord_CSharp.Formatter
             
             var pages = interactivity.GeneratePagesInEmbed(helpStringFormatter,DSharpPlus.Interactivity.Enums.SplitType.Line,_embed);
 
-            var  emned = _ctx.Channel.SendPaginatedMessageAsync(_ctx.Member, pages);
+            _ctx.Channel.SendPaginatedMessageAsync(_ctx.Member, pages);
+
             return new CommandHelpMessage();
   
         }
