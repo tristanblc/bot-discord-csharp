@@ -38,7 +38,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             {
                 Token = startup.GetTokenFromJsonFile(),
                 TokenType = TokenType.Bot,
-                Intents = DiscordIntents.All,
+                Intents = DiscordIntents.All
               
             });
 
@@ -52,7 +52,8 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             discord.UseInteractivity(new InteractivityConfiguration()
             {
                 PollBehaviour = PollBehaviour.KeepEmojis,
-                Timeout = TimeSpan.FromDays(25)
+                Timeout = TimeSpan.FromDays(25),
+                PaginationBehaviour = PaginationBehaviour.WrapAround
             });
 
             var commands = discord.UseCommandsNext(command_configuration);
@@ -72,10 +73,9 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<RedditModule>();
             commands.RegisterCommands<SteamModule>();
             commands.RegisterCommands<TwitchModule>();
-
+            commands.RegisterCommands<SteamGameModule>();
             commands.SetHelpFormatter<BotHelpFormatter>();
-
-         
+            
             LoggerProject.WriteInformationLog("Discord client created");
 
             return discord;

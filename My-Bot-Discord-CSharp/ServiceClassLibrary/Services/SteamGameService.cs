@@ -41,6 +41,7 @@ namespace ServiceClassLibrary.Services
             SteamCSGOServers = this.GetCSGOServer(HttpClient);
             SteamEconomy = this.GetISteamEconomy(HttpClient);       
             SteamService = new SteamService(apikey);
+            TFItems = this.GetITFitems(HttpClient);
         }
 
         public SteamWebInterfaceFactory GetClient(string apikey)
@@ -177,6 +178,11 @@ namespace ServiceClassLibrary.Services
                 var contents = $"Get status f servers";
                 contents += $"\nNumber of datacenters : {serverStatus.Datacenters.Count}";
                 contents += $"\nNumber of steam community server :{serverStatus.Services.SteamCommunity.Length}";
+
+                contents += $"\nOnline users {serverStatus.Matchmaking.OnlinePlayers}";
+                contents += $"\nNumber of online servers :{serverStatus.Matchmaking.OnlineServers}";
+                contents += $" App TimeStamp :{serverStatus.App.Timestamp}";
+                contents += $"\nCsgo version :{serverStatus.App.Version}";
                 var embed = UtilsService.CreateNewEmbed($"Server", DiscordColor.Aquamarine, contents);
                 return embed;
             }
