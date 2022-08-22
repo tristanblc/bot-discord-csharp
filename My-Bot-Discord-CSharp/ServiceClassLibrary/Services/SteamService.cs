@@ -528,6 +528,10 @@ namespace ServiceClassLibrary.Services
                 contents += $"\nDescription: {achievementModel.Description}";
                 if (achievementModel.Achieved != 0)
                     contents = $" Achivement lock : Unlock";
+
+                if(achievementModel.Achieved != 0) 
+                  contents = $" Achivement lock : Unlock";
+
                 else
                 {
                     contents = $" Achivement lock : lock";
@@ -650,5 +654,5 @@ namespace ServiceClassLibrary.Services
          
         }
     }
-     
+
 }

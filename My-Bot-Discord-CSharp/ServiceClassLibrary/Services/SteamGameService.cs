@@ -46,8 +46,10 @@ namespace ServiceClassLibrary.Services
             SteamEconomy = this.GetISteamEconomy(HttpClient);       
             SteamService = new SteamService(apikey);
             TFItems = this.GetITFitems(HttpClient);
+
             SteamApps = this.GetISteamApps(HttpClient);
             SteamWebAPIUtil = this.GetISteamWebAPIUtil(HttpClient);
+
         }
 
         public SteamWebInterfaceFactory GetClient(string apikey)

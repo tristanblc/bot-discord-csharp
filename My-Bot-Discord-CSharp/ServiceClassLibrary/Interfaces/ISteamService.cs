@@ -73,7 +73,5 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertSchemaGameModeToEmbed(SchemaForGameResultModel schemaModel);
 
 
-
-
     }
 }
