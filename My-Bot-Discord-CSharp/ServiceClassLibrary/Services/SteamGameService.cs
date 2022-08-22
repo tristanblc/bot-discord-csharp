@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
+using Steam.Models;
 using Steam.Models.CSGO;
 using Steam.Models.SteamEconomy;
 using Steam.Models.TF2;
@@ -29,7 +30,10 @@ namespace ServiceClassLibrary.Services
 
         public ITFItems TFItems { get; init; }
 
+        private ISteamApps SteamApps { get; init; }
+        private ISteamWebAPIUtil SteamWebAPIUtil { get; init; } 
         public SteamService SteamService { get; init; }
+
 
 
         public SteamGameService(string apikey)
@@ -42,6 +46,8 @@ namespace ServiceClassLibrary.Services
             SteamEconomy = this.GetISteamEconomy(HttpClient);       
             SteamService = new SteamService(apikey);
             TFItems = this.GetITFitems(HttpClient);
+            SteamApps = this.GetISteamApps(HttpClient);
+            SteamWebAPIUtil = this.GetISteamWebAPIUtil(HttpClient);
         }
 
         public SteamWebInterfaceFactory GetClient(string apikey)
@@ -230,6 +236,108 @@ namespace ServiceClassLibrary.Services
                 LoggerProject.WriteLogErrorLog(message);
                 throw new SteamException(message);
             }
+        }
+
+        public ISteamApps GetISteamApps(HttpClient httpClient)
+        {
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<SteamApps>(httpClient);
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get steam apps interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }           
+        }
+
+        public SteamServerInfoModel GetServerApiInfo()
+        {
+            try
+            {
+                return SteamWebAPIUtil.GetServerInfoAsync().Result.Data;
+            }
+            catch (Exception ex)
+            {
+                var message = "Cannot get steam apps interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public List<SteamInterfaceModel> GetSuppportedApiList()
+        {
+            try
+            {
+                return SteamWebAPIUtil.GetSupportedAPIListAsync().Result.Data.ToList();
+            }
+            catch(Exception ex)
+            {
+                
+                    var message = "Cannot get supported api";
+                    LoggerProject.WriteLogErrorLog(message);
+                    throw new SteamException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertServerStatusToEmbed(SteamServerInfoModel steamServerModel)
+        {
+            try
+            {
+                var contents = $"";
+                contents += $"Server time {steamServerModel.ServerTime.ToDateTime().ToLocalTime()}";
+                contents += $"Datetime server : {steamServerModel.ServerTimeDateTime}";
+                var embed = UtilsService.CreateNewEmbed("Server status ", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertSteamInterfaceToEmbed(SteamInterfaceModel steamInterfaceModel)
+        {
+            try
+            {
+                var contents = $"";
+                contents += $"{steamInterfaceModel.Name}";
+                steamInterfaceModel.Methods.ToList().ForEach(myInterface =>
+                {
+                    contents += $"{myInterface.Name}  - {myInterface.Version}";
+
+                });
+
+                var embed = UtilsService.CreateNewEmbed($"Interface steam api", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get embed";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+
+            }
+           
+        }
+
+        public ISteamWebAPIUtil GetISteamWebAPIUtil(HttpClient httpClient)
+        {
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<SteamWebAPIUtil>(HttpClient);
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get steam web aoi interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+      
         }
     }
 }

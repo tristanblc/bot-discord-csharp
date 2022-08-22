@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
 using Steam.Models;
@@ -186,6 +187,7 @@ namespace ServiceClassLibrary.Services
             {
                 var list = SteamApps.GetAppListAsync().Result.Data.Where(x => x.Name == name).ToList();
                 var apps = new List<SteamAppModel>();
+
                 list.ToList().ForEach(app =>
                 {
                     if (app.Name.ToLower() != name.ToLower())
@@ -404,7 +406,17 @@ namespace ServiceClassLibrary.Services
 
         public ISteamNews GetISteamNews(HttpClient httpClient)
         {
-            return SteamWebInterface.CreateSteamWebInterface<SteamNews>(new HttpClient());
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<SteamNews>(new HttpClient());
+            }
+            catch(Exception ex)
+            {
+                var message = $"Cannot steam news interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+            
         }
 
 
@@ -514,8 +526,8 @@ namespace ServiceClassLibrary.Services
             {
                 var contents = $" when : {achievementModel.UnlockTime.ToLocalTime()}";
                 contents += $"\nDescription: {achievementModel.Description}";
-                if(achievementModel.Achieved != 0) 
-                  contents = $" Achivement lock : Unlock";
+                if (achievementModel.Achieved != 0)
+                    contents = $" Achivement lock : Unlock";
                 else
                 {
                     contents = $" Achivement lock : lock";
@@ -598,7 +610,45 @@ namespace ServiceClassLibrary.Services
             }
 
         }
-    }
 
+        public SteamAppUpToDateCheckModel GetUpToDateCheckModelByVersionAndAppId(string appId, uint version)
+        {
+            try
+            {
+                return SteamApps.UpToDateCheckAsync(uint.Parse(appId), version).Result.Data;
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot check if is outdated or updated version";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertUpToDateAppToEmbed(SteamAppUpToDateCheckModel app)
+        {
+            try
+            {
+                var contents = $"";
+                contents += $"\n {app.Message}";
+                if(app.UpToDate)
+                    contents += $"\nIs up to date ";
+                else
+                    contents += $"\n Is outdated -> app is update to {app.RequiredVersion}";
+                var embed = UtilsService.CreateNewEmbed($"App check version", DiscordColor.Aquamarine, contents);
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot convert to embed";
+                LoggerProject.WriteLogErrorLog(exception);
+                throw new SteamException(exception);
+
+            }
+         
+        }
+    }
      
 }
