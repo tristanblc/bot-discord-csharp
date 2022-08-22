@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using Steam.Models;
 using Steam.Models.SteamCommunity;
 using Steam.Models.SteamPlayer;
@@ -59,6 +60,10 @@ namespace ServiceClassLibrary.Interfaces
 
         List<PlayerAchievementModel> GetUserAchievementForUser(string gameName, uint userId);
 
+        SteamAppUpToDateCheckModel GetUpToDateCheckModelByVersionAndAppId(string appId, uint version);
+
+        DiscordEmbedBuilder ConvertUpToDateAppToEmbed(SteamAppUpToDateCheckModel app);
+
         DiscordEmbedBuilder ConvertPlayerAchivementsModelToEmbed(PlayerAchievementModel achievementModel);
 
         DiscordEmbedBuilder ConvertGlobalStatModelToEmbed(GlobalStatModel globalStatModel);
@@ -66,6 +71,7 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertUserStatsForGameToeEmbed(UserStatsForGameResultModel userStatsModel);
 
         DiscordEmbedBuilder ConvertSchemaGameModeToEmbed(SchemaForGameResultModel schemaModel);
+
 
     }
 }

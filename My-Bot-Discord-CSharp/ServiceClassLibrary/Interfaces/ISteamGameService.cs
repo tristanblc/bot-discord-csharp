@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using Steam.Models;
 using Steam.Models.CSGO;
 using Steam.Models.SteamEconomy;
 using Steam.Models.TF2;
@@ -19,6 +20,9 @@ namespace ServiceClassLibrary.Interfaces
 
         ITFItems GetITFitems(HttpClient httpClient);
 
+        ISteamApps GetISteamApps(HttpClient httpClient);
+        ISteamWebAPIUtil GetISteamWebAPIUtil(HttpClient httpClient);
+
         ServerStatusModel GetServerStatus();
 
         AssetClassInfoResultModel GetAssetInfo(string appname);
@@ -26,11 +30,23 @@ namespace ServiceClassLibrary.Interfaces
         AssetPriceResultModel GetPriceAssset(string appname, string currency);
 
         List<GoldenWrenchModel> GetGoldenWrenchModels();
+        SteamServerInfoModel GetServerApiInfo();
+
+        List<SteamInterfaceModel> GetSuppportedApiList();
+
+        DiscordEmbedBuilder ConvertServerStatusToEmbed(SteamServerInfoModel steamServerModel);
+
+        DiscordEmbedBuilder ConvertSteamInterfaceToEmbed(SteamInterfaceModel steamInterfaceModel);
 
         DiscordEmbedBuilder ConvertServerStatusToEmbed(ServerStatusModel serverStatus);
 
         DiscordEmbedBuilder ConvertAssetClassToEmbed(AssetClassInfoResultModel asset);
 
         DiscordEmbedBuilder ConvertGoldenWrenchToEmbed(GoldenWrenchModel goldenWrench);
+
+        
+   
+
+    
     }
 }
