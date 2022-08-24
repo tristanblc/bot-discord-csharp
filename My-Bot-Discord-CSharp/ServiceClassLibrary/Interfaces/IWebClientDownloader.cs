@@ -5,13 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TwitchLib.Api.Helix.Models.Clips.GetClips;
 
 namespace ServiceClassLibrary.Interfaces
 {
     internal interface IWebClientDownloader
     {
-        void DownloadVideoFromDiscord(DiscordAttachment discordAttachement);    
+        void DownloadVideoFromDiscord(DiscordAttachment discordAttachement);
+        void DownloadVideoFromTwitch(Clip clip);
         FileStream ConvertVideoToStream(string path);
         void DownloadVideo(string url, string name);
+    
     }
 }

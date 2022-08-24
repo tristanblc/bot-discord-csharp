@@ -13,6 +13,8 @@ namespace ServiceClassLibrary.Interfaces
 
         string CompressVideo(DiscordAttachment discordAttachement);
 
+        void CompressVideo(string inputPath, string outputPath);
+
         string GetVideoInfo(DiscordAttachment discordAttachement);
 
         void DeleteVideo(string path);
