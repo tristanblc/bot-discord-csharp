@@ -45,5 +45,7 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertStreamTwitchToEmbed(TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream stream);
 
         DiscordEmbedBuilder ConvertGameStatTwitchToEmbed(TwitchLib.Api.Helix.Models.Analytics.GameAnalytics gameAnalytics);
+
+        DiscordEmbedBuilder ConvertGameToEmbed(TwitchLib.Api.Helix.Models.Games.Game game);
     }
 }

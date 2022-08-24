@@ -287,14 +287,14 @@ namespace ServiceClassLibrary.Services
             try
             {
              
-                var path = Path.Join(Directory.GetCurrentDirectory(), "video");
+                var pathdoc = Path.Join(Directory.GetCurrentDirectory(), "video");
                 var filename = $"extract_clip_{clip.CreatorName}.mp4";
-                path = Path.Join(path,filename);
+                var path = Path.Join(pathdoc,filename);
 
                 WebClientDownloader.DownloadVideoFromTwitch(clip);
 
                 var filenames = $"clip_{clip.CreatorName}_{new DateTimeOffset(DateTime.Parse(clip.CreatedAt)).ToUnixTimeSeconds()}.mp4";
-                var filePath = Path.Join(path, filenames);
+                var filePath = Path.Join(pathdoc, filenames);
                 VideoService.CompressVideo(path, filePath);
                 return WebClientDownloader.ConvertVideoToStream(filePath);
             }
@@ -311,8 +311,12 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-              var embed = UtilsService.CreateNewEmbed($"Clip from {clip.CreatorName}", DiscordColor.Azure, $"Date {clip.CreatedAt} - Duration : {clip.Duration.ToString()}");                
-              return embed;
+
+                var contents = $"User name : {clip.CreatorName} - Duration : {clip.Duration}";
+                contents += $"\n{clip.Url}";
+                var embed = UtilsService.CreateNewEmbed($"Clip from {clip.CreatorName}", DiscordColor.Azure, contents);
+                embed.WithImageUrl(clip.ThumbnailUrl);
+                return embed;
 
             }
             catch (Exception ex)
@@ -354,5 +358,24 @@ namespace ServiceClassLibrary.Services
                 throw new TwitchAPIException(exception);
             }
         }
+
+        public DiscordEmbedBuilder ConvertGameToEmbed(Game game)
+        {
+            try
+            {
+                var contents = $"Game {game.Name}";
+                contents += $"\nId {game.Id}";
+                var embed = UtilsService.CreateNewEmbed($"Game info", DiscordColor.Azure, contents);
+                embed.WithImageUrl(game.BoxArtUrl);
+                return embed;
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot convert game to embed;";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
     }
 }

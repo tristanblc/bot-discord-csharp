@@ -117,6 +117,48 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
+        [Command("getlatestclip")]
+        public async Task HandleGetLatestClip(CommandContext ctx, string username)
+        {
+            try
+            {
 
+                var user = TwitchService.GetUserByName(username);
+                var clips = TwitchService.Get10LatestClipsFromUser(username);
+                clips.ForEach(clip =>
+                {
+                    var embed = TwitchService.ConvertTwitchClipToEmbed(clip);
+                    ctx.RespondAsync(embed.Build());
+
+                }
+                );
+         
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream from{username}");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("game")]
+        public async Task HandleGetGames(CommandContext ctx,string game)
+        {
+            try
+            {
+                var games = TwitchService.GetGameFromName(game);
+                var embed = TwitchService.ConvertGameToEmbed(games);
+                await ctx.RespondAsync(embed.Build());
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("pas de jeu", DiscordColor.Azure, "");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
     }
 }
