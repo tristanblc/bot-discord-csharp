@@ -169,5 +169,37 @@ namespace ServiceClassLibrary.Services
             }
         }
 
+        public void CompressVideo(string inputPath, string outputPath)
+        {
+            try
+            {
+
+                try
+                {
+                    FFMpegArguments
+                          .FromFileInput(inputPath)
+                          .OutputToFile(outputPath)
+                          .ProcessAsynchronously(false).Wait();
+
+
+                }
+                catch (Exception ex)
+                {
+                    LoggerProject.WriteLogErrorLog($"FFMEG convert error");
+                    throw new VideoException("Error => Erreur enregistrement");
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                LoggerProject.WriteLogErrorLog($"can't compress video");
+                throw new VideoException($"Error :  can't compress video ");
+            }
+        } 
+        
+        
+    
     }
 }

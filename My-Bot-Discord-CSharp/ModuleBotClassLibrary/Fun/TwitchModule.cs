@@ -31,11 +31,12 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gettwitchUser")]
-        public async Task HandleGetTwitchUser(CommandContext ctx,string userId)
+        public async Task HandleGetTwitchUser(CommandContext ctx,string username)
         {
             try
             {
-                var user = TwitchService.GetUserById(userId);
+
+                var user = TwitchService.GetUserByName(username);
                 var embed = TwitchService.ConvertTwitchUserToEmbed(user);
 
                 await ctx.RespondAsync(embed.Build());
@@ -49,13 +50,14 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("getFollowingUser")]
-        public async Task HandleGetFollowingUser(CommandContext ctx, string userId)
+        [Command("getFollowuser")]
+        public async Task HandleGetFollowingUser(CommandContext ctx, string name)
         {
             try
             {
+                var user = TwitchService.GetUserByName(name);
 
-                var followers = TwitchService.GetFollowedUser(userId);
+                var followers = TwitchService.GetFollowedUser(user.Id);
 
                 followers.ToList().ForEach(follower =>
                 {
@@ -76,24 +78,45 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getStreams")]
-        public async Task HandleGetStreams(CommandContext ctx,string userId)
+        public async Task HandleGetStreams(CommandContext ctx,string name)
         {
             try
             {
-             
-                var stream = TwitchService.GetStreamById(userId);
+
+                var user = TwitchService.GetUserByName(name);
+                var stream = TwitchService.GetStreamById(user.Id);
                 var embed = TwitchService.ConvertStreamTwitchToEmbed(stream);
 
                 await ctx.RespondAsync(embed.Build());
 
             }
             catch(Exception ex) {
-                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream pour {name}");
 
                 await ctx.RespondAsync(exception.Build());
             }
         }
 
+        [Command("getClip")]
+        public async Task HandleGetClip(CommandContext ctx, string username)
+        {
+            try
+            {
+
+                var user = TwitchService.GetUserByName(username);
+                var clip = TwitchService.GetLatestClipByUsername(username);
+                var extract = TwitchService.DownloadClipFromTwitch(clip);
+                var message = TwitchService.ConvertClipToMessage(extract);
+                await message.SendAsync(ctx.Channel);
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream from{ username}");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
 
     }
 }

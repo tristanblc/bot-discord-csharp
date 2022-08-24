@@ -4,10 +4,12 @@ using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TwitchLib.Api;
 using TwitchLib.Api.Helix.Models.Analytics;
+using TwitchLib.Api.Helix.Models.Clips.GetClips;
 using TwitchLib.Api.Helix.Models.Games;
 using TwitchLib.Api.Helix.Models.Users;
 using TwitchLib.Api.Helix.Models.Users.GetUserFollows;
@@ -23,14 +25,21 @@ namespace ServiceClassLibrary.Services
 
         private IUtilsService UtilsService { get; init; }
 
+        private IVideoService VideoService { get; init; }
 
+        private IWebClientDownloader WebClientDownloader { get; init; }
+        private string DirectoryForSave { get; init; } = Directory.GetCurrentDirectory();
+
+        private WebClient WebClient { get; init; }
         public TwitchService(string accesstoken, string clientId)
         {
 
             Logger = new LoggerProject();
             UtilsService = new UtilsService();
             TwitchClient = this.ConnectToTwitch(clientId, accesstoken);
-
+            WebClient = new WebClient();
+            WebClientDownloader = new WebClientDownloader(WebClient);
+            VideoService = new VideoService();
         }
 
         public TwitchAPI ConnectToTwitch(string clientid, string accessToken)
@@ -38,8 +47,10 @@ namespace ServiceClassLibrary.Services
             try
             {
                 var client = new TwitchAPI();
-                client.Settings.AccessToken = accessToken;
                 client.Settings.ClientId = clientid;
+                client.Settings.Secret = accessToken;
+                client.Settings.AccessToken = client.Auth.GetAccessTokenAsync(null).Result;
+         
                 return client;
 
 
@@ -82,13 +93,11 @@ namespace ServiceClassLibrary.Services
 
         }
 
-        public List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string username)
+        public List<TwitchLib.Api.Helix.Models.Streams.GetStreams.Stream> GetStreams(string broadcasterId)
         {
             try
             {
-               
-
-                return TwitchClient.Helix.Streams.GetStreamsAsync(null, null, 20, null, null, "all", new List<string>() { username}, null).Result.Streams.ToList();
+                return TwitchClient.Helix.Streams.GetStreamsAsync(null, null, 20, null, null, "all", new List<string>() { broadcasterId }, null, null).Result.Streams.ToList();
             }
             catch (Exception ex)
             {
@@ -139,7 +148,7 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                var contents = $"Username {follower.FromUserName}";
+                var contents = $"Username {follower.ToUserName}";
                 contents += $"{follower.FollowedAt.ToLocalTime().ToString()}";
                 var embed = UtilsService.CreateNewEmbed($"{follower.FromUserName}", DiscordColor.Azure, contents);
                 return embed;
@@ -243,6 +252,107 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-       
+
+        public User GetUserByName(string name)
+        {
+            try
+            {
+                return TwitchClient.Helix.Users.GetUsersAsync(null, new List<string>() { name }, null).Result.Users.ToList().First();
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public List<Clip> Get10LatestClipsFromUser(string username)
+        {
+            try
+            {
+                var user = GetUserByName(username);
+                return TwitchClient.Helix.Clips.GetClipsAsync(null, null, user.Id, null, null, DateTime.Now.AddDays(-1), DateTime.Now, 10, null).Result.Clips.ToList();
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public FileStream DownloadClipFromTwitch(Clip clip)
+        {
+            try
+            {
+             
+                var path = Path.Join(Directory.GetCurrentDirectory(), "video");
+                var filename = $"extract_clip_{clip.CreatorName}.mp4";
+                path = Path.Join(path,filename);
+
+                WebClientDownloader.DownloadVideoFromTwitch(clip);
+
+                var filenames = $"clip_{clip.CreatorName}_{new DateTimeOffset(DateTime.Parse(clip.CreatedAt)).ToUnixTimeSeconds()}.mp4";
+                var filePath = Path.Join(path, filenames);
+                VideoService.CompressVideo(path, filePath);
+                return WebClientDownloader.ConvertVideoToStream(filePath);
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+
+        }
+
+        public DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip)
+        {
+            try
+            {
+              var embed = UtilsService.CreateNewEmbed($"Clip from {clip.CreatorName}", DiscordColor.Azure, $"Date {clip.CreatedAt} - Duration : {clip.Duration.ToString()}");                
+              return embed;
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public Clip GetLatestClipByUsername(string username)
+        {
+            try
+            {
+                var user = GetUserByName(username);
+                return TwitchClient.Helix.Clips.GetClipsAsync(null, null, user.Id, null, null, DateTime.Now.AddDays(-1), DateTime.Now, 1, null).Result.Clips.ToList().First();
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public DiscordMessageBuilder ConvertClipToMessage(FileStream file)
+        {
+            try
+            {
+                DiscordMessageBuilder builders = new DiscordMessageBuilder();
+                FileStream fileStream = file;
+                builders.WithFile(fileStream);
+                return builders;
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot get user by id";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
     }
 }
