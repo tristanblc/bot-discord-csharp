@@ -14,6 +14,7 @@ using TwitchLib.Api.Helix.Models.Analytics;
 using TwitchLib.Api.Helix.Models.Channels.GetChannelInformation;
 using TwitchLib.Api.Helix.Models.Chat.Badges;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetChannelEmotes;
+
 using TwitchLib.Api.Helix.Models.Clips.GetClips;
 using TwitchLib.Api.Helix.Models.Games;
 using TwitchLib.Api.Helix.Models.Users;
@@ -480,6 +481,6 @@ namespace ServiceClassLibrary.Services
          
         }
 
-      
+
     }
 }

@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitchLib.Api;
 using TwitchLib.Api.Core.Models.Undocumented.CSStreams;
+
 using TwitchLib.Api.Helix;
 using TwitchLib.Api.Helix.Models.Channels.GetChannelInformation;
 using TwitchLib.Api.Helix.Models.Chat.Badges;
 using TwitchLib.Api.Helix.Models.Chat.Emotes.GetChannelEmotes;
+
 using TwitchLib.Api.Helix.Models.Clips.GetClips;
 using TwitchLib.Api.Helix.Models.Users;
 
@@ -37,6 +39,7 @@ namespace ServiceClassLibrary.Interfaces
 
         List<Clip> Get10LatestClipsFromUser(string username);
 
+
         List<ChannelInformation> GetChannelsinformation(string username);
 
         GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId);
@@ -49,9 +52,9 @@ namespace ServiceClassLibrary.Interfaces
 
         DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip);
 
+
         void ConvertEmojiToEmbed(string broadcasterId,CommandContext ctx);
 
-        DiscordEmbedBuilder ConvertChannelsToEmbed(ChannelInformation channelInfo);
 
         DiscordEmbedBuilder ConvertTwitchUserToEmbed(TwitchLib.Api.Helix.Models.Users.GetUsers.User user);
         DiscordEmbedBuilder ConvertFollowersTwitchToEmbed(TwitchLib.Api.Helix.Models.Users.GetUserFollows.Follow follower);
