@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
 using System;
@@ -8,7 +9,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TwitchLib.Api;
+using TwitchLib.Api.Helix;
 using TwitchLib.Api.Helix.Models.Analytics;
+using TwitchLib.Api.Helix.Models.Channels.GetChannelInformation;
+using TwitchLib.Api.Helix.Models.Chat.Badges;
+using TwitchLib.Api.Helix.Models.Chat.Emotes.GetChannelEmotes;
 using TwitchLib.Api.Helix.Models.Clips.GetClips;
 using TwitchLib.Api.Helix.Models.Games;
 using TwitchLib.Api.Helix.Models.Users;
@@ -377,5 +382,110 @@ namespace ServiceClassLibrary.Services
             }
         }
 
+
+        public List<ChannelInformation> GetChannelsinformation(string username)
+        {
+            try
+            {
+                var user = GetUserByName(username);
+                return TwitchClient.Helix.Channels.GetChannelInformationAsync(user.Id, null).Result.Data.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot convert game to embed;";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+       
+        }
+
+        public List<ChannelPoints> GetChannelPoints(string username)
+        {
+            throw new NotImplementedException();
+        }
+      
+        public DiscordEmbedBuilder ConvertChannelPointsToEmbed(ChannelPoints channelPoints)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DiscordEmbedBuilder ConvertChannelsToEmbed(ChannelInformation channelInfo)
+        {
+            try
+            {
+                var contents = $"Game: {channelInfo.GameName}";
+                contents = $"\nName: {channelInfo.BroadcasterName}";           
+                contents = $"\nLanguage: {channelInfo.BroadcasterLanguage}";
+                contents = $"\nTitle: {channelInfo.Title}";
+                contents = $"\nDelay: {channelInfo.Delay}";
+                var embed = UtilsService.CreateNewEmbed($"Game info", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot convert  channel info to embed;";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+       
+        }
+
+        public void ConvertEmojiToEmbed(string broadcasterId, CommandContext ctx)
+        {
+            try
+            {
+
+            
+                var emojis = getEmojisFromBroadcasterId(broadcasterId);
+                Task.Delay(2000);
+                emojis.ChannelEmotes.ToList().ForEach(emoj =>
+                {
+                        var contents = $"Emoji info";
+                   
+                        contents += $"\nName  : {emoj.Name}";                  
+                        contents += $"\nTier : {emoj.Tier}";
+                        contents += $"\nUrl x1  : {emoj.Images.Url1X}";
+                        contents += $"\nUrl x2 : {emoj.Images.Url2X}";
+                        contents += $"\nUrl x4 : {emoj.Images.Url4X}";
+                        var embed = UtilsService.CreateNewEmbed($"Emoji info {emoj.Name}", DiscordColor.Azure, contents);
+                        embed.WithThumbnail(emoj.Images.Url1X);
+                        embed.WithImageUrl(emoj.Images.Url2X);
+                        ctx.RespondAsync(embed.Build());
+                        Task.Delay(2000);
+                        contents = "";
+
+
+                });
+                
+           
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot convert  channel info to embed;";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
+
+        public GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId)
+        {
+      
+            try
+            {
+                return TwitchClient.Helix.Chat.GetChannelEmotesAsync(broadcasterId).Result;
+                
+            
+             }
+            catch(Exception ex)
+            {
+                var exception = $"Cannot convert emoji";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+         
+        }
+
+      
     }
 }

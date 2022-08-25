@@ -143,14 +143,15 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("game")]
-        public async Task HandleGetGames(CommandContext ctx,string game)
+        [Command("twitchemoji")]
+        public async Task HandleGetUserEmoji(CommandContext ctx, string username)
         {
             try
             {
-                var games = TwitchService.GetGameFromName(game);
-                var embed = TwitchService.ConvertGameToEmbed(games);
-                await ctx.RespondAsync(embed.Build());
+                var user = TwitchService.GetUserByName(username);
+                TwitchService.ConvertEmojiToEmbed(user.Id, ctx);
+               
+                
 
             }
             catch (Exception ex)
@@ -160,5 +161,7 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
+
+ 
     }
 }
