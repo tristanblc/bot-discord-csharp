@@ -86,23 +86,5 @@ namespace ServiceClassLibrary.Services
             }
            
         }
-
-        public void DownloadVideoFromTwitch(Clip clip)
-        {
-
-            UtilsService.DeleteDirectoryIfExist(PathToSave);
-            var path = Path.Join(PathToSave,$"extract_clip_{ clip.CreatorName}.mp4");
-            try
-            {
-                WebClient.DownloadFile(new Uri(clip.Url), path);
-                WebClient.Dispose();
-            }
-            catch (Exception ex)
-            {
-
-                LoggerProject.WriteLogErrorLog($"Erreur dans le téléchargement du fichier from twitch");
-                throw new FileDownloadException($"Erreur dans le téléchargement du fichier  from twitch");
-            }
-        }
     }
 }
