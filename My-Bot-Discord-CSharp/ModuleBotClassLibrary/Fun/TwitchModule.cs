@@ -161,21 +161,6 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-
-
-                }
-                );
-         
-
-            }
-            catch (Exception ex)
-            {
-                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream from{username}");
-
-                await ctx.RespondAsync(exception.Build());
-            }
-        }
-
         [Command("game")]
         public async Task HandleGetGames(CommandContext ctx,string game)
         {
