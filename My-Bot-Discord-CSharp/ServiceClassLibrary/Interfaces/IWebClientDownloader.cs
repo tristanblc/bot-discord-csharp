@@ -12,7 +12,6 @@ namespace ServiceClassLibrary.Interfaces
     internal interface IWebClientDownloader
     {
         void DownloadVideoFromDiscord(DiscordAttachment discordAttachement);
-        void DownloadVideoFromTwitch(Clip clip);
         FileStream ConvertVideoToStream(string path);
         void DownloadVideo(string url, string name);
     

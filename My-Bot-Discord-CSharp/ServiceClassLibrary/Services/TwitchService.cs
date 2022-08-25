@@ -288,30 +288,6 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public FileStream DownloadClipFromTwitch(Clip clip)
-        {
-            try
-            {
-             
-                var pathdoc = Path.Join(Directory.GetCurrentDirectory(), "video");
-                var filename = $"extract_clip_{clip.CreatorName}.mp4";
-                var path = Path.Join(pathdoc,filename);
-
-                WebClientDownloader.DownloadVideoFromTwitch(clip);
-
-                var filenames = $"clip_{clip.CreatorName}_{new DateTimeOffset(DateTime.Parse(clip.CreatedAt)).ToUnixTimeSeconds()}.mp4";
-                var filePath = Path.Join(pathdoc, filenames);
-                VideoService.CompressVideo(path, filePath);
-                return WebClientDownloader.ConvertVideoToStream(filePath);
-            }
-            catch (Exception ex)
-            {
-                var exception = $"Cannot get user by id";
-                Logger.WriteLogErrorLog(exception);
-                throw new TwitchAPIException(exception);
-            }
-
-        }
 
         public DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip)
         {
@@ -339,23 +315,6 @@ namespace ServiceClassLibrary.Services
             {
                 var user = GetUserByName(username);
                 return TwitchClient.Helix.Clips.GetClipsAsync(null, null, user.Id, null, null, DateTime.Now.AddDays(-1), DateTime.Now, 1, null).Result.Clips.ToList().First();
-            }
-            catch (Exception ex)
-            {
-                var exception = $"Cannot get user by id";
-                Logger.WriteLogErrorLog(exception);
-                throw new TwitchAPIException(exception);
-            }
-        }
-
-        public DiscordMessageBuilder ConvertClipToMessage(FileStream file)
-        {
-            try
-            {
-                DiscordMessageBuilder builders = new DiscordMessageBuilder();
-                FileStream fileStream = file;
-                builders.WithFile(fileStream);
-                return builders;
             }
             catch (Exception ex)
             {

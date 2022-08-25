@@ -105,9 +105,8 @@ namespace ModuleBotClassLibrary.Fun
 
                 var user = TwitchService.GetUserByName(username);
                 var clip = TwitchService.GetLatestClipByUsername(username);
-                var extract = TwitchService.DownloadClipFromTwitch(clip);
-                var message = TwitchService.ConvertClipToMessage(extract);
-                await message.SendAsync(ctx.Channel);
+                var embed = TwitchService.ConvertTwitchClipToEmbed(clip);
+                ctx.RespondAsync(embed.Build());
 
             }
             catch (Exception ex)

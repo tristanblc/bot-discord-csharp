@@ -45,11 +45,6 @@ namespace ServiceClassLibrary.Interfaces
         GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId);
 
 
-        FileStream DownloadClipFromTwitch(Clip clip);
-
-
-        DiscordMessageBuilder ConvertClipToMessage(FileStream file);
-
         DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip);
 
 
