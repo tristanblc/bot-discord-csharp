@@ -129,6 +129,39 @@ namespace ModuleBotClassLibrary.Fun
                 {
                     var embed = TwitchService.ConvertTwitchClipToEmbed(clip);
                     ctx.RespondAsync(embed.Build());
+                }
+                );
+         
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream from{username}");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("twitchemoji")]
+        public async Task HandleGetUserEmoji(CommandContext ctx, string username)
+        {
+            try
+            {
+                var user = TwitchService.GetUserByName(username);
+                TwitchService.ConvertEmojiToEmbed(user.Id, ctx);
+               
+                
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("pas de jeu", DiscordColor.Azure, "");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+
 
                 }
                 );
@@ -160,5 +193,6 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
+
     }
 }
