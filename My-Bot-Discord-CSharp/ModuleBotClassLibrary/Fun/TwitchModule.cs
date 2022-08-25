@@ -129,6 +129,7 @@ namespace ModuleBotClassLibrary.Fun
                 {
                     var embed = TwitchService.ConvertTwitchClipToEmbed(clip);
                     ctx.RespondAsync(embed.Build());
+
                 }
                 );
          
@@ -160,21 +161,7 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
-
-
-
-                }
-                );
-         
-
-            }
-            catch (Exception ex)
-            {
-                var exception = UtilsService.CreateNewEmbed("Pas en live", DiscordColor.White, $"Pas de stream from{username}");
-
-                await ctx.RespondAsync(exception.Build());
-            }
-        }
+   
 
         [Command("game")]
         public async Task HandleGetGames(CommandContext ctx,string game)
