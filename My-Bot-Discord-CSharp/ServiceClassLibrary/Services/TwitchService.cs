@@ -400,15 +400,9 @@ namespace ServiceClassLibrary.Services
        
         }
 
-        public List<ChannelPoints> GetChannelPoints(string username)
-        {
-            throw new NotImplementedException();
-        }
+
       
-        public DiscordEmbedBuilder ConvertChannelPointsToEmbed(ChannelPoints channelPoints)
-        {
-            throw new NotImplementedException();
-        }
+ 
 
         public DiscordEmbedBuilder ConvertChannelsToEmbed(ChannelInformation channelInfo)
         {

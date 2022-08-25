@@ -41,8 +41,6 @@ namespace ServiceClassLibrary.Interfaces
 
         GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId);
 
-        List<ChannelPoints> GetChannelPoints(string username);
-
 
         FileStream DownloadClipFromTwitch(Clip clip);
 
@@ -52,8 +50,6 @@ namespace ServiceClassLibrary.Interfaces
         DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip);
 
         void ConvertEmojiToEmbed(string broadcasterId,CommandContext ctx);
-
-        DiscordEmbedBuilder ConvertChannelPointsToEmbed(ChannelPoints channelPoints);
 
         DiscordEmbedBuilder ConvertChannelsToEmbed(ChannelInformation channelInfo);
 
