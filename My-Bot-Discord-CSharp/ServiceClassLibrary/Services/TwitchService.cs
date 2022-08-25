@@ -385,6 +385,28 @@ namespace ServiceClassLibrary.Services
        
         }
 
+        public List<ChannelInformation> GetChannelsinformation(string username)
+        {
+            try
+            {
+                var user = GetUserByName(username);
+                return TwitchClient.Helix.Channels.GetChannelInformationAsync(user.Id, null).Result.Data.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                var exception = $"Cannot convert game to embed;";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+       
+        }
+
+
+      
+ 
+
+
         public void ConvertEmojiToEmbed(string broadcasterId, CommandContext ctx)
         {
             try

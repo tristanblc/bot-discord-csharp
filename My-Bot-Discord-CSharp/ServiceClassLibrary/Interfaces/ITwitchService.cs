@@ -45,6 +45,13 @@ namespace ServiceClassLibrary.Interfaces
         GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId);
 
 
+
+
+        List<ChannelInformation> GetChannelsinformation(string username);
+
+        GetChannelEmotesResponse getEmojisFromBroadcasterId(string broadcasterId);
+
+
         DiscordEmbedBuilder ConvertTwitchClipToEmbed(Clip clip);
 
 
