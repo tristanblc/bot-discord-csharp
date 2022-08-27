@@ -38,6 +38,7 @@ namespace ModuleBotClassLibrary
 
    
         [Command("transpiracy")]
+        [Description("add transpiracy effect")]
         public async Task HandleImageToTranspiracy(CommandContext ctx)
         {
 
@@ -79,6 +80,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("grayscale")]
+        [Description("add grayscale effect")]
         public async Task HandleImageToGrayscale(CommandContext ctx)
         {
 
@@ -123,6 +125,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("sepia")]
+        [Description("add sepia effect")]
         public async Task HandleImageToSepiaTone(CommandContext ctx)
         {
             var attachments = ctx.Message.Attachments;
@@ -165,6 +168,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("negative")]
+        [Description("add negative effect")]
         public async Task HandleImageToNegativeCopy(CommandContext ctx)
         {
 
@@ -206,6 +210,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("bw")]
+        [Description("add black & white effect")]
         public async Task HandleImageToBlackAndWhite(CommandContext ctx)
         {
 
@@ -252,6 +257,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("clear-directory")]
+        [Description("clear image directory server")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleClearDirectory(CommandContext ctx)
         {
@@ -276,6 +282,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("watch-directory")]
+        [Description("watch image directory server")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleWatchDirectory(CommandContext ctx)
         {

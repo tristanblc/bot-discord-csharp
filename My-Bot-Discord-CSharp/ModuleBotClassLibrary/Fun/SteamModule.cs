@@ -34,6 +34,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("userSteam")]
+        [Description("get steam user info")]
         public async Task HandleGetPostsFromSub(CommandContext ctx, ulong steamUserId)
         {
             try
@@ -57,6 +58,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("friendlist")]
+        [Description("get steam user friendlist")]
         public async Task HandleGetFriendsList(CommandContext ctx, ulong steamUserId)
         {
             try
@@ -80,6 +82,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getapp")]
+        [Description("get steam app info")]
         public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)
         {
             try
@@ -100,6 +103,7 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
         [Command("getapps")]
+        [Description("get steam apps info")]
         public async Task HandleGetApps(CommandContext ctx)
         {
             try
@@ -122,6 +126,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getappsname")]
+        [Description("get steam app info by name")]
         public async Task HandleGetAppByName(CommandContext ctx, string appname)
         {
             try
@@ -143,6 +148,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getappsbydateasc")]
+        [Description("get steam apps info by date asc")]
         public async Task HandleGetAppsByDateAsc(CommandContext ctx, DateTime date)
         {
             try
@@ -164,6 +170,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getappsbydatedesc")]
+        [Description("get steam apps info by date desc")]
         public async Task HandleGetAppsByDateDesc(CommandContext ctx, DateTime date)
         {
             try
@@ -185,6 +192,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getnewsforapp")]
+        [Description("get steam apps news")]
         public async Task HandleGetNewsForApp(CommandContext ctx, uint appId)
         {
             try

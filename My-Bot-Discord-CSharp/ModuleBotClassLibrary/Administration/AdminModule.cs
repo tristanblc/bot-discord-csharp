@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using ModuleBotClassLibrary.Services;
+using ModuleBotClassLibrary.Utils;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -13,12 +14,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
 namespace ModuleBotClassLibrary
 {
 
     public class AdminModule : BaseCommandModule
     {
         private IUtilsService utilsService { get; init; }
+
         public AdminModule()
         {
             utilsService = new UtilsService();
@@ -26,7 +29,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ban")]
-        [Description("Ban user")]
+        [Description("ban")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task ban(CommandContext ctx, DiscordMember member, string reason)
         {

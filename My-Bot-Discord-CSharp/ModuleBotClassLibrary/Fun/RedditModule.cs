@@ -29,6 +29,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getpostsfromsub")]
+        [Description("get reddit posts by description")]
         public async Task HandleGetPostsFromSub(CommandContext ctx, string subname)
         {
             try
@@ -52,6 +53,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getlatestpost")]
+        [Description("get lastest reddit posts by subname")]
         public async Task HandleGetLatestPost(CommandContext ctx, string subname)
         {
             try
@@ -72,6 +74,7 @@ namespace ModuleBotClassLibrary.Fun
     
 
         [Command("getbest")]
+        [Description("get best reddit posts by subname")]
         public async Task HandleGetBestPostFromSub(CommandContext ctx, string subname)
         {
             try
@@ -99,6 +102,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gettopdaily")]
+        [Description("get top daily reddit posts by subname")]
         public async Task HandleGetTopDaily(CommandContext ctx, string subname)
         {
             try
@@ -124,6 +128,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gethotsreddit")]
+        [Description("get hot reddit posts by subname")]
         public async Task HandleGetHotsReddit(CommandContext ctx, string subname)
         {
             try
@@ -180,7 +185,8 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("getcomments")]  
+        [Command("getcomments")]
+        [Description("get comment on reddit posts by subname & title")]
         public async Task HandleGetCommentsFromPost(CommandContext ctx,string subname,string title)
         {
             try
@@ -204,6 +210,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getcountreplies")]
+        [Description("get count replies")]
         public async Task HandleGetCountReplies(CommandContext ctx, string subname,string title)
         {
             try
@@ -220,7 +227,8 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-        [Command("getuserdate")]
+        [Command("getuserdata")]
+        [Description("get user info")]
         public async Task HandleGetUserInfo(CommandContext ctx, string username)
         {
             try
@@ -239,6 +247,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getuserposts")]
+        [Description("get user post")]
         public async Task HandleGetUsersInfo(CommandContext ctx, string username)
         {
             try

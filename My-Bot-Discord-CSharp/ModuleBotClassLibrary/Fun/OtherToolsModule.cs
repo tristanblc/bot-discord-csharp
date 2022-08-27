@@ -38,6 +38,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("random")]
+        [Description("return random number")]
         public async Task RandomCommand(CommandContext ctx, int min, int max)
         {
             var random = new Random();
@@ -48,6 +49,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("avatar")]
+        [Description("get discord user avatar")]
         public async Task AvatarCommand(CommandContext ctx, DiscordMember member)
         {
 
@@ -56,6 +58,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("site2html")]
+        [Description("cnvert a site to html")]
         public async Task ScreenCommand(CommandContext ctx, string url)
         {
             try

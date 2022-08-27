@@ -38,6 +38,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("create-rappel")]
+        [Description("create rappel")]
         public async Task HandleCreateRappel(CommandContext ctx,string name,string description)
         {
             try
@@ -67,6 +68,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("checked-rappel")]
+        [Description("check rappel")]
         public async Task HandleCheckedRappel(CommandContext ctx,string id)
         {
             try
@@ -101,6 +103,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("list-rappel")]
+        [Description("list rappel")]
         public async Task HandleLisUnreadTicket(CommandContext ctx)
         {
             try
@@ -144,6 +147,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("read-rappel")]
+        [Description("Read rappel")]
         public async Task HandleLisUnreadRappel(CommandContext ctx, string id)
         {
             try

@@ -29,6 +29,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("messagetofile")]
+        [Description("convert messages to a txt file")]
         public async Task HandleMessageToFile(CommandContext ctx)
         {
 
@@ -61,6 +62,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("usermessage")]
+        [Description("extract messages to a txt file")]
         public async Task HandleMessageToFile(CommandContext ctx, DiscordMember mem)
         {
 
@@ -97,6 +99,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("convert2zip")]
+        [Description("convert messages t  zip file")]
         public async Task HandleConvert2Zip(CommandContext ctx, string? filename)
         { 
             var attachments = ctx.Message.Attachments;
@@ -113,6 +116,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("decompress2zip")]
+        [Description("decomptess zip file to files")]
         public async Task HandleDecompress2Zip(CommandContext ctx, string filename)
         {
 
@@ -134,7 +138,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("tojson")]
-
+        [Description("extract messages json")]
         public async Task HandleChatToJson(CommandContext ctx)
         {
 

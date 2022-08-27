@@ -10,9 +10,12 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
+using ModuleBotClassLibrary.Utils;
 using My_Bot_Discord_CSharp.Services;
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.ServiceBot;
+using System.Reflection;
+using System.Resources;
 
 
 static void Main(string[] args)
@@ -24,9 +27,10 @@ static async Task MainAsync()
 {
 
     var discord_service = new DiscordClientService();
-
+ 
     try
     {
+          
         var discord = discord_service.CreateDiscordClient();
 
         var endpoint = new ConnectionEndpoint
