@@ -30,6 +30,8 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("csgoserver")]
+
+        [Description("get csgo server status")]
         public async Task HandleGetCsgoServerStatus(CommandContext ctx)
         {
             try
@@ -49,6 +51,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getasset")]
+        [Description("get asset")]
         public async Task HandleGetAssetInfo(CommandContext ctx, string appname)
         {
             try
@@ -68,6 +71,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getGoldenWrench")]
+        [Description("get tf golden wrench")]
         public async Task HandleGetGoldenWrench(CommandContext ctx,int number)
         {
             try

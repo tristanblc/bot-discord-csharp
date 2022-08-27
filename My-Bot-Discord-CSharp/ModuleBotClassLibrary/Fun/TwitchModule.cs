@@ -31,6 +31,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gettwitchUser")]
+        [Description("get twitch user info")]
         public async Task HandleGetTwitchUser(CommandContext ctx,string username)
         {
             try
@@ -51,6 +52,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getFollowuser")]
+        [Description("get twitch user following")]
         public async Task HandleGetFollowingUser(CommandContext ctx, string name)
         {
             try
@@ -78,6 +80,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getStreams")]
+        [Description("get twitch stream info")]
         public async Task HandleGetStreams(CommandContext ctx,string name)
         {
             try
@@ -98,6 +101,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getClip")]
+        [Description("get twitch user clip")]
         public async Task HandleGetClip(CommandContext ctx, string username)
         {
             try
@@ -117,6 +121,7 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
         [Command("getlatestclip")]
+        [Description("get latest twitch user clip")]
         public async Task HandleGetLatestClip(CommandContext ctx, string username)
         {
             try
@@ -142,6 +147,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("twitchemoji")]
+        [Description("get twitch user emoji")]
         public async Task HandleGetUserEmoji(CommandContext ctx, string username)
         {
             try
@@ -163,6 +169,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("game")]
+        [Description("get twitch game info")]
         public async Task HandleGetGames(CommandContext ctx,string game)
         {
             try

@@ -26,6 +26,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("film")]
+        [Description("get film info")]
         public async Task FilmCommand(CommandContext ctx, string message)
         {
 
@@ -54,6 +55,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("star")]
+        [Description("get star info")]
         public async Task PeopleCommand(CommandContext ctx, string message)
         {
 

@@ -28,6 +28,7 @@ namespace ModuleBotClassLibrary
         }
         
         [Command("join")]
+        [Description("bot audio channel join")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
@@ -62,6 +63,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("leave")]
+        [Description("leave channel")]
         public async Task Leave(CommandContext ctx, DiscordChannel channel)
         {
             
@@ -102,7 +104,8 @@ namespace ModuleBotClassLibrary
             await ctx.RespondAsync(builder.Build());
         }
 
-        [Command]
+        [Command("play")]
+        [Description("play search song")]
         public async Task Play(CommandContext ctx, [RemainingText] string search)
         {
            
@@ -165,6 +168,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("stop")]
+        [Description("stop song")]
         public async Task Stop(CommandContext ctx, [RemainingText] string search)
         {
 
@@ -219,6 +223,7 @@ namespace ModuleBotClassLibrary
         }
        
         [Command("pause")]
+        [Description("pause song")]
         public async Task Pause(CommandContext ctx)
         {
 
@@ -254,6 +259,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("volume")]
+        [Description("set volume")]
         public async Task Volume(CommandContext ctx,string volume)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
@@ -303,6 +309,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("add-queue")]
+        [Description("add song to queue")]
         public async Task Queueing(CommandContext ctx, [RemainingText] string search)
         {
 
@@ -345,6 +352,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("skip")]
+        [Description("skip song ")]
         public async Task Skip(CommandContext ctx)
         {
          
@@ -388,6 +396,7 @@ namespace ModuleBotClassLibrary
 
         }
         [Command("clear-queue")]
+        [Description("clear queue")]
         public async Task CleaningQueue(CommandContext ctx)
         {
 
@@ -402,6 +411,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("lists-queues")]
+        [Description("list song queue")]
         public async Task ListsQueue(CommandContext ctx)
         {
          
@@ -423,6 +433,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("del-queue")]
+        [Description("delete song queue")]
         public async Task delQueue(CommandContext ctx, string state)
         {
  
