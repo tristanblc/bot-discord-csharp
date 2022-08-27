@@ -5,7 +5,7 @@
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "Token": "NjMxNTEzODI2NDgyNzE2Njg1.Gxbd2q.JiEFS9lV5DbqaAXvIUucf_IUFCJUorPsIAUdDM",
+  "Token": "",
   "AllowedHosts": "*",
   "apiUrl": "https://localhost:7167/api",
   "Twitter": {
@@ -22,15 +22,15 @@
     "laposte_api": ""
   },
   "Reddit": {
-    "appSecret": "a231MlPitE03v_FYSra2h1IdJE6hbA",
-    "appId": "dRbmzdZ-l-iW0z3WLD9lSw",
+    "appSecret": "",
+    "appId": "",
     "browse": ""
   },
   "Steam": {
-    "apikey": "C151AA8CC0264C48734BE9A92DA2FAA7"
+    "apikey": ""
   },
   "Twitch": {
-    "accesstoken": "uoyydlh5gys3gli81hc56lk8t82u5q",
-    "clientId": "oe90j58vauljm25ggup2d8ye5cb42t"
+    "accesstoken": "",
+    "clientId": ""
   }
 }
