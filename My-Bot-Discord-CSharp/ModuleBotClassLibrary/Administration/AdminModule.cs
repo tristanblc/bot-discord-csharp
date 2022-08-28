@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using ModuleBotClassLibrary.Services;
+using ModuleBotClassLibrary.Utils;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -21,12 +22,13 @@ namespace ModuleBotClassLibrary
     public class AdminModule : BaseCommandModule
     {
         private IUtilsService utilsService { get; init; }
+
         private IServerInfoService ServiceInfo { get; init; }
+
 
         public AdminModule()
         {
             utilsService = new UtilsService();
-            PerformanceCounter performanceCounter = new PerformanceCounter();
             ServiceInfo = new ServerInfoService();
         }
 
