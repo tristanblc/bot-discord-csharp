@@ -9,6 +9,7 @@ using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,9 +23,13 @@ namespace ModuleBotClassLibrary
     {
         private IUtilsService utilsService { get; init; }
 
+        private IServerInfoService ServiceInfo { get; init; }
+
+
         public AdminModule()
         {
             utilsService = new UtilsService();
+            ServiceInfo = new ServerInfoService();
         }
 
 
@@ -45,11 +50,11 @@ namespace ModuleBotClassLibrary
         [Command("changebotstatus")]
         [Description("Bot Status")]
         [RequirePermissions(Permissions.Administrator)]
-        public async Task HandleBotStatus(CommandContext ctx, string reason,string? media)
+        public async Task HandleBotStatus(CommandContext ctx, string reason, string? media)
         {
 
             var builder = utilsService.CreateNewEmbed("Set bot status", DiscordColor.Green, $"Set discord bot activity");
-         
+
             try
             {
                 DiscordActivity activity = null;
@@ -70,17 +75,17 @@ namespace ModuleBotClassLibrary
                         break;
 
                 }
-       
+
                 await ctx.Client.UpdateStatusAsync(activity);
 
                 await ctx.RespondAsync(builder.Build());
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await ctx.RespondAsync(builder.Build());
             }
-        
+
         }
 
         [Command("unban")]
@@ -95,7 +100,7 @@ namespace ModuleBotClassLibrary
         }
 
 
-    
+
         [Command("clean-all")]
         [Description("clear all messages in channel")]
         [RequirePermissions(Permissions.Administrator)]
@@ -105,21 +110,21 @@ namespace ModuleBotClassLibrary
             var builder = utilsService.CreateNewEmbed($"Clear discord channel {ctx.Channel.Name}", DiscordColor.Green, "");
             try
             {
-                
+
                 IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync();
 
-                foreach(DiscordMessage message in deletesMessagesLists)
+                foreach (DiscordMessage message in deletesMessagesLists)
                 {
                     await ctx.Channel.DeleteMessageAsync(message);
                 }
-             
-            
+
+
                 builder.Description = "End clean all  messages in channel";
                 await ctx.RespondAsync(builder.Build());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 builder.Description = "Error";
                 builder.Color = DiscordColor.Red;
                 await ctx.RespondAsync(builder.Build());
@@ -136,8 +141,8 @@ namespace ModuleBotClassLibrary
         public async Task clean(CommandContext ctx, int number)
         {
 
-           
-      
+
+
 
             IEnumerable<DiscordMessage> deletesMessagesLists = await ctx.Channel.GetMessagesAsync(number);
             foreach (DiscordMessage message in deletesMessagesLists)
@@ -157,35 +162,35 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandlePoll(CommandContext ctx, string question)
         {
-            var builder = utilsService.CreateNewEmbed($"Poll ", DiscordColor.Green, $"{ question }");
+            var builder = utilsService.CreateNewEmbed($"Poll ", DiscordColor.Green, $"{question}");
 
- 
+
             var emoji = DiscordEmoji.FromName(ctx.Client, ":thumbup:");
             var emoji2 = DiscordEmoji.FromName(ctx.Client, ":thumbdown:");
 
             var message = await ctx.RespondAsync(builder.Build());
             await message.CreateReactionAsync(emoji);
             await message.CreateReactionAsync(emoji2);
-    
+
 
         }
 
-      
+
 
         [Command("deaf")]
         [Description("deaf user")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task deafUser(CommandContext ctx, DiscordMember member, string reason)
         {
-           
+
             if (member.IsDeafened)
             {
-                var builder = utilsService.CreateNewEmbed($"Deaf User { member.Username }", DiscordColor.Green, "Member " + member.Username.ToString() + " is already Deafened");
+                var builder = utilsService.CreateNewEmbed($"Deaf User {member.Username}", DiscordColor.Green, "Member " + member.Username.ToString() + " is already Deafened");
                 await ctx.RespondAsync(builder.Build());
 
                 return;
             }
-            var builder_ = utilsService.CreateNewEmbed($"Deaf User { member.Username }", DiscordColor.Red, "Member " + member.Username.ToString() + " is  Deafened");  
+            var builder_ = utilsService.CreateNewEmbed($"Deaf User {member.Username}", DiscordColor.Red, "Member " + member.Username.ToString() + " is  Deafened");
             await member.SetDeafAsync(true, reason);
             await ctx.RespondAsync(builder_.Build());
 
@@ -194,7 +199,7 @@ namespace ModuleBotClassLibrary
         }
 
 
-    
+
 
 
         [Command("undeaf")]
@@ -204,8 +209,8 @@ namespace ModuleBotClassLibrary
         {
             if (member.IsDeafened == false)
             {
-                var builder = utilsService.CreateNewEmbed($"Not Deaf User { member.Username }", DiscordColor.Red, "Member " + member.Username.ToString() + " is not Deafened");
-              
+                var builder = utilsService.CreateNewEmbed($"Not Deaf User {member.Username}", DiscordColor.Red, "Member " + member.Username.ToString() + " is not Deafened");
+
                 await ctx.RespondAsync(builder.Build());
 
                 return;
@@ -213,9 +218,9 @@ namespace ModuleBotClassLibrary
 
             await member.SetDeafAsync(false, reason);
 
-            var builder_ = utilsService.CreateNewEmbed($"Undeaf User { member.Username }", DiscordColor.Green, "Member " + member.Username.ToString() + " is not deafened now");
+            var builder_ = utilsService.CreateNewEmbed($"Undeaf User {member.Username}", DiscordColor.Green, "Member " + member.Username.ToString() + " is not deafened now");
             await ctx.RespondAsync(builder_.Build());
-        
+
 
 
 
@@ -233,7 +238,7 @@ namespace ModuleBotClassLibrary
 
                 var builder = new DiscordEmbedBuilder
                 {
-                    Title = $"Already Mute User { member.Username }",
+                    Title = $"Already Mute User {member.Username}",
                     Description = "Member " + member.Username.ToString() + " is already mute",
 
                     Color = DiscordColor.Green,
@@ -242,7 +247,7 @@ namespace ModuleBotClassLibrary
 
                 };
                 await ctx.RespondAsync(builder.Build());
-            
+
 
                 return;
             }
@@ -251,7 +256,7 @@ namespace ModuleBotClassLibrary
 
             var builder_ = new DiscordEmbedBuilder
             {
-                Title = $" Mute User { member.Username } is muted now",
+                Title = $" Mute User {member.Username} is muted now",
                 Description = "Member " + member.Username.ToString() + " is  muted",
 
                 Color = DiscordColor.Green,
@@ -260,7 +265,7 @@ namespace ModuleBotClassLibrary
 
             };
             await ctx.RespondAsync(builder_.Build());
-       
+
 
 
 
@@ -285,7 +290,7 @@ namespace ModuleBotClassLibrary
 
                 };
                 await ctx.RespondAsync(builder.Build());
-               
+
 
                 return;
             }
@@ -305,7 +310,7 @@ namespace ModuleBotClassLibrary
             };
             await ctx.RespondAsync(builder_.Build());
 
-     
+
 
 
 
@@ -316,7 +321,7 @@ namespace ModuleBotClassLibrary
         [Command("addrole")]
         [Description("add role to  user")]
         [RequirePermissions(Permissions.Administrator)]
-        public async Task addRoleUser(CommandContext ctx, DiscordMember member,DiscordRole role)
+        public async Task addRoleUser(CommandContext ctx, DiscordMember member, DiscordRole role)
         {
             if (member.Roles.Contains(role))
             {
@@ -333,7 +338,7 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-           await member.GrantRoleAsync(role);
+            await member.GrantRoleAsync(role);
             var builder = new DiscordEmbedBuilder
             {
                 Title = "Grant role",
@@ -359,7 +364,7 @@ namespace ModuleBotClassLibrary
             {
                 var builder = utilsService.CreateNewEmbed("Role Remover", DiscordColor.Azure, "Remove role : " + role.Name + " to " + member.Username.ToString());
                 await member.RevokeRoleAsync(role);
-            
+
 
                 await ctx.RespondAsync(builder.Build());
             }
@@ -372,11 +377,11 @@ namespace ModuleBotClassLibrary
         public async Task timeoutUser(CommandContext ctx, DiscordMember member, string time)
         {
             DateTime.TryParse(time, out var now);
-              var builder = utilsService.CreateNewEmbed("Timeout user", DiscordColor.Azure, $"Null time");
+            var builder = utilsService.CreateNewEmbed("Timeout user", DiscordColor.Azure, $"Null time");
 
             if (now == null)
             {
-              
+
                 await ctx.RespondAsync(builder.Build());
                 return;
             }
@@ -386,7 +391,7 @@ namespace ModuleBotClassLibrary
             builder.Color = DiscordColor.Green;
 
 
-           
+
             await ctx.RespondAsync(builder.Build());
 
 
@@ -398,19 +403,19 @@ namespace ModuleBotClassLibrary
         [Command("invite")]
         [Description("invite")]
         [RequirePermissions(Permissions.Administrator)]
-        public async Task inviteUser(CommandContext ctx , DiscordChannel channel,int time)
+        public async Task inviteUser(CommandContext ctx, DiscordChannel channel, int time)
         {
 
-            var invite  = await channel.CreateInviteAsync(time);
+            var invite = await channel.CreateInviteAsync(time);
             var builder = utilsService.CreateNewEmbed("New invite", DiscordColor.Azure, invite.ToString());
             await ctx.RespondAsync(builder.Build());
-      
+
 
         }
 
         [Command("clone")]
         [RequirePermissions(Permissions.Administrator)]
-        public async Task HandleCloneChannel(CommandContext ctx,DiscordChannel channel)
+        public async Task HandleCloneChannel(CommandContext ctx, DiscordChannel channel)
         {
 
 
@@ -419,13 +424,14 @@ namespace ModuleBotClassLibrary
             {
                 await channel.CloneAsync();
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
                 builder.Title = "Clone channel";
                 builder.Description = $"ErrorClone {channel.Name} channel";
                 builder.Color = DiscordColor.Red;
-            
+
 
             }
             await ctx.RespondAsync(builder.Build());
@@ -454,7 +460,7 @@ namespace ModuleBotClassLibrary
             await ctx.RespondAsync(builder.Build());
         }
 
-     
+
 
         [Command("get-links")]
         [RequirePermissions(Permissions.Administrator)]
@@ -468,7 +474,7 @@ namespace ModuleBotClassLibrary
                 IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
                 List<DiscordMessage> urls = utilsService.CheckContainsLinks(listDiscordMessages);
                 urls.ToList().ForEach(message => reply += $"{message.Content} \n");
-            
+
 
                 var builder = utilsService.CreateNewEmbed("Links", DiscordColor.Azure, reply);
 
@@ -492,8 +498,8 @@ namespace ModuleBotClassLibrary
             {
                 IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
                 List<DiscordMessage> urls = utilsService.CheckContainsLinks(listDiscordMessages);
-                string reply = "";            
-              
+                string reply = "";
+
                 int count = urls.ToList().Count;
                 urls.ToList().ForEach(async message => await ctx.Channel.DeleteMessageAsync(message));
 
@@ -522,7 +528,7 @@ namespace ModuleBotClassLibrary
                 IEnumerable<DiscordMessage> listDiscordMessages = await ctx.Channel.GetMessagesAsync();
                 List<DiscordMessage> urls = utilsService.CheckContainsLinks(listDiscordMessages);
 
-              
+
 
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "documents");
                 utilsService.CheckDirectory(path);
@@ -537,15 +543,15 @@ namespace ModuleBotClassLibrary
                 fileService.WriteTxt(urls, "write.txt");
 
                 var builder = utilsService.CreateNewEmbed("Links", DiscordColor.Azure, "Export to .txt file");
-                DiscordMessageBuilder builders = utilsService.SendImage(pathFile);              
+                DiscordMessageBuilder builders = utilsService.SendImage(pathFile);
 
                 await ctx.RespondAsync(builder.Build());
 
                 builders.SendAsync(ctx.Channel);
 
-        
 
-         
+
+
 
             }
             catch (Exception ex)
@@ -553,6 +559,44 @@ namespace ModuleBotClassLibrary
                 await ctx.RespondAsync(ex.ToString());
 
             }
+        }
+        [Command("getRamInfo")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleRamInfo(CommandContext ctx, int iterate)
+        {
+            try
+            {
+                var ramInfo = ServiceInfo.GetMemeryUsedInformation(iterate);
+                var builder = utilsService.CreateNewEmbed($"ram information", DiscordColor.Azure, ramInfo);
+                await ctx.RespondAsync(builder.Build());
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+
+
+            }
+
+        }
+        [Command("getprocinfo")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleProcInfo(CommandContext ctx, int iterate)
+        {
+            try
+            {
+                var ramInfo = ServiceInfo.GetProcessorPerformamceUsed(iterate);
+                var builder = utilsService.CreateNewEmbed($"proc information", DiscordColor.Azure, ramInfo);
+                await ctx.RespondAsync(builder.Build());
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+
+
+            }
+
         }
     }
 }
