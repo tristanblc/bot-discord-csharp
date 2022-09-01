@@ -3,6 +3,7 @@ using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
 using Steam.Models;
 using Steam.Models.CSGO;
+using Steam.Models.SteamCommunity;
 using Steam.Models.SteamEconomy;
 using Steam.Models.TF2;
 using SteamWebAPI2.Interfaces;
@@ -32,7 +33,13 @@ namespace ServiceClassLibrary.Services
 
         private ISteamApps SteamApps { get; init; }
         private ISteamWebAPIUtil SteamWebAPIUtil { get; init; } 
+
+
+        private ISteamRemoteStorage SteamRemoteStorage { get; init; }
+
+        private IPlayerService PlayerService { get; init; }
         public SteamService SteamService { get; init; }
+
 
 
 
@@ -49,6 +56,8 @@ namespace ServiceClassLibrary.Services
 
             SteamApps = this.GetISteamApps(HttpClient);
             SteamWebAPIUtil = this.GetISteamWebAPIUtil(HttpClient);
+            SteamRemoteStorage = this.GetISteamRemoteStorage(HttpClient);
+            PlayerService = this.GetIPlayerService(HttpClient);
 
         }
 
@@ -340,6 +349,175 @@ namespace ServiceClassLibrary.Services
                 throw new SteamException(message);
             }
       
+        }
+
+        public ISteamRemoteStorage GetISteamRemoteStorage(HttpClient httpClient)
+        {
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<SteamRemoteStorage>(httpClient);
+            }
+            catch(Exception ex)
+            {
+                
+                 var message = "Cannot get steam steam remote storage interface";
+                 LoggerProject.WriteLogErrorLog(message);
+                 throw new SteamException(message);
+            }
+        
+        }
+
+        public IPlayerService GetIPlayerService(HttpClient httpClient)
+        {
+            try
+            {
+                return SteamWebInterface.CreateSteamWebInterface<PlayerService>(httpClient);
+            }
+            catch (Exception ex)
+            {
+
+                var message = "Cannot get steam player service interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public ulong IsPlayingSharedGame(string SteamId, string appId)
+        {
+            try
+            {
+
+                return PlayerService.IsPlayingSharedGameAsync(ulong.Parse(SteamId), uint.Parse(appId)).Result.Data.Value;
+            }
+            catch (Exception)
+            {
+
+                var message = "Cannot get steam player service interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+           
+        }
+
+        public List<BadgeModel> GetUserBagdes(string steamId)
+        {
+            try
+            {
+                return PlayerService.GetBadgesAsync(ulong.Parse(steamId)).Result.Data.Badges.ToList();
+            }
+            catch (Exception)
+            {
+                var message = "Cannot get steam player service interface";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public string GetUserSteamPage(string steamId)
+        {
+            try
+            {
+
+                var steamid = ulong.Parse(steamId);
+                var recentlyGamePlayed = PlayerService.GetRecentlyPlayedGamesAsync(steamid).Result.Data;
+
+                var ownedGames = PlayerService.GetOwnedGamesAsync(steamid).Result.Data;
+
+                var userSteamLevel = PlayerService.GetSteamLevelAsync(steamid).Result.Data;
+
+                var content = $"\nSteam page";
+
+                content += $"level steam : {userSteamLevel}";
+                content += $"\nGames played :";
+
+                recentlyGamePlayed.RecentlyPlayedGames.ToList().ForEach(game =>
+                {
+                    content += $"\nGame:{game.Name}  - Playing time : {game.PlaytimeForever} hour(s) - Playing times for last 2 weeks : {game.Playtime2Weeks} hours";
+
+                });
+
+                content += $"\n Number of Owned games :{ownedGames.GameCount}";
+
+                return content;
+
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get steam user page";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+         }
+
+        public List<PublishedFileDetailsModel> GetPublishedFileDetails(List<ulong> steamRemoteIds)
+        {
+            try
+            {
+                return SteamRemoteStorage.GetPublishedFileDetailsAsync(steamRemoteIds).Result.Data.ToList();
+            }
+            catch (Exception ex)
+            {
+                var message = "Cannot get steam user page";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+
+
+        public DiscordEmbedBuilder ConvertUserBadgesToEmbed(BadgeModel badgeModel)
+        {
+            try
+            {
+                var app = SteamService.GetSteamAppsById(ulong.Parse(badgeModel.AppId.ToString())).First();
+                var contents = $"App : {app.Name}";
+                contents += $"\nXp : {badgeModel.Xp}";
+                contents += $"\nCommunity id : {badgeModel.CommunityItemId}";  
+
+                var embed = UtilsService.CreateNewEmbed($"Badge Model", DiscordColor.Aquamarine, contents);
+                return embed;
+
+            }
+            catch(Exception ex)
+            {
+                var message = "Cannot get steam user page";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder CreateUserPageEmbed(string steamId)
+        {
+            try
+            {
+                var contents = GetUserSteamPage(steamId);
+                var embed = UtilsService.CreateNewEmbed($"User steam page for {steamId}", DiscordColor.Aquamarine, contents);
+                return embed;
+            }
+            catch (Exception ex)
+            {
+                var message = "Cannot get steam user page";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+        }
+
+        public bool IsPlayingSharedGameAsync(ulong steamId, string appId)
+        {
+            try
+            {
+                var result = PlayerService.IsPlayingSharedGameAsync(steamId, uint.Parse(appId)).Result.Data;
+                if(result >= 1)
+                    return true;
+                return false;
+            }
+            catch (Exception)
+            {
+                var message = "Cannot get steam user page";
+                LoggerProject.WriteLogErrorLog(message);
+                throw new SteamException(message);
+            }
+
         }
     }
 }
