@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using ModuleBotClassLibrary.Services;
-using ModuleBotClassLibrary.Utils;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;

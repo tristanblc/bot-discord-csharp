@@ -10,10 +10,6 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using ModuleBotClassLibrary;
-using ModuleBotClassLibrary.RessourceManager;
-
-using ModuleBotClassLibrary.Utils;
-
 using My_Bot_Discord_CSharp.Services;
 using My_Bot_Discord_CSharp.Services.Interface;
 using My_Bot_Discord_CSharp.Services.ServiceBot;
