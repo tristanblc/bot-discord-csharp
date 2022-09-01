@@ -47,5 +47,20 @@
     <ProjectReference Include="..\ModuleBotClassLibrary\ModuleBotClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CommandDescription.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommandDescription.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="CommandDescription.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandDescription.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
    
 </Project>
