@@ -1,101 +1,387 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
-		Microsoft ResX Schema
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-		Version 1.3
-
-		The primary goals of this format is to allow a simple XML format 
-		that is mostly human readable. The generation and parsing of the 
-		various data types are done through the TypeConverter classes 
-		associated with the data types.
-
-		Example:
-
-		... ado.net/XML headers & schema ...
-		<resheader name="resmimetype">text/microsoft-resx</resheader>
-		<resheader name="version">1.3</resheader>
-		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-		<data name="Name1">this is my long string</data>
-		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-			[base64 mime encoded serialized .NET Framework object]
-		</data>
-		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-			[base64 mime encoded string representing a byte array form of the .NET Framework object]
-		</data>
-
-		There are any number of "resheader" rows that contain simple 
-		name/value pairs.
-
-		Each data row contains a name, and value. The row also contains a 
-		type or mimetype. Type corresponds to a .NET class that support 
-		text/value conversion through the TypeConverter architecture. 
-		Classes that don't support this are serialized and stored with the 
-		mimetype set.
-
-		The mimetype is used for serialized objects, and tells the 
-		ResXResourceReader how to depersist the object. This is currently not 
-		extensible. For a given mimetype the value must be set accordingly:
-
-		Note - application/x-microsoft.net.object.binary.base64 is the format 
-		that the ResXResourceWriter will generate, however the reader can 
-		read any of the formats listed below.
-
-		mimetype: application/x-microsoft.net.object.binary.base64
-		value   : The object must be serialized with 
-			: System.Serialization.Formatters.Binary.BinaryFormatter
-			: and then encoded with base64 encoding.
-
-		mimetype: application/x-microsoft.net.object.soap.base64
-		value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-			: and then encoded with base64 encoding.
-
-		mimetype: application/x-microsoft.net.object.bytearray.base64
-		value   : The object must be serialized into a byte array 
-			: using a System.ComponentModel.TypeConverter
-			: and then encoded with base64 encoding.
-	-->
-	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="addroleCommand" xml:space="preserve">
+    <value>add role to  user</value>
+  </data>
+  <data name="addSongAudioCommand" xml:space="preserve">
+    <value>add song to queue</value>
+  </data>
+  <data name="banCommand" xml:space="preserve">
+    <value>ban user using discord member </value>
+  </data>
+  <data name="botStatusCommand" xml:space="preserve">
+    <value>change Bot Status</value>
+  </data>
+  <data name="bwCommand" xml:space="preserve">
+    <value>add black &amp; white effect</value>
+  </data>
+  <data name="checkRappelCmd" xml:space="preserve">
+    <value>check rappel</value>
+  </data>
+  <data name="checkTicketCommand" xml:space="preserve">
+    <value>Check a ticket</value>
+  </data>
+  <data name="cleanallCommand" xml:space="preserve">
+    <value>clear all messages in channel</value>
+  </data>
+  <data name="clearAudioCommand" xml:space="preserve">
+    <value>clear queue</value>
+  </data>
+  <data name="clearCommand" xml:space="preserve">
+    <value>clear x message in channel</value>
+  </data>
+  <data name="clearDirCommand" xml:space="preserve">
+    <value>clear image directory server</value>
+  </data>
+  <data name="cloneCommand" xml:space="preserve">
+    <value>clone channel</value>
+  </data>
+  <data name="compressCommand" xml:space="preserve">
+    <value>compress video</value>
+  </data>
+  <data name="convert2txtCommand" xml:space="preserve">
+    <value>convert messages to a txt file</value>
+  </data>
+  <data name="convert2zipCommand" xml:space="preserve">
+    <value>convert messages to  zip file</value>
+  </data>
+  <data name="createRappelCmd" xml:space="preserve">
+    <value>create rappel</value>
+  </data>
+  <data name="createticketCommand" xml:space="preserve">
+    <value>Create a ticket</value>
+  </data>
+  <data name="deafCommand" xml:space="preserve">
+    <value>deaf user</value>
+  </data>
+  <data name="decompress2zipCommand" xml:space="preserve">
+    <value>decompress zip file to files</value>
+  </data>
+  <data name="deleteAudioCommand" xml:space="preserve">
+    <value>delete song queue</value>
+  </data>
+  <data name="deleteCommand" xml:space="preserve">
+    <value>delete channel</value>
+  </data>
+  <data name="deletelinksCommand" xml:space="preserve">
+    <value>delete links from channel</value>
+  </data>
+  <data name="exportlinksCommand" xml:space="preserve">
+    <value>export links from channel</value>
+  </data>
+  <data name="extractCommand" xml:space="preserve">
+    <value>extract audio from a video file</value>
+  </data>
+  <data name="extractMessageCommand" xml:space="preserve">
+    <value>extract messages to a txt file</value>
+  </data>
+  <data name="filmCommand" xml:space="preserve">
+    <value>get film info</value>
+  </data>
+  <data name="getlinksCommand" xml:space="preserve">
+    <value>get links from channel</value>
+  </data>
+  <data name="getpostsbydescriptionRedditCmd" xml:space="preserve">
+    <value>et reddit posts by description</value>
+  </data>
+  <data name="grayscaleCommand" xml:space="preserve">
+    <value>add grayscale effect</value>
+  </data>
+  <data name="imageWatchCommand" xml:space="preserve">
+    <value>watch image directory server</value>
+  </data>
+  <data name="inviteCommand" xml:space="preserve">
+    <value>invite to your server</value>
+  </data>
+  <data name="joinAudioCommand" xml:space="preserve">
+    <value>bot audio channel join</value>
+  </data>
+  <data name="leaveAudioCommand" xml:space="preserve">
+    <value>leave channel</value>
+  </data>
+  <data name="listAudioCommand" xml:space="preserve">
+    <value>list song queue</value>
+  </data>
+  <data name="listRappelCmd" xml:space="preserve">
+    <value>list rappel</value>
+  </data>
+  <data name="listticketCommand" xml:space="preserve">
+    <value>List all of tickets</value>
+  </data>
+  <data name="metadataCommand" xml:space="preserve">
+    <value>get video metadata</value>
+  </data>
+  <data name="muteCommand" xml:space="preserve">
+    <value>mute user</value>
+  </data>
+  <data name="negativeCommand" xml:space="preserve">
+    <value>add negative effect</value>
+  </data>
+  <data name="pauseAudioCommand" xml:space="preserve">
+    <value>pause song</value>
+  </data>
+  <data name="pileoufaceCommand" xml:space="preserve">
+    <value>Pile ou face</value>
+  </data>
+  <data name="pingsenderCommand" xml:space="preserve">
+    <value>Ping sender</value>
+  </data>
+  <data name="pingwebCommand" xml:space="preserve">
+    <value>Ping sender for web</value>
+  </data>
+  <data name="playAudioCommand" xml:space="preserve">
+    <value>play search song</value>
+  </data>
+  <data name="pollCommand" xml:space="preserve">
+    <value>create poll</value>
+  </data>
+  <data name="readRappelCmd" xml:space="preserve">
+    <value>Read rappel</value>
+  </data>
+  <data name="readticketCommand" xml:space="preserve">
+    <value>Read a ticket</value>
+  </data>
+  <data name="removeRoleCommand" xml:space="preserve">
+    <value>remove role to  user</value>
+  </data>
+  <data name="sepiaCommand" xml:space="preserve">
+    <value>add sepia effect</value>
+  </data>
+  <data name="setticketCommand" xml:space="preserve">
+    <value>Set a ticket checked</value>
+  </data>
+  <data name="setVolumeAudioCommand" xml:space="preserve">
+    <value>set volume</value>
+  </data>
+  <data name="skipAudioCommand" xml:space="preserve">
+    <value>skip song</value>
+  </data>
+  <data name="starCommand" xml:space="preserve">
+    <value>get star info</value>
+  </data>
+  <data name="stopAudioCommand" xml:space="preserve">
+    <value>stop song</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>get user post</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>return random number</value>
+  </data>
+  <data name="String10" xml:space="preserve">
+    <value>get twitch game info</value>
+  </data>
+  <data name="String11" xml:space="preserve">
+    <value>get steam apps news</value>
+  </data>
+  <data name="String12" xml:space="preserve">
+    <value>get steam apps info by date desc</value>
+  </data>
+  <data name="String13" xml:space="preserve">
+    <value>get steam apps info by date asc</value>
+  </data>
+  <data name="String14" xml:space="preserve">
+    <value>get steam app info by name</value>
+  </data>
+  <data name="String15" xml:space="preserve">
+    <value>get steam apps info</value>
+  </data>
+  <data name="String16" xml:space="preserve">
+    <value>get steam app info</value>
+  </data>
+  <data name="String17" xml:space="preserve">
+    <value>get steam user friendlist</value>
+  </data>
+  <data name="String18" xml:space="preserve">
+    <value>get steam user info</value>
+  </data>
+  <data name="String19" xml:space="preserve">
+    <value>get tf golden wrench</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value>get discord user avatar</value>
+  </data>
+  <data name="String20" xml:space="preserve">
+    <value>get asset</value>
+  </data>
+  <data name="String21" xml:space="preserve">
+    <value>get csgo server status</value>
+  </data>
+  <data name="String22" xml:space="preserve">
+    <value>get user info</value>
+  </data>
+  <data name="String23" xml:space="preserve">
+    <value>get count replies</value>
+  </data>
+  <data name="String24" xml:space="preserve">
+    <value>get comment on reddit posts by subname &amp; title</value>
+  </data>
+  <data name="String25" xml:space="preserve">
+    <value>get hot reddit posts by subname</value>
+  </data>
+  <data name="String26" xml:space="preserve">
+    <value>get top daily reddit posts by subname</value>
+  </data>
+  <data name="String27" xml:space="preserve">
+    <value>get best reddit posts by subname</value>
+  </data>
+  <data name="String28" xml:space="preserve">
+    <value>get lastest reddit posts by subname</value>
+  </data>
+  <data name="String3" xml:space="preserve">
+    <value>cnvert a site to html</value>
+  </data>
+  <data name="String4" xml:space="preserve">
+    <value>get twitch stream info</value>
+  </data>
+  <data name="String5" xml:space="preserve">
+    <value>get twitch user clip</value>
+  </data>
+  <data name="String6" xml:space="preserve">
+    <value>get latest twitch user clip</value>
+  </data>
+  <data name="String7" xml:space="preserve">
+    <value>get twitch user emoji</value>
+  </data>
+  <data name="String8" xml:space="preserve">
+    <value>get twitch user info</value>
+  </data>
+  <data name="String9" xml:space="preserve">
+    <value>get twitch user following</value>
+  </data>
+  <data name="timeoutCommand" xml:space="preserve">
+    <value>timeout user</value>
+  </data>
+  <data name="transpiracyCommand" xml:space="preserve">
+    <value>add transpiracy effect</value>
+  </data>
+  <data name="unbanCommand" xml:space="preserve">
+    <value>unban user</value>
+  </data>
+  <data name="undeafCommand" xml:space="preserve">
+    <value>undeaf user</value>
+  </data>
+  <data name="unmuteCommand" xml:space="preserve">
+    <value>unmute user</value>
+  </data>
+  <data name="uploadCommand" xml:space="preserve">
+    <value>upload video to bot discord server</value>
+  </data>
 </root>
