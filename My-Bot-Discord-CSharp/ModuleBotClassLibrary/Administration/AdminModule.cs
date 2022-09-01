@@ -25,10 +25,10 @@ namespace ModuleBotClassLibrary
 
         private IServerInfoService ServiceInfo { get; init; }
 
-
         public AdminModule()
         {
             utilsService = new UtilsService();
+
             ServiceInfo = new ServerInfoService();
         }
 
@@ -551,14 +551,33 @@ namespace ModuleBotClassLibrary
 
 
 
-
-
             }
             catch (Exception ex)
             {
                 await ctx.RespondAsync(ex.ToString());
 
             }
+        }
+        
+
+        [Command("getprocinfo")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleProcInfo(CommandContext ctx, int iterate)
+        {
+            try
+            {
+                var ramInfo = ServiceInfo.GetProcessorPerformamceUsed(iterate);
+                var builder = utilsService.CreateNewEmbed($"proc information", DiscordColor.Azure, ramInfo);
+                await ctx.RespondAsync(builder.Build());
+            }
+            catch (Exception ex)
+            {
+                await ctx.RespondAsync(ex.ToString());
+
+
+
+            }
+
         }
         [Command("getRamInfo")]
         [RequirePermissions(Permissions.Administrator)]
@@ -579,24 +598,6 @@ namespace ModuleBotClassLibrary
             }
 
         }
-        [Command("getprocinfo")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task HandleProcInfo(CommandContext ctx, int iterate)
-        {
-            try
-            {
-                var ramInfo = ServiceInfo.GetProcessorPerformamceUsed(iterate);
-                var builder = utilsService.CreateNewEmbed($"proc information", DiscordColor.Azure, ramInfo);
-                await ctx.RespondAsync(builder.Build());
-            }
-            catch (Exception ex)
-            {
-                await ctx.RespondAsync(ex.ToString());
-
-
-
-            }
-
-        }
+       
     }
 }
