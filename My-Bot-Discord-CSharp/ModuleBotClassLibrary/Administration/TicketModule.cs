@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ModuleBotClassLibrary.Services;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -41,7 +42,7 @@ namespace ModuleBotClassLibrary
 
  
         [Command("create-ticket")]
-        [Description("Create a ticket")]
+        [DescriptionCustomAttribute("createticketCommand")]
         public async Task HandleCreateTicket(CommandContext ctx,DiscordMember member,string title,string description)
         {
 
@@ -72,7 +73,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("checked-ticket")]
-        [Description("Set a ticket checked")]
+        [DescriptionCustomAttribute("checkTicketCommand")]
         public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
 
@@ -109,7 +110,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("list-unread-ticket")]
-        [Description("List all of tickets")]
+        [DescriptionCustomAttribute("listticketCommand")]
         public async Task HandleLisUnreadTicket(CommandContext ctx)
         {
             try

@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using ModuleBotClassLibrary.RessourceManager;
 using ModuleBotClassLibrary.Services;
 using Newtonsoft.Json;
 using ServiceClassLibrary.Interfaces;
@@ -29,7 +30,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("messagetofile")]
-        [Description("convert messages to a txt file")]
+        [DescriptionCustomAttribute("convert2txtCommand")]
         public async Task HandleMessageToFile(CommandContext ctx)
         {
 
@@ -62,7 +63,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("usermessage")]
-        [Description("extract messages to a txt file")]
+        [DescriptionCustomAttribute("convert2txtCommand")]
         public async Task HandleMessageToFile(CommandContext ctx, DiscordMember mem)
         {
 
@@ -99,7 +100,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("convert2zip")]
-        [Description("convert messages t  zip file")]
+        [DescriptionCustomAttribute("convert2zipCommand")]
         public async Task HandleConvert2Zip(CommandContext ctx, string? filename)
         { 
             var attachments = ctx.Message.Attachments;
@@ -116,7 +117,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("decompress2zip")]
-        [Description("decomptess zip file to files")]
+        [DescriptionCustomAttribute("decompress2zipCommand")]
         public async Task HandleDecompress2Zip(CommandContext ctx, string filename)
         {
 
@@ -138,7 +139,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("tojson")]
-        [Description("extract messages json")]
+        [DescriptionCustomAttribute("tojsonCmd")]
         public async Task HandleChatToJson(CommandContext ctx)
         {
 

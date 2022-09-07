@@ -123,14 +123,26 @@
   <data name="addSongAudioCommand" xml:space="preserve">
     <value>add song to queue</value>
   </data>
+  <data name="assetCommand" xml:space="preserve">
+    <value>get asset</value>
+  </data>
+  <data name="avatarCommand" xml:space="preserve">
+    <value>get discord user avatar</value>
+  </data>
   <data name="banCommand" xml:space="preserve">
     <value>ban user using discord member </value>
+  </data>
+  <data name="bestRPostCmd" xml:space="preserve">
+    <value>get best reddit posts by subname</value>
   </data>
   <data name="botStatusCommand" xml:space="preserve">
     <value>change Bot Status</value>
   </data>
   <data name="bwCommand" xml:space="preserve">
     <value>add black &amp; white effect</value>
+  </data>
+  <data name="changeNSFWCmd" xml:space="preserve">
+    <value>change to +18 reddit permissions</value>
   </data>
   <data name="checkRappelCmd" xml:space="preserve">
     <value>check rappel</value>
@@ -150,8 +162,14 @@
   <data name="clearDirCommand" xml:space="preserve">
     <value>clear image directory server</value>
   </data>
+  <data name="cloneCmd" xml:space="preserve">
+    <value />
+  </data>
   <data name="cloneCommand" xml:space="preserve">
     <value>clone channel</value>
+  </data>
+  <data name="commentCommand" xml:space="preserve">
+    <value>get comment on reddit posts by subname &amp; title</value>
   </data>
   <data name="compressCommand" xml:space="preserve">
     <value>compress video</value>
@@ -162,11 +180,17 @@
   <data name="convert2zipCommand" xml:space="preserve">
     <value>convert messages to  zip file</value>
   </data>
+  <data name="crCommand" xml:space="preserve">
+    <value>get count replies</value>
+  </data>
   <data name="createRappelCmd" xml:space="preserve">
     <value>create rappel</value>
   </data>
   <data name="createticketCommand" xml:space="preserve">
     <value>Create a ticket</value>
+  </data>
+  <data name="csgoCommand" xml:space="preserve">
+    <value>get csgo server status</value>
   </data>
   <data name="deafCommand" xml:space="preserve">
     <value>deaf user</value>
@@ -183,6 +207,15 @@
   <data name="deletelinksCommand" xml:space="preserve">
     <value>delete links from channel</value>
   </data>
+  <data name="dogCmd" xml:space="preserve">
+    <value>get random dog</value>
+  </data>
+  <data name="downloadlateststreamCmd" xml:space="preserve">
+    <value>download latest stream</value>
+  </data>
+  <data name="duckCmd" xml:space="preserve">
+    <value>get random duck</value>
+  </data>
   <data name="exportlinksCommand" xml:space="preserve">
     <value>export links from channel</value>
   </data>
@@ -195,6 +228,9 @@
   <data name="filmCommand" xml:space="preserve">
     <value>get film info</value>
   </data>
+  <data name="gameTwitchCmd" xml:space="preserve">
+    <value>get twitch game info</value>
+  </data>
   <data name="getlinksCommand" xml:space="preserve">
     <value>get links from channel</value>
   </data>
@@ -204,14 +240,29 @@
   <data name="grayscaleCommand" xml:space="preserve">
     <value>add grayscale effect</value>
   </data>
+  <data name="hotRCmd" xml:space="preserve">
+    <value>get hot reddit posts by subname</value>
+  </data>
   <data name="imageWatchCommand" xml:space="preserve">
     <value>watch image directory server</value>
+  </data>
+  <data name="inviteCmd" xml:space="preserve">
+    <value>get invite link</value>
   </data>
   <data name="inviteCommand" xml:space="preserve">
     <value>invite to your server</value>
   </data>
   <data name="joinAudioCommand" xml:space="preserve">
     <value>bot audio channel join</value>
+  </data>
+  <data name="laposteCmd" xml:space="preserve">
+    <value>get package laposte tracker</value>
+  </data>
+  <data name="latestClipCmd" xml:space="preserve">
+    <value>get latest twitch user clip</value>
+  </data>
+  <data name="latestRpostSubCmd" xml:space="preserve">
+    <value>get lastest reddit posts by subname</value>
   </data>
   <data name="leaveAudioCommand" xml:space="preserve">
     <value>leave channel</value>
@@ -252,6 +303,18 @@
   <data name="pollCommand" xml:space="preserve">
     <value>create poll</value>
   </data>
+  <data name="procInfoCmd" xml:space="preserve">
+    <value>get proc used by bot</value>
+  </data>
+  <data name="queueCmd" xml:space="preserve">
+    <value>add song to queue</value>
+  </data>
+  <data name="ramInfoCmd" xml:space="preserve">
+    <value>get ram used by bot</value>
+  </data>
+  <data name="randomCommand" xml:space="preserve">
+    <value>return random number</value>
+  </data>
   <data name="readRappelCmd" xml:space="preserve">
     <value>Read rappel</value>
   </data>
@@ -260,6 +323,12 @@
   </data>
   <data name="removeRoleCommand" xml:space="preserve">
     <value>remove role to  user</value>
+  </data>
+  <data name="RUserDataCmd" xml:space="preserve">
+    <value>get user data reddit</value>
+  </data>
+  <data name="RUserPostCmd" xml:space="preserve">
+    <value>get user post reddit</value>
   </data>
   <data name="sepiaCommand" xml:space="preserve">
     <value>add sepia effect</value>
@@ -270,107 +339,74 @@
   <data name="setVolumeAudioCommand" xml:space="preserve">
     <value>set volume</value>
   </data>
+  <data name="siteCmd" xml:space="preserve">
+    <value>convert a site to html</value>
+  </data>
   <data name="skipAudioCommand" xml:space="preserve">
     <value>skip song</value>
   </data>
   <data name="starCommand" xml:space="preserve">
     <value>get star info</value>
   </data>
+  <data name="steamAppbyNameCommand" xml:space="preserve">
+    <value>get steam app info by name</value>
+  </data>
+  <data name="steamAppCommand" xml:space="preserve">
+    <value>get steam apps news</value>
+  </data>
+  <data name="steamAppInfoCommand" xml:space="preserve">
+    <value>get steam app info</value>
+  </data>
+  <data name="steamAppsAscCommand" xml:space="preserve">
+    <value>get steam apps info by date asc</value>
+  </data>
+  <data name="steamAppsDescCommand" xml:space="preserve">
+    <value>get steam apps info by date desc</value>
+  </data>
+  <data name="steamAppsInfoCommand" xml:space="preserve">
+    <value>get steam apps info</value>
+  </data>
+  <data name="steamUserFriendListCommand" xml:space="preserve">
+    <value>get steam user friendlist</value>
+  </data>
+  <data name="steamUserInfoCommand" xml:space="preserve">
+    <value>get steam user info</value>
+  </data>
   <data name="stopAudioCommand" xml:space="preserve">
     <value>stop song</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>get user post</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>return random number</value>
-  </data>
-  <data name="String10" xml:space="preserve">
-    <value>get twitch game info</value>
-  </data>
-  <data name="String11" xml:space="preserve">
-    <value>get steam apps news</value>
-  </data>
-  <data name="String12" xml:space="preserve">
-    <value>get steam apps info by date desc</value>
-  </data>
-  <data name="String13" xml:space="preserve">
-    <value>get steam apps info by date asc</value>
-  </data>
-  <data name="String14" xml:space="preserve">
-    <value>get steam app info by name</value>
-  </data>
-  <data name="String15" xml:space="preserve">
-    <value>get steam apps info</value>
-  </data>
-  <data name="String16" xml:space="preserve">
-    <value>get steam app info</value>
-  </data>
-  <data name="String17" xml:space="preserve">
-    <value>get steam user friendlist</value>
-  </data>
-  <data name="String18" xml:space="preserve">
-    <value>get steam user info</value>
-  </data>
-  <data name="String19" xml:space="preserve">
+  <data name="tfCommand" xml:space="preserve">
     <value>get tf golden wrench</value>
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value>get discord user avatar</value>
-  </data>
-  <data name="String20" xml:space="preserve">
-    <value>get asset</value>
-  </data>
-  <data name="String21" xml:space="preserve">
-    <value>get csgo server status</value>
-  </data>
-  <data name="String22" xml:space="preserve">
-    <value>get user info</value>
-  </data>
-  <data name="String23" xml:space="preserve">
-    <value>get count replies</value>
-  </data>
-  <data name="String24" xml:space="preserve">
-    <value>get comment on reddit posts by subname &amp; title</value>
-  </data>
-  <data name="String25" xml:space="preserve">
-    <value>get hot reddit posts by subname</value>
-  </data>
-  <data name="String26" xml:space="preserve">
-    <value>get top daily reddit posts by subname</value>
-  </data>
-  <data name="String27" xml:space="preserve">
-    <value>get best reddit posts by subname</value>
-  </data>
-  <data name="String28" xml:space="preserve">
-    <value>get lastest reddit posts by subname</value>
-  </data>
-  <data name="String3" xml:space="preserve">
-    <value>cnvert a site to html</value>
-  </data>
-  <data name="String4" xml:space="preserve">
-    <value>get twitch stream info</value>
-  </data>
-  <data name="String5" xml:space="preserve">
-    <value>get twitch user clip</value>
-  </data>
-  <data name="String6" xml:space="preserve">
-    <value>get latest twitch user clip</value>
-  </data>
-  <data name="String7" xml:space="preserve">
-    <value>get twitch user emoji</value>
-  </data>
-  <data name="String8" xml:space="preserve">
-    <value>get twitch user info</value>
-  </data>
-  <data name="String9" xml:space="preserve">
-    <value>get twitch user following</value>
   </data>
   <data name="timeoutCommand" xml:space="preserve">
     <value>timeout user</value>
   </data>
+  <data name="tojsonCmd" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tpdSubCmd" xml:space="preserve">
+    <value>get top daily reddit posts by subname</value>
+  </data>
   <data name="transpiracyCommand" xml:space="preserve">
     <value>add transpiracy effect</value>
+  </data>
+  <data name="twEmojiCmd" xml:space="preserve">
+    <value>get twitch user emoji</value>
+  </data>
+  <data name="twitchFollowingCommand" xml:space="preserve">
+    <value>get twitch user following</value>
+  </data>
+  <data name="twitchgameCommand" xml:space="preserve">
+    <value>get twitch game info</value>
+  </data>
+  <data name="twitchUserInfoCmd" xml:space="preserve">
+    <value>get twitch user info</value>
+  </data>
+  <data name="twstreaminfCmd" xml:space="preserve">
+    <value>get twitch stream info</value>
+  </data>
+  <data name="twUserClipCmd" xml:space="preserve">
+    <value>get twitch user clip</value>
   </data>
   <data name="unbanCommand" xml:space="preserve">
     <value>unban user</value>
@@ -383,5 +419,17 @@
   </data>
   <data name="uploadCommand" xml:space="preserve">
     <value>upload video to bot discord server</value>
+  </data>
+  <data name="userEmojiCmd" xml:space="preserve">
+    <value>get twitch user emoji</value>
+  </data>
+  <data name="userInfoCommand" xml:space="preserve">
+    <value>get user info</value>
+  </data>
+  <data name="userpostCommand" xml:space="preserve">
+    <value>get user post</value>
+  </data>
+  <data name="watchDirectoryCmd" xml:space="preserve">
+    <value>watch image directory server</value>
   </data>
 </root>

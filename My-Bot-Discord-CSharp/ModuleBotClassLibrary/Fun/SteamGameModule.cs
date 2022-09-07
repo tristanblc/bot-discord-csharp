@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -30,8 +31,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("csgoserver")]
-
-        [Description("get csgo server status")]
+        [DescriptionCustomAttribute("csgoCommand")]
         public async Task HandleGetCsgoServerStatus(CommandContext ctx)
         {
             try
@@ -51,7 +51,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getasset")]
-        [Description("get asset")]
+        [DescriptionCustomAttribute("assetCommand")]
         public async Task HandleGetAssetInfo(CommandContext ctx, string appname)
         {
             try
@@ -71,7 +71,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getGoldenWrench")]
-        [Description("get tf golden wrench")]
+        [DescriptionCustomAttribute("tfCommand")]
         public async Task HandleGetGoldenWrench(CommandContext ctx,int number)
         {
             try

@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+using ModuleBotClassLibrary.RessourceManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,16 @@ namespace My_Bot_Discord_CSharp.Formatter
             _embed.Title = $"Command {command.Name} Help";
 
             var commandHelpString = "";
-            if (String.IsNullOrEmpty(command.Description))
-                _strBuilder += $"\n{command.Name} - This command don't have a description";
-            else
-                _strBuilder += $"\n{command.Name} - {command.Description}";
+            command.CustomAttributes.ToList().ForEach(action => 
+            {
+                   if(action.GetType() == typeof(DescriptionCustomAttribute))
+                    {
+                       var descAction = action as DescriptionCustomAttribute;
+                    _strBuilder += $"\n{command.Name} - {descAction}";
+                    };
+
+            }
+            );
 
             if (command.Aliases != null)
             {
@@ -57,13 +64,24 @@ namespace My_Bot_Discord_CSharp.Formatter
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> cmds)
         {
             _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
+
             cmds.ToList().ForEach(cmd =>
             {
 
-                if(String.IsNullOrEmpty(cmd.Description))
-                    _strBuilder += $"\n{cmd.Name} - This command don't have a description";
-                else
-                    _strBuilder += $"\n{cmd.Name} - {cmd.Description}";
+                cmd.CustomAttributes.ToList().ForEach(action =>
+                {
+
+                    if (action.GetType() == typeof(DescriptionCustomAttribute))
+                    {
+                        var descAction = action as DescriptionCustomAttribute;
+                        if (String.IsNullOrEmpty(descAction.Description))
+                            _strBuilder += $"\n{cmd.Name} - This command don't have a description";
+                        else
+                            _strBuilder += $"\n{cmd.Name} - {descAction.Description}";
+
+                    };
+
+                });
 
             });
             return this;

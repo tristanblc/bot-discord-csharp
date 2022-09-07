@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -28,7 +29,7 @@ namespace ModuleBotClassLibrary
         }
         
         [Command("join")]
-        [Description("bot audio channel join")]
+        [DescriptionCustomAttribute("joinAudioCommand")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
@@ -63,6 +64,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("leave")]
+        [DescriptionCustomAttribute("joinAudioCommand")]
         [Description("leave channel")]
         public async Task Leave(CommandContext ctx, DiscordChannel channel)
         {
@@ -105,7 +107,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("play")]
-        [Description("play search song")]
+        [DescriptionCustomAttribute("playAudioCommand")]
         public async Task Play(CommandContext ctx, [RemainingText] string search)
         {
            
@@ -168,7 +170,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("stop")]
-        [Description("stop song")]
+        [DescriptionCustomAttribute("stopAudioCommand")]
         public async Task Stop(CommandContext ctx, [RemainingText] string search)
         {
 
@@ -223,7 +225,7 @@ namespace ModuleBotClassLibrary
         }
        
         [Command("pause")]
-        [Description("pause song")]
+        [DescriptionCustomAttribute("pauseAudioCommand")]
         public async Task Pause(CommandContext ctx)
         {
 
@@ -259,7 +261,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("volume")]
-        [Description("set volume")]
+        [DescriptionCustomAttribute("setVolumeAudioCommand")]
+
         public async Task Volume(CommandContext ctx,string volume)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");
@@ -309,7 +312,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("add-queue")]
-        [Description("add song to queue")]
+        [DescriptionCustomAttribute("queueCmd")]
         public async Task Queueing(CommandContext ctx, [RemainingText] string search)
         {
 
@@ -352,7 +355,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("skip")]
-        [Description("skip song ")]
+        [DescriptionCustomAttribute("skipAudioCommand")]
         public async Task Skip(CommandContext ctx)
         {
          
@@ -411,7 +414,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("lists-queues")]
-        [Description("list song queue")]
+        [DescriptionCustomAttribute("listAudioCommand")]
         public async Task ListsQueue(CommandContext ctx)
         {
          
@@ -433,7 +436,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("del-queue")]
-        [Description("delete song queue")]
+        [DescriptionCustomAttribute("deleteAudioCommand")]
         public async Task delQueue(CommandContext ctx, string state)
         {
  

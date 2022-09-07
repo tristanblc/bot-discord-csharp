@@ -5,7 +5,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 
 using ExceptionClassLibrary;
-
+using ModuleBotClassLibrary.RessourceManager;
 using ReaderClassLibrary.Interfaces;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -38,7 +38,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("random")]
-        [Description("return random number")]
+        [DescriptionCustomAttribute("randomCommand")]
         public async Task RandomCommand(CommandContext ctx, int min, int max)
         {
             var random = new Random();
@@ -49,7 +49,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("avatar")]
-        [Description("get discord user avatar")]
+        [DescriptionCustomAttribute("avatarCommand")]
         public async Task AvatarCommand(CommandContext ctx, DiscordMember member)
         {
 
@@ -58,7 +58,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("site2html")]
-        [Description("cnvert a site to html")]
+        [DescriptionCustomAttribute("siteCmd")]
         public async Task ScreenCommand(CommandContext ctx, string url)
         {
             try
@@ -87,6 +87,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("duck")]
+        [DescriptionCustomAttribute("duckCmd")]
         public async Task DuckCommand(CommandContext ctx)
         {
 
@@ -112,6 +113,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("dog")]
+        [DescriptionCustomAttribute("dogCmd")]
         public async Task DogCommand(CommandContext ctx)
         {
 
@@ -134,8 +136,9 @@ namespace ModuleBotClassLibrary
             }
             await ctx.RespondAsync(builder.Build());
         }
-
+        
         [Command("contribute")]
+        [DescriptionCustomAttribute("cntCmd")]
         public async Task ContributeCommand(CommandContext ctx)
         {
             var url = "https://github.com/tristanblc/bot-discord-csharp";
@@ -151,6 +154,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("laposte")]
+        [DescriptionCustomAttribute("laposteCmd")]
         public async Task TrackPackageCommand(CommandContext ctx, string idShip)
         {
 

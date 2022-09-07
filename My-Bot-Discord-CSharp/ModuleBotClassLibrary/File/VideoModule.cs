@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -24,7 +25,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("uploadvideo")]
-        [Description("upload video to bot discord server")]
+        [DescriptionCustomAttribute("uploadCommand")]
         public async Task HandleUploadVideoCommand(CommandContext ctx)
         {
             var builder = UtilsService.CreateNewEmbed("Status", DiscordColor.Azure, "");
@@ -47,7 +48,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("extractaudio")]
-        [Description("extract audio from a video file")]
+        [DescriptionCustomAttribute("extractCommand")]
         public async Task HandleExtractAudioCommand(CommandContext ctx)
         {
             var builder = UtilsService.CreateNewEmbed("Audio", DiscordColor.Green, "send audio");
@@ -85,7 +86,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("compressvideo")]
-        [Description("compress video")]
+        [DescriptionCustomAttribute("compressCommand")]
         public async Task HandleCompressVideoCommand(CommandContext ctx)
         {
      
@@ -135,7 +136,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("videoinfo")]
-        [Description("get video metadata")]
+        [DescriptionCustomAttribute("metadataCommand")]
         public async Task HandleSVideoInfoCommand(CommandContext ctx)
         {
             var builder = UtilsService.CreateNewEmbed("Video info", DiscordColor.Green, "Info of videos");

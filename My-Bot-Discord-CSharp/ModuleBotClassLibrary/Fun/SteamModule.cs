@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -34,7 +35,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("userSteam")]
-        [Description("get steam user info")]
+        [DescriptionCustomAttribute("steamUserInfoCommand")]
         public async Task HandleGetPostsFromSub(CommandContext ctx, ulong steamUserId)
         {
             try
@@ -58,7 +59,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("friendlist")]
-        [Description("get steam user friendlist")]
+        [DescriptionCustomAttribute("steamUserFriendListCommand")]
         public async Task HandleGetFriendsList(CommandContext ctx, ulong steamUserId)
         {
             try
@@ -82,7 +83,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getapp")]
-        [Description("get steam app info")]
+        [DescriptionCustomAttribute("steamAppInfoCommand")]
         public async Task HandleGetAppFromSteam(CommandContext ctx, string appname)
         {
             try
@@ -103,7 +104,7 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
         [Command("getapps")]
-        [Description("get steam apps info")]
+        [DescriptionCustomAttribute("steamAppInfoCommand")]
         public async Task HandleGetApps(CommandContext ctx)
         {
             try
@@ -126,7 +127,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getappsname")]
-        [Description("get steam app info by name")]
+        [DescriptionCustomAttribute("steamAppbyNameCommand")]
         public async Task HandleGetAppByName(CommandContext ctx, string appname)
         {
             try
@@ -148,7 +149,8 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getappsbydateasc")]
-        [Description("get steam apps info by date asc")]
+        [DescriptionCustomAttribute("steamAppsAscCommand")]
+
         public async Task HandleGetAppsByDateAsc(CommandContext ctx, DateTime date)
         {
             try
@@ -170,7 +172,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getappsbydatedesc")]
-        [Description("get steam apps info by date desc")]
+        [DescriptionCustomAttribute("steamAppsDescCommand")]
         public async Task HandleGetAppsByDateDesc(CommandContext ctx, DateTime date)
         {
             try
@@ -192,7 +194,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getnewsforapp")]
-        [Description("get steam apps news")]
+        [DescriptionCustomAttribute("steamAppCommand")]
         public async Task HandleGetNewsForApp(CommandContext ctx, uint appId)
         {
             try
