@@ -374,7 +374,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("timeout")]
-        [Description("timeout user")]
+        [DescriptionCustomAttribute("timeoutCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task timeoutUser(CommandContext ctx, DiscordMember member, string time)
         {
@@ -403,7 +403,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("invite")]
-        [Description("invite")]
+        [DescriptionCustomAttribute("inviteCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task inviteUser(CommandContext ctx, DiscordChannel channel, int time)
         {
@@ -416,6 +416,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("clone")]
+        [DescriptionCustomAttribute("cloneCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleCloneChannel(CommandContext ctx, DiscordChannel channel)
         {
@@ -439,6 +440,7 @@ namespace ModuleBotClassLibrary
             await ctx.RespondAsync(builder.Build());
         }
         [Command("delete-channel")]
+        [DescriptionCustomAttribute("deleteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleDeleteChannel(CommandContext ctx, DiscordChannel channel)
         {
@@ -465,6 +467,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("get-links")]
+        [DescriptionCustomAttribute("getlinksCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleLinks(CommandContext ctx, DiscordChannel channel)
         {
@@ -493,6 +496,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("delete-links")]
+        [DescriptionCustomAttribute("deleteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleDeleteLinks(CommandContext ctx, DiscordChannel channel)
         {
@@ -520,6 +524,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("export-links")]
+        [DescriptionCustomAttribute("exportlinksCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleExportLinks(CommandContext ctx, DiscordChannel channel)
         {
@@ -563,6 +568,7 @@ namespace ModuleBotClassLibrary
         
 
         [Command("getprocinfo")]
+        [DescriptionCustomAttribute("procInfoCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleProcInfo(CommandContext ctx, int iterate)
         {
@@ -582,6 +588,7 @@ namespace ModuleBotClassLibrary
 
         }
         [Command("getRamInfo")]
+        [DescriptionCustomAttribute("ramInfoCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleRamInfo(CommandContext ctx, int iterate)
         {
