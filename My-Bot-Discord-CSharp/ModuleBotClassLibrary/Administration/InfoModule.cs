@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ModuleBotClassLibrary.RessourceManager;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -31,7 +32,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ping")]
-        [Description("Ping sender")]
+        [DescriptionCustomAttribute("pingsenderCommand")]
 
         public async Task PingCommand(CommandContext ctx)
         {
@@ -66,7 +67,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("pingweb")]
-        [Description("Ping sender for web")]
+        [DescriptionCustomAttribute("pingwebCommand")]
         public async Task PingWebsiteCommand(CommandContext ctx, string url)
         {
             var builder = utilsService.CreateNewEmbed("Status", DiscordColor.Red, "");

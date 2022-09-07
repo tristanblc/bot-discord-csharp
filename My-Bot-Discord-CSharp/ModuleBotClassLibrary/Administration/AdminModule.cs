@@ -1,19 +1,21 @@
-﻿using DSharpPlus;
+﻿using BotClassLibrary;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity.Extensions;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using ModuleBotClassLibrary.Services;
+using Newtonsoft.Json;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using System.Resources;
+using ModuleBotClassLibrary.RessourceManager;
 
 namespace ModuleBotClassLibrary
 {
@@ -24,6 +26,7 @@ namespace ModuleBotClassLibrary
 
         private IServerInfoService ServiceInfo { get; init; }
 
+
         public AdminModule()
         {
             utilsService = new UtilsService();
@@ -33,7 +36,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ban")]
-        [Description("ban")]
+        [DescriptionCustomAttribute("banCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task ban(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -47,7 +50,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("changebotstatus")]
-        [Description("Bot Status")]
+        [DescriptionCustomAttribute("botStatusCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleBotStatus(CommandContext ctx, string reason, string? media)
         {
@@ -88,7 +91,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("unban")]
-        [Description("unban user")]
+        [DescriptionCustomAttribute("unbanCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task unban(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -101,7 +104,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("clean-all")]
-        [Description("clear all messages in channel")]
+        [DescriptionCustomAttribute("cleanallCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task CleanAChannel(CommandContext ctx)
         {
@@ -135,7 +138,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("clear")]
-        [Description("clear x message in channel")]
+        [DescriptionCustomAttribute("clearCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task clean(CommandContext ctx, int number)
         {
@@ -157,7 +160,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("poll")]
-        [Description("poll")]
+        [DescriptionCustomAttribute("pollCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandlePoll(CommandContext ctx, string question)
         {
@@ -177,7 +180,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("deaf")]
-        [Description("deaf user")]
+        [DescriptionCustomAttribute("deafCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task deafUser(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -202,7 +205,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("undeaf")]
-        [Description("undeaf user")]
+        [DescriptionCustomAttribute("undeafCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task undeafUser(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -228,7 +231,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("mute")]
-        [Description("mute user")]
+        [DescriptionCustomAttribute("muteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task muteUser(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -272,7 +275,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("unmute")]
-        [Description("unmute user")]
+        [DescriptionCustomAttribute("unmuteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task UnMuteUser(CommandContext ctx, DiscordMember member, string reason)
         {
@@ -318,7 +321,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("addrole")]
-        [Description("add role to  user")]
+        [DescriptionCustomAttribute("addroleCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task addRoleUser(CommandContext ctx, DiscordMember member, DiscordRole role)
         {
@@ -355,7 +358,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("removerole")]
-        [Description("remove role to  user")]
+        [DescriptionCustomAttribute("removeCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task removeRoleUser(CommandContext ctx, DiscordMember member, DiscordRole role)
         {

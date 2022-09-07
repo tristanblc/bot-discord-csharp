@@ -444,6 +444,23 @@ namespace ServiceClassLibrary.Services
          
         }
 
-
+        public void DownloadLatestVideo(string broadcasterName)
+        {
+            try
+            {
+              var broadcaster = GetUserByName(broadcasterName);
+              var video = TwitchClient.Helix.Videos.GetVideosAsync(new List<string>(), broadcaster.Id, null, null, null, 1, null).Result;
+              var extractVideoFromTwitch =  video.Videos.ToList().First();
+              var name = $"{extractVideoFromTwitch.Id}_extract.mp4";
+              WebClientDownloader.DownloadVideo(extractVideoFromTwitch.Url, name);
+           
+            }
+            catch (Exception)
+            {
+                var exception = $"Cannot convert emoji";
+                Logger.WriteLogErrorLog(exception);
+                throw new TwitchAPIException(exception);
+            }
+        }
     }
 }

@@ -51,6 +51,9 @@ namespace ServiceClassLibrary.Interfaces
         void ConvertEmojiToEmbed(string broadcasterId,CommandContext ctx);
 
 
+
+        void DownloadLatestVideo(string broadcasterName);
+
         DiscordEmbedBuilder ConvertTwitchUserToEmbed(TwitchLib.Api.Helix.Models.Users.GetUsers.User user);
         DiscordEmbedBuilder ConvertFollowersTwitchToEmbed(TwitchLib.Api.Helix.Models.Users.GetUserFollows.Follow follower);
 

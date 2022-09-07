@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Services;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getpostsfromsub")]
-        [Description("get reddit posts by description")]
+        [DescriptionCustomAttribute("getpostsbydescriptionRedditCmd")]
         public async Task HandleGetPostsFromSub(CommandContext ctx, string subname)
         {
             try
@@ -53,7 +54,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getlatestpost")]
-        [Description("get lastest reddit posts by subname")]
+        [DescriptionCustomAttribute("latestRpostSubCmd")]
         public async Task HandleGetLatestPost(CommandContext ctx, string subname)
         {
             try
@@ -74,7 +75,7 @@ namespace ModuleBotClassLibrary.Fun
     
 
         [Command("getbest")]
-        [Description("get best reddit posts by subname")]
+        [DescriptionCustomAttribute("bestRPostCmd")]
         public async Task HandleGetBestPostFromSub(CommandContext ctx, string subname)
         {
             try
@@ -102,7 +103,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gettopdaily")]
-        [Description("get top daily reddit posts by subname")]
+        [DescriptionCustomAttribute("tpdSubCmd")]
         public async Task HandleGetTopDaily(CommandContext ctx, string subname)
         {
             try
@@ -128,7 +129,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("gethotsreddit")]
-        [Description("get hot reddit posts by subname")]
+        [DescriptionCustomAttribute("hotRCmd")]
         public async Task HandleGetHotsReddit(CommandContext ctx, string subname)
         {
             try
@@ -151,6 +152,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("changeNSFW")]
+        [DescriptionCustomAttribute("changeNSFWCmd")]
         public async Task HandleUserRedditPreference(CommandContext ctx, string setterbool)
         {
             try
@@ -186,7 +188,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getcomments")]
-        [Description("get comment on reddit posts by subname & title")]
+        [DescriptionCustomAttribute("commentCommand")]
         public async Task HandleGetCommentsFromPost(CommandContext ctx,string subname,string title)
         {
             try
@@ -210,7 +212,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getcountreplies")]
-        [Description("get count replies")]
+        [DescriptionCustomAttribute("crCommand")]
         public async Task HandleGetCountReplies(CommandContext ctx, string subname,string title)
         {
             try
@@ -228,7 +230,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getuserdata")]
-        [Description("get user info")]
+        [DescriptionCustomAttribute("RUserDataCmd")]
         public async Task HandleGetUserInfo(CommandContext ctx, string username)
         {
             try
@@ -247,7 +249,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getuserposts")]
-        [Description("get user post")]
+        [DescriptionCustomAttribute("RUserPostCmd")]
         public async Task HandleGetUsersInfo(CommandContext ctx, string username)
         {
             try

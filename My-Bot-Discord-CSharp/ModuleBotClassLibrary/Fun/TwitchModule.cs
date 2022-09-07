@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 using System;
@@ -27,11 +28,12 @@ namespace ModuleBotClassLibrary.Fun
             IConfiguration AppSetting = builder.Build();
         
            TwitchService = new TwitchService(AppSetting["Twitch:accesstoken"],AppSetting["Twitch:clientId"]);
+            UtilsService = new UtilsService();
 
         }
 
         [Command("gettwitchUser")]
-        [Description("get twitch user info")]
+        [DescriptionCustomAttribute("twitchUserInfoCmd")]
         public async Task HandleGetTwitchUser(CommandContext ctx,string username)
         {
             try
@@ -52,7 +54,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getFollowuser")]
-        [Description("get twitch user following")]
+        [DescriptionCustomAttribute("twitchFollowingCommand")]
         public async Task HandleGetFollowingUser(CommandContext ctx, string name)
         {
             try
@@ -80,7 +82,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getStreams")]
-        [Description("get twitch stream info")]
+        [DescriptionCustomAttribute("twstreaminfCmd")]
         public async Task HandleGetStreams(CommandContext ctx,string name)
         {
             try
@@ -101,7 +103,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getClip")]
-        [Description("get twitch user clip")]
+        [DescriptionCustomAttribute("latestClipCmd")]
         public async Task HandleGetClip(CommandContext ctx, string username)
         {
             try
@@ -121,7 +123,7 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
         [Command("getlatestclip")]
-        [Description("get latest twitch user clip")]
+        [DescriptionCustomAttribute("twEmojiCmd")]
         public async Task HandleGetLatestClip(CommandContext ctx, string username)
         {
             try
@@ -147,7 +149,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("twitchemoji")]
-        [Description("get twitch user emoji")]
+        [DescriptionCustomAttribute("twEmojiCmd")]
         public async Task HandleGetUserEmoji(CommandContext ctx, string username)
         {
             try
@@ -169,7 +171,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("game")]
-        [Description("get twitch game info")]
+        [DescriptionCustomAttribute("gameTwitchCmd")]
         public async Task HandleGetGames(CommandContext ctx,string game)
         {
             try
@@ -177,6 +179,26 @@ namespace ModuleBotClassLibrary.Fun
                 var games = TwitchService.GetGameFromName(game);
                 var embed = TwitchService.ConvertGameToEmbed(games);
                 await ctx.RespondAsync(embed.Build());
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("pas de jeu", DiscordColor.Azure, "");
+
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("downloadlateststream")]
+        [DescriptionCustomAttribute("downloadlateststreamCmd")]
+        public async Task HandleGetLatestStream(CommandContext ctx, string broadcastername)
+        {
+            try
+            {
+                TwitchService.DownloadLatestVideo(broadcastername);
+                var result = UtilsService.CreateNewEmbed("Steam downladed", DiscordColor.Azure, "");
+
+                await ctx.RespondAsync(result.Build());
 
             }
             catch (Exception ex)

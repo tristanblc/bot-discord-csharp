@@ -14,6 +14,7 @@ using System.Resources;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
+using ModuleBotClassLibrary.RessourceManager;
 
 namespace ModuleBotClassLibrary
 {   
@@ -30,7 +31,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("pileouface")]
-        [Description("Pile ou face")]
+        [DescriptionCustomAttribute("pileoufaceCommand")]
         public async Task PileOuFaceCommand(CommandContext ctx, string choice)
         {
             PileFace pileFace = new PileFace(ctx,choice);

@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ModuleBotClassLibrary.RessourceManager;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -38,7 +39,7 @@ namespace ModuleBotClassLibrary
 
    
         [Command("transpiracy")]
-        [Description("add transpiracy effect")]
+        [DescriptionCustomAttribute("transpiracyCommand")]
         public async Task HandleImageToTranspiracy(CommandContext ctx)
         {
 
@@ -80,7 +81,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("grayscale")]
-        [Description("add grayscale effect")]
+        [DescriptionCustomAttribute("grayscaleCommand")]
         public async Task HandleImageToGrayscale(CommandContext ctx)
         {
 
@@ -125,7 +126,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("sepia")]
-        [Description("add sepia effect")]
+        [DescriptionCustomAttribute("sepiaCommand")]
+
         public async Task HandleImageToSepiaTone(CommandContext ctx)
         {
             var attachments = ctx.Message.Attachments;
@@ -168,7 +170,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("negative")]
-        [Description("add negative effect")]
+        [DescriptionCustomAttribute("negativeCommand")]
         public async Task HandleImageToNegativeCopy(CommandContext ctx)
         {
 
@@ -210,7 +212,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("bw")]
-        [Description("add black & white effect")]
+        [DescriptionCustomAttribute("bwCommand")]
+
         public async Task HandleImageToBlackAndWhite(CommandContext ctx)
         {
 
@@ -257,7 +260,8 @@ namespace ModuleBotClassLibrary
 
 
         [Command("clear-directory")]
-        [Description("clear image directory server")]
+        [DescriptionCustomAttribute("clearDirCommand")]
+
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleClearDirectory(CommandContext ctx)
         {
@@ -282,7 +286,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("watch-directory")]
-        [Description("watch image directory server")]
+        [DescriptionCustomAttribute("watchDirectoryCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleWatchDirectory(CommandContext ctx)
         {
@@ -316,14 +320,7 @@ namespace ModuleBotClassLibrary
                 builder.Description = "Error";
                 await ctx.RespondAsync(builder.Build());
             }
-
-
-
-        }
-
-
-
-     
+        }   
 
     }
 }

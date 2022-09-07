@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Configuration;
+using ModuleBotClassLibrary.RessourceManager;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -38,7 +39,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("create-rappel")]
-        [Description("create rappel")]
+        [DescriptionCustomAttribute("createRappelCmd")]       
         public async Task HandleCreateRappel(CommandContext ctx,string name,string description)
         {
             try
@@ -68,7 +69,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("checked-rappel")]
-        [Description("check rappel")]
+        [DescriptionCustomAttribute("checkRappelCmd")]
         public async Task HandleCheckedRappel(CommandContext ctx,string id)
         {
             try
@@ -103,7 +104,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("list-rappel")]
-        [Description("list rappel")]
+        [DescriptionCustomAttribute("listRappelCmd")]
         public async Task HandleLisUnreadTicket(CommandContext ctx)
         {
             try
@@ -147,7 +148,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("read-rappel")]
-        [Description("Read rappel")]
+        [DescriptionCustomAttribute("readRappelCmd")]
         public async Task HandleLisUnreadRappel(CommandContext ctx, string id)
         {
             try
