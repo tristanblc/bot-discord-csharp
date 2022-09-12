@@ -1,4 +1,5 @@
-﻿using ExceptionClassLibrary;
+﻿using DSharpPlus.Entities;
+using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -126,5 +127,42 @@ namespace ServiceClassLibrary.Services
             }
         }
 
+        public DiscordEmbedBuilder ConvertIUserToEmbed(IUser user)
+        {
+            try
+            {
+                var contents = $"{user.Name} - {user.Status}";
+                contents += $" Is Protected : {user.Protected}";
+                contents += $"Is verified  {user.Verified}";
+                var embed = UtilsService.CreateNewEmbed($"{user.Name}", DiscordColor.Aquamarine, contents);
+                embed.WithThumbnail(user.ProfileImageUrl400x400);
+                return embed;
+
+
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get user from twitter";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertITweetToEmbed(ITweet tweet)
+        {
+            try
+            {
+                var contents = $"{tweet.FullText}";
+                var embed = UtilsService.CreateNewEmbed($"Tweet", DiscordColor.Aquamarine, contents);
+                return embed;
+
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get user from twitter";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterException(message);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSharpPlus.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,10 @@ namespace ServiceClassLibrary.Interfaces
         List<IUser> GetFriendsLists(string username);
         long[] GetLongsFollowers(string username);
         List<IUser> GetFollowersUsers(string username);
+
+        DiscordEmbedBuilder ConvertIUserToEmbed(IUser user);
+
+        DiscordEmbedBuilder ConvertITweetToEmbed(ITweet tweet);
 
     }
 }
