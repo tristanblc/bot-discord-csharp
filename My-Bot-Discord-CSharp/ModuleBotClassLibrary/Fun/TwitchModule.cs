@@ -210,7 +210,6 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
-    
 
     }
 }

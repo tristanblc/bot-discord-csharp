@@ -3,10 +3,12 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+
 using ExceptionClassLibrary;
 using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,7 @@ namespace My_Bot_Discord_CSharp.Formatter
                         _strBuilder += $"\n{command.Name} - {descAction}";
                     };
 
+
                 }
                 );
 
@@ -79,9 +82,11 @@ namespace My_Bot_Discord_CSharp.Formatter
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> cmds)
         {
+
             try
             {
                 _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
+
 
                 cmds.ToList().ForEach(cmd =>
                 {
@@ -98,6 +103,7 @@ namespace My_Bot_Discord_CSharp.Formatter
                                 _strBuilder += $"\n{cmd.Name} - {descAction.Description}";
 
                         };
+
 
                     });
 
