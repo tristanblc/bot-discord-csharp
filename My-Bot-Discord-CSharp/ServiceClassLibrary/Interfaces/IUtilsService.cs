@@ -39,6 +39,5 @@ namespace ServiceClassLibrary.Interfaces
         bool isJson(string message);
 
 
-        Task<string> GetPage(string url);
     }
 }

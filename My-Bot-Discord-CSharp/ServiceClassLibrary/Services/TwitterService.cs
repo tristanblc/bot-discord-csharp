@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Core.Models;
 using Tweetinvi.Models;
+using Tweetinvi.Models.V2;
 using TwitchLib.Api.Helix;
 
 namespace ServiceClassLibrary.Services
@@ -19,18 +20,20 @@ namespace ServiceClassLibrary.Services
         private IUtilsService UtilsService { get; init; }  
         private ILoggerProject Logger { get; init; }
 
-        public TwitterService(string consumerKey, string consumerSecret)
+        public TwitterService(string apiKey, string apiSecret, string accessToken, string accessSecret)
         {
-            TwitterClient = new TwitterClient(consumerKey, consumerSecret);
+            TwitterClient = new TwitterClient(apiKey, apiSecret, accessToken, accessSecret);
+            TwitterClient.Auth.RequestAuthenticationUrlAsync();
             UtilsService = new UtilsService();
             Logger = new LoggerProject();
+           
         }
 
-        public IUser GetUsers(string username)
+        public UserV2Response GetUsers(string username)
         {
             try
             {
-                return TwitterClient.Users.GetUserAsync(username).Result;
+                return TwitterClient.UsersV2.GetUserByNameAsync(username).Result;
             }
             catch (Exception)
             {
@@ -41,53 +44,11 @@ namespace ServiceClassLibrary.Services
            
         }
 
-        public IAuthenticatedUser GetAuthenticatedUser()
+        public TweetV2Response GetTweetByName(string name)
         {
             try
             {
-                return TwitterClient.Users.GetAuthenticatedUserAsync().Result;
-            }
-            catch (Exception)
-            {
-                var message = $" cannot get user from twitter";
-                Logger.WriteLogErrorLog(message);
-                throw new TwitterException(message);
-            }
-        }
-
-        public ITweet GetTweetById(int id)
-        {
-            try
-            {
-                return TwitterClient.Tweets.GetTweetAsync(id).Result;
-            }
-            catch (Exception)
-            {
-                var message = $" cannot get user from twitter";
-                Logger.WriteLogErrorLog(message);
-                throw new TwitterException(message);
-            }
-        }
-
-        public long[] GetLongsFriendsLists(string username)
-        {
-            try
-            {
-                return TwitterClient.Users.GetFriendIdsAsync(username).Result;
-            }
-            catch (Exception)
-            {
-                var message = $" cannot get user from twitter";
-                Logger.WriteLogErrorLog(message);
-                throw new TwitterException(message);
-            }
-        }
-        public List<IUser> GetFriendsLists(string username)
-        {
-            try
-            {
-                var userLong = GetLongsFriendsLists(username).ToList();
-                return TwitterClient.Users.GetUsersAsync(userLong).Result.ToList();
+                return TwitterClient.TweetsV2.GetTweetAsync(name).Result;
             }
             catch (Exception)
             {
@@ -98,47 +59,18 @@ namespace ServiceClassLibrary.Services
         }
 
 
-        public long[] GetLongsFollowers(string username)
+        public DiscordEmbedBuilder ConvertUserToEmbed(UserV2Response user)
         {
             try
             {
-                return TwitterClient.Users.GetFollowerIdsAsync(username).Result;
-            }
-            catch (Exception)
-            {
-                var message = $" cannot get user from twitter";
-                Logger.WriteLogErrorLog(message);
-                throw new TwitterException(message);
-            }
-        }
-
-        public List<IUser> GetFollowersUsers(string username)
-        {
-            try
-            {
-                var userLong = GetLongsFriendsLists(username).ToList();
-                return TwitterClient.Users.GetUsersAsync(userLong).Result.ToList();
-            }
-            catch (Exception)
-            {
-                var message = $" cannot get user from twitter";
-                Logger.WriteLogErrorLog(message);
-                throw new TwitterException(message);
-            }
-        }
-
-        public DiscordEmbedBuilder ConvertIUserToEmbed(IUser user)
-        {
-            try
-            {
-                var contents = $"{user.Name} - {user.Status}";
-                contents += $" Is Protected : {user.Protected}";
-                contents += $"Is verified  {user.Verified}";
-                var embed = UtilsService.CreateNewEmbed($"{user.Name}", DiscordColor.Aquamarine, contents);
-                embed.WithThumbnail(user.ProfileImageUrl400x400);
+                var contents = $"User id : {user.User.Id}";
+                contents += $"\nName : {user.User.Name}";
+                contents += $"\nUsername :{user.User.Username}";
+                contents += $"Description : {user.User.Description}";
+                contents += $"\nIs verified : {user.User.Verified}";
+                var embed = UtilsService.CreateNewEmbed($"Twitter user info", DiscordColor.Brown,contents);
+                embed.WithUrl(user.User.ProfileImageUrl);
                 return embed;
-
-
             }
             catch (Exception)
             {
@@ -148,18 +80,66 @@ namespace ServiceClassLibrary.Services
             }
         }
 
-        public DiscordEmbedBuilder ConvertITweetToEmbed(ITweet tweet)
+        public DiscordEmbedBuilder ConvertTweetToEmbed(TweetV2 tweet)
+        {
+            var contents = $"\"";
+
+            contents += $"\nContent : {tweet.Text}";
+            contents += $"\nRetweet count : {tweet.PublicMetrics.RetweetCount}";
+            contents += $"\nLike count : {tweet.PublicMetrics.LikeCount}";
+            contents += $"\nQuote count : {tweet.PublicMetrics.QuoteCount}";
+            var embed = UtilsService.CreateNewEmbed($"Twitter user info", DiscordColor.Brown, contents);      
+            return embed;
+        }
+
+        public List<TweetV2> GetTweetsByName(string name)
         {
             try
             {
-                var contents = $"{tweet.FullText}";
-                var embed = UtilsService.CreateNewEmbed($"Tweet", DiscordColor.Aquamarine, contents);
-                return embed;
+                var searchIterator = TwitterClient.SearchV2.GetSearchTweetsV2Iterator(name);
+                List<TweetV2> listTweets = new List<TweetV2>();
+                while (!searchIterator.Completed)
+                {
+                    var searchPage = searchIterator.NextPageAsync().Result;
+                    int i = 0;
+                    var searchResponse = searchPage.Content;
+                    var tweets = searchResponse.Tweets;
+                    while (i < 20)
+                    {
 
+                        listTweets.Add(tweets[i]);
+                        if (i == 20)
+                            break;
+                        i++;
+                    }
+                    break;
+
+                }
+                return listTweets;
             }
             catch (Exception)
             {
+
                 var message = $" cannot get user from twitter";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterException(message);
+            }
+        }
+
+        public List<TweetV2> GetTweetsByUser(string username, string limit)
+        {
+            try
+            {
+                 var user = GetUsers(username);                
+                var listTweets = new List<TweetV2>();
+                int i = 0;
+                var tweets = new List<TweetV2>();
+
+                return user.Includes.Tweets.ToList();                
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get tweet user from twitter";
                 Logger.WriteLogErrorLog(message);
                 throw new TwitterException(message);
             }

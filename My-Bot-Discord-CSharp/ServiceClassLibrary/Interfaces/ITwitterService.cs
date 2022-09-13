@@ -1,28 +1,19 @@
 ﻿using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tweetinvi.Core.Models;
-using Tweetinvi.Models;
-using TwitchLib.Api.Helix;
+using Tweetinvi.Models.V2;
 
 namespace ServiceClassLibrary.Interfaces
 {
-    internal interface ITwitterService
+    public  interface ITwitterService
     {
-        IUser GetUsers(string username);
-        IAuthenticatedUser GetAuthenticatedUser();
-        ITweet GetTweetById(int id);
-        long[] GetLongsFriendsLists(string username);
-        List<IUser> GetFriendsLists(string username);
-        long[] GetLongsFollowers(string username);
-        List<IUser> GetFollowersUsers(string username);
+        UserV2Response GetUsers(string username);
+        TweetV2Response GetTweetByName(string name);
 
-        DiscordEmbedBuilder ConvertIUserToEmbed(IUser user);
+        List<TweetV2> GetTweetsByName(string name);
+        List<TweetV2> GetTweetsByUser(string username, string limit);
 
-        DiscordEmbedBuilder ConvertITweetToEmbed(ITweet tweet);
+        DiscordEmbedBuilder ConvertUserToEmbed(UserV2Response user);
+
+        DiscordEmbedBuilder ConvertTweetToEmbed(TweetV2 tweet);
 
     }
 }
