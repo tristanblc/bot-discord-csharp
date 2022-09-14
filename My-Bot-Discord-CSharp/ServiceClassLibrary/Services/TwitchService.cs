@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using ExceptionClassLibrary;
+using HtmlAgilityPack;
 using ServiceClassLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -462,5 +463,6 @@ namespace ServiceClassLibrary.Services
                 throw new TwitchAPIException(exception);
             }
         }
+
     }
 }

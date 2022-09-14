@@ -75,6 +75,7 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             commands.RegisterCommands<TwitchModule>();
             commands.RegisterCommands<SteamGameModule>();
             commands.SetHelpFormatter<BotHelpFormatter>();
+            commands.RegisterCommands<TwitterModule>();
             
             LoggerProject.WriteInformationLog("Discord client created");
 

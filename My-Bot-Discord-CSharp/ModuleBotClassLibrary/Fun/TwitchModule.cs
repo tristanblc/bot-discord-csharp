@@ -18,6 +18,7 @@ namespace ModuleBotClassLibrary.Fun
         private TwitchService TwitchService { get; init; }
 
         private IUtilsService UtilsService { get; init; }
+        private IConfiguration AppSetting { get;init; }
 
         public TwitchModule()
         {
@@ -208,6 +209,7 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
+
 
     }
 }
