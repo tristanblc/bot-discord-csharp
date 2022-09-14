@@ -1,20 +1,13 @@
 ﻿using DSharpPlus.Entities;
 using ExceptionClassLibrary;
 using ServiceClassLibrary.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tweetinvi;
-using Tweetinvi.Core.Models;
-using Tweetinvi.Models;
 using Tweetinvi.Models.V2;
-using TwitchLib.Api.Helix;
+using Tweetinvi.Parameters.V2;
 
 namespace ServiceClassLibrary.Services
 {
-   public  class TwitterService : ITwitterService
+    public  class TwitterService : ITwitterService
     {
         private TwitterClient TwitterClient { get; init; }
         private IUtilsService UtilsService { get; init; }  
@@ -82,9 +75,9 @@ namespace ServiceClassLibrary.Services
 
         public DiscordEmbedBuilder ConvertTweetToEmbed(TweetV2 tweet)
         {
-            var contents = $"\"";
+            var contents = $"";
 
-            contents += $"\nContent : {tweet.Text}";
+            contents += $"Content : {tweet.Text}";
             contents += $"\nRetweet count : {tweet.PublicMetrics.RetweetCount}";
             contents += $"\nLike count : {tweet.PublicMetrics.LikeCount}";
             contents += $"\nQuote count : {tweet.PublicMetrics.QuoteCount}";
@@ -130,12 +123,24 @@ namespace ServiceClassLibrary.Services
         {
             try
             {
-                 var user = GetUsers(username);                
-                var listTweets = new List<TweetV2>();
-                int i = 0;
-                var tweets = new List<TweetV2>();
+                var userResponse = TwitterClient.UsersV2.GetUserByNameAsync(new GetUserByNameV2Parameters(username)
+                {
+                    Expansions = UserResponseFields.Expansions.ALL,
+                    TweetFields =
+                     {
+                         UserResponseFields.Tweet.Attachments,
+                         UserResponseFields.Tweet.Entities,
+                         UserResponseFields.Tweet.Text,
+                         UserResponseFields.Tweet.PublicMetrics,
+                         UserResponseFields.Tweet.PossiblySensitive
+                     },
+                    UserFields = UserResponseFields.User.ALL
 
-                return user.Includes.Tweets.ToList();                
+                }).Result;
+
+                return userResponse.Includes.Tweets.ToList();
+              
+                           
             }
             catch (Exception)
             {
@@ -144,5 +149,6 @@ namespace ServiceClassLibrary.Services
                 throw new TwitterException(message);
             }
         }
+
     }
 }

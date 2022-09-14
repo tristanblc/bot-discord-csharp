@@ -10,6 +10,7 @@ namespace ServiceClassLibrary.Interfaces
 
         List<TweetV2> GetTweetsByName(string name);
         List<TweetV2> GetTweetsByUser(string username, string limit);
+   
 
         DiscordEmbedBuilder ConvertUserToEmbed(UserV2Response user);
 
