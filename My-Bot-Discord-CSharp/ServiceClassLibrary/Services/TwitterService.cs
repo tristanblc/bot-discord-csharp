@@ -33,6 +33,7 @@ namespace ServiceClassLibrary.Services
                 var message = $" cannot get user from twitter";
                 Logger.WriteLogErrorLog(message);
                 throw new TwitterConsumerException(message);
+
             }
            
         }
@@ -48,6 +49,7 @@ namespace ServiceClassLibrary.Services
                 var message = $" cannot get user from twitter";
                 Logger.WriteLogErrorLog(message);
                 throw new TwitterConsumerException(message);
+
             }
         }
 
@@ -69,7 +71,9 @@ namespace ServiceClassLibrary.Services
             {
                 var message = $" cannot get user from twitter";
                 Logger.WriteLogErrorLog(message);
+
                 throw new TwitterConsumerException(message);
+
             }
         }
 
@@ -115,6 +119,8 @@ namespace ServiceClassLibrary.Services
                 var message = $" cannot get user from twitter";
                 Logger.WriteLogErrorLog(message);
                 throw new TwitterConsumerException(message);
+
+
             }
         }
 
@@ -146,6 +152,7 @@ namespace ServiceClassLibrary.Services
                 var message = $" cannot get tweet user from twitter";
                 Logger.WriteLogErrorLog(message);
                 throw new TwitterConsumerException(message);
+                
             }
         }
 
