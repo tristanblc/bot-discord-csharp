@@ -10,11 +10,22 @@ namespace ServiceClassLibrary.Interfaces
 
         List<TweetV2> GetTweetsByName(string name);
         List<TweetV2> GetTweetsByUser(string username, string limit);
-   
+
+        List<UserMentionV2> GetTweetsMentions(string username);
+
+        List<TweetPublicMetricsV2> GetPublicMetrics(string username);
+
+        List<TweetAttachmentsV2> GetAttachementFromTweet(string username);
+
+        DiscordEmbedBuilder ConvertUserMentionToEmbed(UserMentionV2 userMention);
 
         DiscordEmbedBuilder ConvertUserToEmbed(UserV2Response user);
 
         DiscordEmbedBuilder ConvertTweetToEmbed(TweetV2 tweet);
+
+        DiscordEmbedBuilder ConvertAttachementToEmbed(TweetAttachmentsV2 attachments);
+
+        DiscordEmbedBuilder ConvertPublicStatToEmbed(TweetPublicMetricsV2 publicMetrics);
 
     }
 }

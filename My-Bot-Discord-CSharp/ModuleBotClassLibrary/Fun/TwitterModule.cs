@@ -33,6 +33,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getTwitterUser")]
+        [DescriptionCustomAttribute("twitterUser")]
         public async Task HandleGetTwitterUser(CommandContext ctx, string username)
         {
             try
@@ -105,7 +106,6 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
-
 
     }
 }
