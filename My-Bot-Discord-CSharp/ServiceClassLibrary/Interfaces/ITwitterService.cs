@@ -17,6 +17,16 @@ namespace ServiceClassLibrary.Interfaces
 
         List<TweetAttachmentsV2> GetAttachementFromTweet(string username);
 
+        List<HashtagV2> GetHastagsFromTweet(string username);
+
+        List<string> GetUrlFromTweet(string username);
+
+        List<TweetAnnotationV2> GetAnnotationFromTweet(string username);
+
+        DiscordEmbedBuilder ConvertUrlToEmbed(List<string> urls);
+
+        DiscordEmbedBuilder ConvertAnnotationToEmbed(TweetAnnotationV2 annotation);
+
         DiscordEmbedBuilder ConvertUserMentionToEmbed(UserMentionV2 userMention);
 
         DiscordEmbedBuilder ConvertUserToEmbed(UserV2Response user);
