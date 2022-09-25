@@ -400,5 +400,23 @@ namespace ServiceClassLibrary.Services
             }
 
         }
+
+        public DiscordEmbedBuilder ConvertHashtagToEmbed(HashtagV2 hash)
+        {
+            try
+            {
+                var contents = $"Hashtag :";
+                contents += $"\n Tag name : {hash.Tag}";
+                var embed = UtilsService.CreateNewEmbed($"Annotation", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = $" cannot convert hastag to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+          
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace ServiceClassLibrary.Interfaces
 
         List<TweetAnnotationV2> GetAnnotationFromTweet(string username);
 
+
+        DiscordEmbedBuilder ConvertHashtagToEmbed(HashtagV2 hash);
         DiscordEmbedBuilder ConvertUrlToEmbed(List<string> urls);
 
         DiscordEmbedBuilder ConvertAnnotationToEmbed(TweetAnnotationV2 annotation);
