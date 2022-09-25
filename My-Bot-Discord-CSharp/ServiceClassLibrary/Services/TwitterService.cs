@@ -156,5 +156,267 @@ namespace ServiceClassLibrary.Services
             }
         }
 
+        public List<UserMentionV2> GetTweetsMentions(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+
+                var listTweets = new List<UserMentionV2>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    var replies = tweet.Entities.Mentions.ToList();
+                    replies.ForEach(reply =>
+                    {
+                        listTweets.Add(reply);
+                    });
+                });
+
+
+                return listTweets;
+
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get replies from tweet";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertUserMentionToEmbed(UserMentionV2 userMention)
+        {
+            try
+            {
+                var contents = $"User mention - {userMention.Username}";
+                contents += $"\n{userMention.Username}";
+                contents += $"End position : {userMention.End} - Start position {userMention.Start}";
+                var embed = UtilsService.CreateNewEmbed($"User mentions", DiscordColor.Azure,  contents);
+                return embed;
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get user mention to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public List<TweetPublicMetricsV2> GetPublicMetrics(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+                var userMetrics = new List<TweetPublicMetricsV2>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    userMetrics.Add(tweet.PublicMetrics);
+                   
+                });
+                return userMetrics;
+            }
+            catch (Exception)
+            {
+                var message = $" cannot get public metrics by tweet";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public List<TweetAttachmentsV2> GetAttachementFromTweet(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+                var tweetsAttacchements = new List<TweetAttachmentsV2>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    tweetsAttacchements.Add(tweet.Attachments);
+
+                });
+                return tweetsAttacchements;
+            }
+            catch (Exception)
+            {
+
+                var message = $" cannot get attacheement from tweets for user {username}";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public List<HashtagV2> GetHastagsFromTweet(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+                var hastags = new List<HashtagV2>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    tweet.Entities.Hashtags.ToList().ForEach(htag =>
+                    {
+                        hastags.Add(htag);
+                    });
+             
+
+                });
+                return hastags;
+            }
+            catch (Exception)
+            {
+
+                var message = $" cannot get attacheement from tweets for user {username}";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+
+        public List<string> GetUrlFromTweet(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+                var urls = new List<string>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    tweet.Entities.Urls.ToList().ForEach(url =>
+                    {
+                         urls.Add(url.ExpandedUrl);
+                    });
+
+                });
+                return urls;
+            }
+            catch (Exception)
+            {
+
+                var message = $" cannot get attacheement from tweets for user {username}";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+        public List<TweetAnnotationV2> GetAnnotationFromTweet(string username)
+        {
+            try
+            {
+                var user = this.GetUsers(username);
+                var tweetAnnotations = new List<TweetAnnotationV2>();
+                user.Includes.Tweets.ToList().ForEach(tweet =>
+                {
+                    tweet.Entities.Annotations.ToList().ForEach(annotation =>
+                    {
+                        tweetAnnotations.Add(annotation);
+                    });
+
+                });
+                return tweetAnnotations;
+            }
+            catch (Exception)
+            {
+
+                var message = $" cannot get attacheement from tweets for user {username}";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertAttachementToEmbed(TweetAttachmentsV2 attachments)
+        {
+            try
+            {
+                var contents = $"Attachement : ";
+                contents += $"Poll id : {attachments.PollIds}";
+                contents += $"\nMedia keys :{attachments.MediaKeys}";
+                var embed = UtilsService.CreateNewEmbed($"User mentions", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch (Exception)
+            {
+                var message = $" cannot convert attacheement to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertPublicStatToEmbed(TweetPublicMetricsV2 publicMetrics)
+        {
+            try
+            {
+                var contents = $"Public Metric";
+                contents += $"\n Quote count = {publicMetrics.QuoteCount}";
+                contents += $"\n Retweet count = {publicMetrics.RetweetCount}";
+                contents += $"\n Reply count = {publicMetrics.ReplyCount}";
+                var embed = UtilsService.CreateNewEmbed($"User mentions", DiscordColor.Azure, contents);
+                return embed;
+
+            }
+            catch (Exception)
+            {
+
+                var message = $" cannot converts public stats to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+
+        }
+
+        public DiscordEmbedBuilder ConvertUrlToEmbed(List<string> urls)
+        {
+            try
+            {
+                var contents = $"Urls :";
+                urls.ForEach(url =>
+                {
+                    contents += $"\n{url}";
+                });
+                var embed = UtilsService.CreateNewEmbed($"Urls", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch (Exception)
+            {
+                var message = $" cannot convert url to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+        }
+
+        public DiscordEmbedBuilder ConvertAnnotationToEmbed(TweetAnnotationV2 annotation)
+        {
+            try
+            {
+                var contents = $"Annotation :";
+                contents += $"\n Text : {annotation.NormalizedText}";
+                contents += $"\n Probability = {annotation.Probability}";
+                contents += $"\n Type = {annotation.Type}";
+                var embed = UtilsService.CreateNewEmbed($"Annotation", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch (Exception)
+            {
+                var message = $" cannot convert annotation to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+
+        }
+
+        public DiscordEmbedBuilder ConvertHashtagToEmbed(HashtagV2 hash)
+        {
+            try
+            {
+                var contents = $"Hashtag :";
+                contents += $"\n Tag name : {hash.Tag}";
+                var embed = UtilsService.CreateNewEmbed($"Annotation", DiscordColor.Azure, contents);
+                return embed;
+            }
+            catch(Exception ex)
+            {
+                var message = $" cannot convert hastag to embed";
+                Logger.WriteLogErrorLog(message);
+                throw new TwitterConsumerException(message);
+            }
+          
+        }
     }
 }

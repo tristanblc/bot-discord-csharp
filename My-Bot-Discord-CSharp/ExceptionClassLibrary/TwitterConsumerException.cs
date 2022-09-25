@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace ExceptionClassLibrary
 {
-    public class TwitterException : Exception
+    public class TwitterConsumerException : Exception
     {
-        public TwitterException()
+        public TwitterConsumerException()
         {
         }
 
-        public TwitterException(string? message) : base(message)
+        public TwitterConsumerException(string? message) : base(message)
         {
         }
 
-        public TwitterException(string? message, Exception? innerException) : base(message, innerException)
+        public TwitterConsumerException(string? message, Exception? innerException) : base(message, innerException)
         {
         }
 
-        protected TwitterException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected TwitterConsumerException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

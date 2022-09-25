@@ -27,6 +27,7 @@ namespace GamesClassLibrary
         public async void PlayGame()
         {
 
+
             if (choice.ToString().ToLower() != "face" && choice.ToString().ToLower() != "pile")
             {
                 await ctx.RespondAsync(utilsService.CreateNewEmbed("Error", DiscordColor.Red, "Impossible choice"));

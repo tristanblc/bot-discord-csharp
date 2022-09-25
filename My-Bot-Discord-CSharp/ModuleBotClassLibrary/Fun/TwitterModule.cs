@@ -33,6 +33,7 @@ namespace ModuleBotClassLibrary.Fun
 
 
         [Command("getTwitterUser")]
+        [DescriptionCustomAttribute("twitterUser")]
         public async Task HandleGetTwitterUser(CommandContext ctx, string username)
         {
             try
@@ -106,6 +107,139 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
+
+        [Command("getattach")]
+        public async Task HandleGetAttachementTweet(CommandContext ctx, string search)
+        {
+            try
+            {
+                var tweets = TwitterClient.GetAttachementFromTweet(search);
+                int i = 0;
+                tweets.ForEach(attach =>
+                {
+                    var embed = TwitterClient.ConvertAttachementToEmbed(attach);
+                    ctx.RespondAsync(embed.Build());
+                    if (i == 20)
+                        return;
+                    i++;
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var message = "error";
+                Logger.WriteLogErrorLog(message);
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("getannotation")]
+        public async Task HandleGetAnnotationTwitter(CommandContext ctx, string search)
+        {
+            try
+            {
+                var tweets = TwitterClient.GetAnnotationFromTweet(search);
+                int i = 0;
+                tweets.ForEach(annotation =>
+                {
+                    var embed = TwitterClient.ConvertAnnotationToEmbed(annotation);
+                    ctx.RespondAsync(embed.Build());
+                    if (i == 20)
+                        return;
+                    i++;
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var message = "error";
+                Logger.WriteLogErrorLog(message);
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+        [Command("getattach")]
+        public async Task HandleGetAttachementTwitterCommandContext (CommandContext ctx, string search)
+        {
+            try
+            {
+                var tweets = TwitterClient.GetAttachementFromTweet(search);
+                int i = 0;
+                tweets.ForEach(attach =>
+                {
+                    var embed = TwitterClient.ConvertAttachementToEmbed(attach);
+                    ctx.RespondAsync(embed.Build());
+                    if (i == 20)
+                        return;
+                    i++;
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var message = "error";
+                Logger.WriteLogErrorLog(message);
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+
+        [Command("gethashtag")]
+        public async Task HandleGetHashtagTwitter(CommandContext ctx, string search)
+        {
+            try
+            {
+                var tweets = TwitterClient.GetHastagsFromTweet(search);
+                int i = 0;
+                tweets.ForEach(annotation =>
+                {
+                    var embed = TwitterClient.ConvertHashtagToEmbed(annotation);
+                    ctx.RespondAsync(embed.Build());
+                    if (i == 20)
+                        return;
+                    i++;
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var message = "error";
+                Logger.WriteLogErrorLog(message);
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
+        [Command("getpublicstats")]
+        public async Task HandleGetPublicStats(CommandContext ctx, string search)
+        {
+            try
+            {
+                var tweets = TwitterClient.GetPublicMetrics(search);
+                int i = 0;
+                tweets.ForEach(annotation =>
+                {
+                    var embed = TwitterClient.ConvertPublicStatToEmbed(annotation);
+                    ctx.RespondAsync(embed.Build());
+                    if (i == 20)
+                        return;
+                    i++;
+                });
+
+
+            }
+            catch (Exception ex)
+            {
+                var exception = UtilsService.CreateNewEmbed("error", DiscordColor.White, ex.ToString());
+                var message = "error";
+                Logger.WriteLogErrorLog(message);
+                await ctx.RespondAsync(exception.Build());
+            }
+        }
 
     }
 }
