@@ -41,7 +41,7 @@ namespace ModuleBotClassLibrary
 
 
             var return_value = $"Name : { film.name }";
-            return_value += $"\nLangage : { film.status }";
+            return_value += $"\nLangage : {film.status}";
                 
             return_value += $"\nFirst premiere : { film.premiered.ToString() }";
 
@@ -70,7 +70,7 @@ namespace ModuleBotClassLibrary
 
             var return_value = $"Name { film.person.name}  ";
 
-            return_value += $"\n {film.person.image.medium.ToString()}";
+            return_value += $"\n {film.person.image.medium}";
 
           
 
