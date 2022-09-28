@@ -76,8 +76,6 @@ namespace ModuleBotClassLibrary
         [DescriptionCustomAttribute("checkTicketCommand")]
         public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
-
-
             try
             {
 
@@ -93,17 +91,13 @@ namespace ModuleBotClassLibrary
                     var builder = utilsService.CreateNewEmbed("Delete Ticket", DiscordColor.Azure, $"Your  Ticket is checked  - See you later");
 
                     await ctx.RespondAsync(builder.Build());
-                }
-               
+                }              
 
             }
             catch (Exception ex)
             {
                 var builder = utilsService.CreateNewEmbed("Error Ticket", DiscordColor.Red, "Try again");
-
                 await ctx.RespondAsync(builder.Build());
-
-
             }
 
         }

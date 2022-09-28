@@ -18,14 +18,14 @@ namespace BotClassLibrary
 
         public string status { get; set; }
 
-        public DateTime premiered {get;set;}
+        public DateTime premiered { get; set; }
 
         public DateTime ended { get; set; }
 
-        public  string  officialSite { get; set; }
+        public string officialSite { get; set; }
 
 
-        public Film(string url, string name, string type,string language,string status,DateTime premiered,DateTime ended, string officialSite)
+        public Film(string url, string name, string type, string language, string status, DateTime premiered, DateTime ended, string officialSite)
         {
             this.url = url;
             this.name = name;
@@ -34,9 +34,8 @@ namespace BotClassLibrary
             this.status = status;
             this.ended = ended;
             this.officialSite = officialSite;
-            
+
 
         }
     }
-    
 }
