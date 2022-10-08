@@ -30,15 +30,22 @@ namespace ModuleBotClassLibrary
 
         }
 
-        [Command("pileouface")]
-        [DescriptionCustomAttribute("pileoufaceCommand")]
-        public async Task PileOuFaceCommand(CommandContext ctx, string choice)
+        [Command("pileorface")]
+        public async Task HandlePileOrFace(CommandContext ctx)
         {
-            PileFace pileFace = new PileFace(ctx,choice);
-            pileFace.PlayGame();
+            PileFace pileorface = new PileFace(ctx);
+            pileorface.PlayGame();
         }
 
-   
+
+        [Command("rockpaperscissor")]
+        public async Task HandleRockPaperScissore(CommandContext ctx)
+        {
+            RockPaperScissors game = new RockPaperScissors(ctx);
+            game.PlayRockScissor();
+        }
+
+
 
     }
 }
