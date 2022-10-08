@@ -161,7 +161,7 @@ namespace ModuleBotClassLibrary.Fun
                 await ctx.RespondAsync(exception.Build());
             }
         }
-        [Command("getattach")]
+        [Command("getattachtw")]
         public async Task HandleGetAttachementTwitterCommandContext (CommandContext ctx, string search)
         {
             try
