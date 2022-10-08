@@ -1,6 +1,8 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 using Microsoft.Extensions.Configuration;
 using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
@@ -19,7 +21,7 @@ namespace ModuleBotClassLibrary.Fun
 
         private IUtilsService UtilsService { get; init; }
 
-
+        private DiscordEmoji[] EmojiCache;
         public SteamModule()
         {
             var builder = new ConfigurationBuilder()
@@ -217,5 +219,80 @@ namespace ModuleBotClassLibrary.Fun
             }
         }
 
+        [Command("pollGame")]
+        public async Task HandlePollGame(CommandContext ctx, string gamename)
+        {
+            try
+            {
+                var app = SteamService.GetSteamAppByName(gamename);
+                var appinfo = SteamService.GetSteamAppsById(app.First().AppId);
+                var question = $"Do you like {gamename}";
+                var builder = new DiscordEmbedBuilder()
+                {
+                    Title = $"Community like {app.First().Name}",
+                    Color = DiscordColor.Blue,
+                };
+             
+                
+                if (!string.IsNullOrEmpty(question))
+                {
+                    var client = ctx.Client;
+                    var interactivity = client.GetInteractivity();
+                    if (EmojiCache == null)
+                    {
+                        EmojiCache = new[] {
+                        DiscordEmoji.FromName(client, ":white_check_mark:"),
+                        DiscordEmoji.FromName(client, ":x:")
+                    };
+                    }
+
+                    // Creating the poll message
+                    var pollStartText = new StringBuilder();
+                    pollStartText.Append("**").Append("Poll started for:").AppendLine("**");
+                    pollStartText.Append(question);
+                    var pollStartMessage = await ctx.RespondAsync(pollStartText.ToString());
+
+                    // DoPollAsync adds automatically emojis out from an emoji array to a special message and waits for the "duration" of time to calculate results.
+                    var pollResult = await interactivity.DoPollAsync(pollStartMessage, EmojiCache, PollBehaviour.KeepEmojis, new TimeSpan(0, 5, 0, 0));
+                    var yesVotes = pollResult[0].Total;
+                    var noVotes = pollResult[1].Total;
+
+                    // Printing out the result
+                    var pollResultText = new StringBuilder();
+                    pollResultText.AppendLine(question);
+                    pollResultText.Append("Poll result: ");
+                    pollResultText.Append("**");
+                    if (yesVotes > noVotes)
+                    {
+                        await ctx.RespondAsync(builder.Build());                 
+
+                    }
+                    else if (yesVotes == noVotes)
+                    {
+                        throw new Exception("No choice ");
+                    }
+                    if (yesVotes < noVotes)
+                    {
+
+                        builder.Title = $"Community doesn't like {gamename}";
+
+                        builder.Color = DiscordColor.Red;
+
+                        await ctx.RespondAsync(builder.Build());
+                    }
+
+                }
+                else
+                {
+                    await ctx.RespondAsync("Error: the question can't be empty");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
+
 }
