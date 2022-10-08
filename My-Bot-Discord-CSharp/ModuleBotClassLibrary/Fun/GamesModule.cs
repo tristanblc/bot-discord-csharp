@@ -45,6 +45,12 @@ namespace ModuleBotClassLibrary
             game.PlayRockScissor();
         }
 
+        [Command("justprice")]
+        public async Task HandleJustePrice(CommandContext ctx)
+        {
+            JustPrice juste = new JustPrice(ctx);
+            juste.PlayGame();
+        }
 
 
     }
