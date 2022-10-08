@@ -113,15 +113,10 @@ namespace ServiceClassLibrary.Services
 
                 OpenBrowser(authTokenRetrieverLib.AuthURL(),browserpath);
 
-                LoggerProject.WriteInformationLog($"Finding reddit token");
+                LoggerProject.WriteInformationLog($"Finding reddit token");         
 
-                while (authTokenRetrieverLib.RefreshToken == null)
-                {                  
-                  
-                }              
+                while(authTokenRetrieverLib.AccessToken == null) { }
 
-
-             
                 authTokenRetrieverLib.StopListening();
 
                 CloseBrowser(browserpath);

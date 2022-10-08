@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BotClassLibrary\BotClassLibrary.csproj" />
     <ProjectReference Include="..\GamesClassLibrary\GamesClassLibrary.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
     <ProjectReference Include="..\ServiceClassLibrary\ServiceClassLibrary.csproj" />

@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Resources;
 using ModuleBotClassLibrary.RessourceManager;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 
 namespace ModuleBotClassLibrary
 {
@@ -22,7 +24,7 @@ namespace ModuleBotClassLibrary
     public class AdminModule : BaseCommandModule
     {
         private IUtilsService utilsService { get; init; }
-
+        private DiscordEmoji[] EmojiCache;
         private IServerInfoService ServiceInfo { get; init; }
 
 
@@ -163,19 +165,55 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandlePoll(CommandContext ctx, string question)
         {
-            var builder = utilsService.CreateNewEmbed($"Poll ", DiscordColor.Green, $"{question}");
+            if (!string.IsNullOrEmpty(question))
+            {
+                var client = ctx.Client;
+                var interactivity = client.GetInteractivity();
+                if (EmojiCache == null)
+                {
+                   EmojiCache = new[] {
+                        DiscordEmoji.FromName(client, ":white_check_mark:"),
+                        DiscordEmoji.FromName(client, ":x:")
+                    };
+                }
 
+                // Creating the poll message
+                var pollStartText = new StringBuilder();
+                pollStartText.Append("**").Append("Poll started for:").AppendLine("**");
+                pollStartText.Append(question);
+                var pollStartMessage = await ctx.RespondAsync(pollStartText.ToString());
 
-            var emoji = DiscordEmoji.FromName(ctx.Client, ":thumbup:");
-            var emoji2 = DiscordEmoji.FromName(ctx.Client, ":thumbdown:");
+                // DoPollAsync adds automatically emojis out from an emoji array to a special message and waits for the "duration" of time to calculate results.
+                var pollResult = await interactivity.DoPollAsync(pollStartMessage, EmojiCache, PollBehaviour.KeepEmojis);
+                var yesVotes = pollResult[0].Total;
+                var noVotes = pollResult[1].Total;
 
-            var message = await ctx.RespondAsync(builder.Build());
-            await message.CreateReactionAsync(emoji);
-            await message.CreateReactionAsync(emoji2);
-
+                // Printing out the result
+                var pollResultText = new StringBuilder();
+                pollResultText.AppendLine(question);
+                pollResultText.Append("Poll result: ");
+                pollResultText.Append("**");
+                if (yesVotes > noVotes)
+                {
+                    pollResultText.Append("Yes");
+                }
+                else if (yesVotes == noVotes)
+                {
+                    pollResultText.Append("Undecided");
+                }
+                else
+                {
+                    pollResultText.Append("No");
+                }
+                pollResultText.Append("**");
+                await ctx.RespondAsync(pollResultText.ToString());
+            }
+            else
+            {
+                await ctx.RespondAsync("Error: the question can't be empty");
+            }
 
         }
-
 
 
         [Command("deaf")]

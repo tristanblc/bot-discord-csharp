@@ -52,8 +52,9 @@ namespace My_Bot_Discord_CSharp.Services.ServiceBot
             discord.UseInteractivity(new InteractivityConfiguration()
             {
                 PollBehaviour = PollBehaviour.KeepEmojis,
-                Timeout = TimeSpan.FromDays(25),
-                PaginationBehaviour = PaginationBehaviour.WrapAround
+                Timeout = TimeSpan.FromDays(365),
+                PaginationBehaviour = PaginationBehaviour.WrapAround,
+
             });
 
             var commands = discord.UseCommandsNext(command_configuration);
