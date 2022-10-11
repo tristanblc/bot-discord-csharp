@@ -64,6 +64,8 @@ namespace GamesClassLibrary
                 var leafvote = pollResult[1].Total;
                 var scissorsvote = pollResult[2].Total;
 
+
+                
                 // Printing out the result
                 var pollResultText = new StringBuilder();
                 pollResultText.AppendLine(question);
