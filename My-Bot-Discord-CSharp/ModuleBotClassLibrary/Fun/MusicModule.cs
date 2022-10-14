@@ -24,10 +24,15 @@ namespace ModuleBotClassLibrary
         private DiscordEmoji[] EmojiCache;
         private IUtilsService utilsService { get; set; }
 
+        private string lastPlayedMusic = "";
+
+        private string urlThumb = "https://cdn-icons-png.flaticon.com/512/2480/2480421.png";
+
 
         public MusicModule()
         {
             utilsService = new UtilsService();
+
         }
 
         [Command("join")]
@@ -53,7 +58,7 @@ namespace ModuleBotClassLibrary
                 if (channel.Type != ChannelType.Voice)
                 {
                     builder.Description = "Not a valid voice channel.";
-
+                    
                     await ctx.RespondAsync(builder.Build());
 
                     return;
@@ -161,11 +166,6 @@ namespace ModuleBotClassLibrary
 
             var loadResult = await node.Rest.GetTracksAsync(search);
 
-
-
-
-
-
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
@@ -220,10 +220,16 @@ namespace ModuleBotClassLibrary
 
                     builder.Color = DiscordColor.Blue;
                     builder.Description = $"Now playing {track.Title}! - Author : {track.Author}";
+                    builder.WithThumbnail(urlThumb);
 
+                    lastPlayedMusic = track.Title;
 
+                    DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
+
+                    await ctx.Client.UpdateStatusAsync(activity);
 
                     await ctx.RespondAsync(builder.Build());
+                   
 
                 }
                 else if (yesVotes == noVotes)
@@ -294,8 +300,8 @@ namespace ModuleBotClassLibrary
                 return;
             }
 
-            var track = loadResult.Tracks.First();
-            var question = $"Do you want to stop track {track.Title} ?";
+          
+            var question = $"Do you want to stop track {lastPlayedMusic} ?";
 
             if (!string.IsNullOrEmpty(question))
             {
@@ -334,10 +340,11 @@ namespace ModuleBotClassLibrary
                     builder.Title = "Stop music";
 
                     builder.Color = DiscordColor.Red;
-                    builder.Description = $"Stop playing {track.Title}!";
+                    builder.Description = $"Stop playing {lastPlayedMusic}!";
 
+                    DiscordActivity activity = new DiscordActivity();
 
-
+                    await ctx.Client.UpdateStatusAsync(activity);
                     await ctx.RespondAsync(builder.Build());
 
                 }
@@ -348,7 +355,7 @@ namespace ModuleBotClassLibrary
                 if (yesVotes < noVotes)
                 {
 
-                    builder.Title = $"Not Stoping  music {track.Title}";
+                    builder.Title = $"Not Stoping  music {lastPlayedMusic}";
 
                     builder.Color = DiscordColor.Red;
                     builder.Description = $"Not stoping song";
@@ -365,6 +372,8 @@ namespace ModuleBotClassLibrary
             }
         }
 
+
+        
         [Command("pause")]
         [DescriptionCustomAttribute("pauseAudioCommand")]
         public async Task Pause(CommandContext ctx)
@@ -427,9 +436,12 @@ namespace ModuleBotClassLibrary
 
                     await conn.ResumeAsync();
 
-                    builder.Description = "Resume track";
+                    builder.Description = $"Resume track {lastPlayedMusic}";
                     builder.Color = DiscordColor.Green;
-                    await ctx.RespondAsync(builder.Build());
+
+                    DiscordActivity activity = new DiscordActivity($"Resume track {lastPlayedMusic}");
+
+                    await ctx.Client.UpdateStatusAsync(activity);
 
 
 
@@ -443,7 +455,7 @@ namespace ModuleBotClassLibrary
                 if (yesVotes < noVotes)
                 {
 
-                    builder.Title = $"Not resuming track";
+                    builder.Title = $"Not resuming track  {lastPlayedMusic} ";
 
                     builder.Color = DiscordColor.Red;
                     builder.Description = $"Not resuming track";
@@ -462,6 +474,9 @@ namespace ModuleBotClassLibrary
 
 
         }
+
+
+
 
         [Command("volume")]
         [DescriptionCustomAttribute("setVolumeAudioCommand")]
@@ -589,14 +604,16 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync(builder.Build());
 
 
-                    await conn.PlayAsync(track);
+                    myTracks.Add(track);
 
                     var buildere = new DiscordEmbedBuilder
                     {
                         Title = $"Add track {track.Title} to queue",
 
                         Color = DiscordColor.Green
+
                     };
+                    buildere.WithThumbnail(urlThumb);
                     await ctx.RespondAsync(buildere.Build());
 
                 }
@@ -672,9 +689,15 @@ namespace ModuleBotClassLibrary
                 await ctx.RespondAsync(builder.Build());
                 return;
             }
+            else
+            {
+                builder.Description = $"1st track in queue : {myTracks.First().Title} ";
+                await ctx.RespondAsync(builder.Build());
+                return;
+            }
 
 
-            var question = $"Do you skip track {myTracks[0].Title} ?";
+            var question = $"Do you skip track {lastPlayedMusic} ?";
 
             if (!string.IsNullOrEmpty(question))
             {
@@ -714,15 +737,35 @@ namespace ModuleBotClassLibrary
                     await ctx.RespondAsync(builder.Build());
 
                     var track = myTracks.First();
-                    await conn.PlayAsync(track);
-
-                    var buildere = new DiscordEmbedBuilder
+                    if(track != null || myTracks.Count != 0)
                     {
-                        Title = $"Now playing {track.Title}",
+                        lastPlayedMusic = track.Title;
+                        await conn.PlayAsync(track);
+                        myTracks.Remove(track);
 
-                        Color = DiscordColor.Green
-                    };
-                    await ctx.RespondAsync(buildere.Build());
+                        var buildere = new DiscordEmbedBuilder
+                        {
+                            Title = $"Now playing {track.Title}",
+
+                            Color = DiscordColor.Green
+                        };
+                        buildere.WithThumbnail(urlThumb);
+
+                        DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
+
+                        await ctx.Client.UpdateStatusAsync(activity);
+
+
+                        await ctx.RespondAsync(buildere.Build());
+                    }
+                    else
+                    {
+                        builder.Title = $"Not skiping track";
+                        builder.Color = DiscordColor.Red;
+                        builder.Description = $"No track";
+                        await ctx.RespondAsync(builder.Build());
+                    }
+                   
 
                 }
                 else if (yesVotes == noVotes)
@@ -731,14 +774,9 @@ namespace ModuleBotClassLibrary
                 }
                 if (yesVotes < noVotes)
                 {
-
                     builder.Title = $"Not skiping track {myTracks[0].Title}";
-
                     builder.Color = DiscordColor.Red;
                     builder.Description = $"Not skiping track";
-
-
-
                     await ctx.RespondAsync(builder.Build());
                 }
 
@@ -751,6 +789,64 @@ namespace ModuleBotClassLibrary
          
 
         }
+
+
+        [Command("force-skip")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task HandleSkipForceAdmin(CommandContext ctx)
+        {
+
+            var lava = ctx.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+            var builder = utilsService.CreateNewEmbed("skip admin music", DiscordColor.Azure, $"Force skip");
+
+            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+            {
+                builder.Description = "You are not in a voice channel.";
+                await ctx.RespondAsync(builder.Build());
+                return;
+            }
+
+
+            await conn.ResumeAsync();
+            await ctx.RespondAsync(builder.Build());
+
+            builder.Description = $"Skip track {myTracks[0].Title}";
+            builder.Color = DiscordColor.Green;
+            await ctx.RespondAsync(builder.Build());
+
+            var track = myTracks.First();
+            if (track != null || myTracks.Count != 0)
+            {
+                lastPlayedMusic = track.Title;
+                await conn.PlayAsync(track);
+                myTracks.Remove(track);
+
+                var buildere = new DiscordEmbedBuilder
+                {
+                    Title = $"Now playing {track.Title}",
+
+                    Color = DiscordColor.Green
+                };
+                buildere.WithThumbnail(urlThumb);
+
+                DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
+
+                await ctx.Client.UpdateStatusAsync(activity);
+
+                await ctx.RespondAsync(buildere.Build());
+            }
+            else
+            {
+                builder.Title = $"Not skiping track";
+                builder.Color = DiscordColor.Red;
+                builder.Description = $"No track";
+                await ctx.RespondAsync(builder.Build());
+            }
+        }
+
+
         [Command("clear-queue")]
         [Description("clear queue")]
         public async Task CleaningQueue(CommandContext ctx)
@@ -773,8 +869,6 @@ namespace ModuleBotClassLibrary
 
 
         }
-
-
 
         [Command("lists-queues")]
         [DescriptionCustomAttribute("listAudioCommand")]
@@ -813,19 +907,15 @@ namespace ModuleBotClassLibrary
                 myTracks.RemoveAt(i);
                 builder.Description = $"del track { i.ToString() } in queue ";
                 builder.Color = DiscordColor.Green;
-
                 await ctx.RespondAsync(builder.Build());    
             }
             catch(Exception ex)
             {
                 builder.Description = $"Error ";
                 builder.Color = DiscordColor.Red;
-
                 await ctx.RespondAsync(builder.Build());
 
-            }
-
-           
+            }           
 
 
         }
