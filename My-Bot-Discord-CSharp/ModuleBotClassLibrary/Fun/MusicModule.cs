@@ -28,8 +28,8 @@ namespace ModuleBotClassLibrary
 
         private string urlThumb = "https://cdn-icons-png.flaticon.com/512/2480/2480421.png";
 
-
         private int volumeStat { get; set; } = 50;
+
 
         public MusicModule()
         {
@@ -329,6 +329,7 @@ namespace ModuleBotClassLibrary
             var loadResult = await node.Rest.GetTracksAsync(search, LavalinkSearchType.SoundCloud);
 
 
+
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
@@ -373,6 +374,8 @@ namespace ModuleBotClassLibrary
                 i++;
             }
 
+
+                    lastPlayedMusic = track.Title;
 
             var embed = utilsService.CreateNewEmbed($"Music choice", DiscordColor.HotPink, trackName.ToString());
             await ctx.RespondAsync(embed.Build());
@@ -778,9 +781,9 @@ namespace ModuleBotClassLibrary
                 {
 
 
-
                     if (volumeStat - 10 < 0)
                     {
+
 
                         volumeStat = 0;
                     }
@@ -790,6 +793,7 @@ namespace ModuleBotClassLibrary
                     }
                     await conn.SetVolumeAsync(volumeStat);
             
+
 
                 }
                 else if (backwardVotes > leftVotes && backwardVotes > centerVotes && backwardVotes > forwardVotes && backwardVotes > rightVotes)
@@ -1013,9 +1017,6 @@ namespace ModuleBotClassLibrary
             var node = lava.ConnectedNodes.Values.First();
             var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
 
-  
-        
-
 
             var question = $"Do you skip track {lastPlayedMusic} ?";
 
@@ -1055,6 +1056,7 @@ namespace ModuleBotClassLibrary
 
                     var track = myTracks.First();
 
+
                      lastPlayedMusic = track.Title;
 
 
@@ -1068,6 +1070,7 @@ namespace ModuleBotClassLibrary
 
 
                          var buildere = new DiscordEmbedBuilder
+
                         {
                             Title = $"Now playing {track.Title}",
 
@@ -1082,8 +1085,7 @@ namespace ModuleBotClassLibrary
 
                         await ctx.RespondAsync(buildere.Build());
                     }
-                          
-                   
+          
 
                 }
                 else if (yesVotes == noVotes)
@@ -1113,6 +1115,7 @@ namespace ModuleBotClassLibrary
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleSkipForceAdmin(CommandContext ctx)
         {
+
             var lava = ctx.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
@@ -1120,11 +1123,13 @@ namespace ModuleBotClassLibrary
 
 
             await conn.StopAsync();
+
             builder.Description = $"Skip track {myTracks[0].Title}";
             builder.Color = DiscordColor.Green;
             await ctx.RespondAsync(builder.Build());
 
             var track = myTracks.First();
+
 
             lastPlayedMusic = track.Title;
 
@@ -1139,6 +1144,7 @@ namespace ModuleBotClassLibrary
                 await conn.PlayAsync(track);
                 myTracks.Remove(tracks);
 
+
                 var buildere = new DiscordEmbedBuilder
                 {
                     Title = $"Now playing {track.Title}",
@@ -1151,8 +1157,8 @@ namespace ModuleBotClassLibrary
 
                 await ctx.Client.UpdateStatusAsync(activity);
 
-
                 await ctx.RespondAsync(buildere.Build());
+
 
             }
         }
@@ -1181,7 +1187,9 @@ namespace ModuleBotClassLibrary
 
         }
 
+
         [Command("list-queues")]
+
         [DescriptionCustomAttribute("listAudioCommand")]
         public async Task ListsQueue(CommandContext ctx)
         {
