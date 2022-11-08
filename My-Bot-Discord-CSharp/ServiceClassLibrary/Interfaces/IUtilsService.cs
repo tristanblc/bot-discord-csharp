@@ -38,6 +38,5 @@ namespace ServiceClassLibrary.Interfaces
 
         bool isJson(string message);
 
-
     }
 }
