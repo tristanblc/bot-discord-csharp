@@ -27,7 +27,7 @@ Bot-discord-csharp uses a number of projects to work properly:
 - [Python] - To insert data in database
 
 
-Use librarys :
+Use libraries :
 
 - [DsharpPlus](https://github.com/DSharpPlus/DSharpPlus) - .Net Discord Api Wrapper
 - [FFMPEGCore](https://github.com/rosenbjerg/FFMpegCore)- A .NET Standard FFMpeg/FFProbe wrapper
@@ -39,7 +39,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
-If you want to have more information about the project, send me a message or go on [website](https://tristanblc.github.io/)
+If you want to have more information about the project, send me a message or go on my website [website](https://tristanblc.github.io/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
