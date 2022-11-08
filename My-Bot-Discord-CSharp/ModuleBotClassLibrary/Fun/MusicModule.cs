@@ -30,6 +30,7 @@ namespace ModuleBotClassLibrary
 
         private int volumeStat { get; set; } = 50;
 
+        private string[] urlYtbThumb = { "https://i.ytimg.com/vi/", "/hqdefault.jpg" };
 
         public MusicModule()
         {
@@ -196,6 +197,10 @@ namespace ModuleBotClassLibrary
                 builder.Color = DiscordColor.Blue;
                 builder.Description = $"Now playing {track.Title}! - Author : {track.Author}";
 
+      
+
+
+       
                 lastPlayedMusic = track.Title;
 
                 DiscordActivity activitye = new DiscordActivity(track.Title, ActivityType.ListeningTo);
@@ -281,7 +286,7 @@ namespace ModuleBotClassLibrary
 
             builder.Color = DiscordColor.Blue;
             builder.Description = $"Now playing {track.Title}! - Author : {track.Author}";
-
+            builder.WithImageUrl($"{urlYtbThumb[0]}{track.Uri.ToString().Split("=")[1]}{urlYtbThumb[1]}");
             lastPlayedMusic = track.Title;
 
             DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
@@ -967,7 +972,7 @@ namespace ModuleBotClassLibrary
                 Color = DiscordColor.Green
 
             };
-            buildere.WithThumbnail(urlThumb);
+            builder.WithImageUrl($"{urlYtbThumb[0]}{track.Uri.ToString().Split("=")[1]}{urlYtbThumb[1]}");
             await ctx.RespondAsync(buildere.Build());
                       
         }
@@ -1076,7 +1081,7 @@ namespace ModuleBotClassLibrary
 
                             Color = DiscordColor.Green
                         };
-                        buildere.WithThumbnail(urlThumb);
+                        builder.WithImageUrl($"{urlYtbThumb[0]}{track.Uri.ToString().Split("=")[1]}{urlYtbThumb[1]}");
 
                         DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
 
@@ -1151,7 +1156,7 @@ namespace ModuleBotClassLibrary
 
                     Color = DiscordColor.Green
                 };
-                buildere.WithThumbnail(urlThumb);
+                buildere.WithImageUrl($"{urlYtbThumb[0]}{track.Uri.ToString().Split("=")[1]}{urlYtbThumb[1]}");
 
                 DiscordActivity activity = new DiscordActivity(track.Title, ActivityType.ListeningTo);
 
