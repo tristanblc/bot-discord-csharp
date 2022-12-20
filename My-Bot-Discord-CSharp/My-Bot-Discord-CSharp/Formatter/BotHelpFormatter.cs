@@ -2,10 +2,12 @@
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 
 using ExceptionClassLibrary;
 using ModuleBotClassLibrary.RessourceManager;
+using OpenQA.Selenium.Internal;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
 
@@ -32,8 +34,8 @@ namespace My_Bot_Discord_CSharp.Formatter
         {
             _embed = new DiscordEmbedBuilder();
             _embed.Color = DiscordColor.Cyan;
-            _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
-             _strBuilder = "";
+            _embed.Title = $"Bot Help - Use ! prefix";
+            _strBuilder = "";
             _commandList = "";
             _ctx = ctx;
             _logger = new LoggerProject();
@@ -76,7 +78,7 @@ namespace My_Bot_Discord_CSharp.Formatter
                 _logger.WriteLogErrorLog(exception);
                 throw new HelpFormatterException(exception);
             }
-          
+
         }
 
 
@@ -116,19 +118,23 @@ namespace My_Bot_Discord_CSharp.Formatter
                 _logger.WriteLogErrorLog(exception);
                 throw new HelpFormatterException(exception);
             }
-           
+
         }
 
         public override CommandHelpMessage Build()
         {
             var helpStringFormatter = _strBuilder;
-            var interactivity = _ctx.Client.GetInteractivity();            
-            var pages = interactivity.GeneratePagesInEmbed(helpStringFormatter,DSharpPlus.Interactivity.Enums.SplitType.Line,_embed);
-            _ctx.Channel.SendPaginatedMessageAsync(_ctx.Member, pages);
+            var interactivity = _ctx.Client.GetInteractivity();
+            var pages = interactivity.GeneratePagesInEmbed(helpStringFormatter, DSharpPlus.Interactivity.Enums.SplitType.Line, _embed);
+
+
+            pages.ToList().ForEach(page =>
+            {
+                _ctx.RespondAsync(page.Embed);
+            });
             return new CommandHelpMessage();
-  
-        }       
-        
-        
-     }
+
+        }
+    }
+
 }
