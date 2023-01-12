@@ -120,8 +120,9 @@ namespace ModuleBotClassLibrary
                 {
 
                     FileStream fileStream = VideoService.GetStream(path);   
+                    builders.AddFile(fileStream);
 
-                    builders.WithFile(fileStream);
+
                 }catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());

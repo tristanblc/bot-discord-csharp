@@ -117,7 +117,7 @@ namespace ServiceClassLibrary.Services
             {
                 DiscordMessageBuilder builders = new DiscordMessageBuilder();
                 FileStream fileStream = new FileStream(path, FileMode.Open);
-                builders.WithFile(fileStream);
+                builders.AddFile(fileStream);
                 return builders;
             }
             catch (Exception ex)
