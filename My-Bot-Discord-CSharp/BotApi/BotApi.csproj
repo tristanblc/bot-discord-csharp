@@ -31,6 +31,7 @@
     <ProjectReference Include="..\BotDTOClassLibrary\BotDTOClassLibrary.csproj" />
     <ProjectReference Include="..\ExceptionClassLibrary\ExceptionClassLibrary.csproj" />
     <ProjectReference Include="..\GamesClassLibrary\GamesClassLibrary.csproj" />
+    <ProjectReference Include="..\My-Bot-Discord-CSharp\My-Bot-Discord-CSharp.csproj" />
     <ProjectReference Include="..\ReaderClassLibrary\ReaderClassLibrary.csproj" />
   </ItemGroup>
 

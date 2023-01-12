@@ -17,6 +17,7 @@ using System.Resources;
 using ModuleBotClassLibrary.RessourceManager;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.SlashCommands;
 
 namespace ModuleBotClassLibrary
 {
@@ -37,6 +38,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ban")]
+        [SlashCommand("ban", null, true)]
         [DescriptionCustomAttribute("banCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task ban(CommandContext ctx, DiscordMember member, string reason)
@@ -51,6 +53,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("changebotstatus")]
+        [SlashCommand("changebotstatus", null, true)]
         [DescriptionCustomAttribute("botStatusCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleBotStatus(CommandContext ctx, string reason, string? media)
@@ -92,6 +95,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("unban")]
+        [SlashCommand("unban", null, true)]
         [DescriptionCustomAttribute("unbanCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task unban(CommandContext ctx, DiscordMember member, string reason)
@@ -105,6 +109,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("clean-all")]
+        [SlashCommand("clean-all", null, true)]
         [DescriptionCustomAttribute("cleanallCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task CleanAChannel(CommandContext ctx)
@@ -139,6 +144,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("clear")]
+        [SlashCommand("clear", null, true)]
         [DescriptionCustomAttribute("clearCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task clean(CommandContext ctx, int number)
@@ -161,6 +167,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("poll")]
+        [SlashCommand("poll", null, true)]
         [DescriptionCustomAttribute("pollCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandlePoll(CommandContext ctx, string question)
@@ -217,6 +224,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("deaf")]
+        [SlashCommand("deaf", null, true)]
         [DescriptionCustomAttribute("deafCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task deafUser(CommandContext ctx, DiscordMember member, string reason)
@@ -242,6 +250,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("undeaf")]
+        [SlashCommand("undeaf", null, true)]
         [DescriptionCustomAttribute("undeafCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task undeafUser(CommandContext ctx, DiscordMember member, string reason)
@@ -268,6 +277,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("mute")]
+        [SlashCommand("mute", null, true)]
         [DescriptionCustomAttribute("muteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task muteUser(CommandContext ctx, DiscordMember member, string reason)
@@ -312,6 +322,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("unmute")]
+        [SlashCommand("unmute", null, true)]
         [DescriptionCustomAttribute("unmuteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task UnMuteUser(CommandContext ctx, DiscordMember member, string reason)
@@ -358,6 +369,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("addrole")]
+        [SlashCommand("addrole", null, true)]
         [DescriptionCustomAttribute("addroleCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task addRoleUser(CommandContext ctx, DiscordMember member, DiscordRole role)
@@ -395,6 +407,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("removerole")]
+        [SlashCommand("removerole", null, true)]
         [DescriptionCustomAttribute("removeCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task removeRoleUser(CommandContext ctx, DiscordMember member, DiscordRole role)
@@ -411,6 +424,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("timeout")]
+        [SlashCommand("timeout", null, true)]
         [DescriptionCustomAttribute("timeoutCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task timeoutUser(CommandContext ctx, DiscordMember member, string time)
@@ -440,6 +454,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("invite")]
+        [SlashCommand("invite", null, true)]
         [DescriptionCustomAttribute("inviteCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task inviteUser(CommandContext ctx, DiscordChannel channel, int time)
@@ -453,6 +468,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("clone")]
+        [SlashCommand("clone", null, true)]
         [DescriptionCustomAttribute("cloneCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleCloneChannel(CommandContext ctx, DiscordChannel channel)
@@ -476,7 +492,10 @@ namespace ModuleBotClassLibrary
             }
             await ctx.RespondAsync(builder.Build());
         }
+
+
         [Command("delete-channel")]
+        [SlashCommand("delete-channel", null, true)]
         [DescriptionCustomAttribute("deleteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleDeleteChannel(CommandContext ctx, DiscordChannel channel)
@@ -504,6 +523,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("get-links")]
+        [SlashCommand("get-links", null, true)]
         [DescriptionCustomAttribute("getlinksCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleLinks(CommandContext ctx, DiscordChannel channel)
@@ -533,6 +553,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("delete-links")]
+        [SlashCommand("delete-links", null, true)]
         [DescriptionCustomAttribute("deleteCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleDeleteLinks(CommandContext ctx, DiscordChannel channel)
@@ -561,6 +582,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("export-links")]
+        [SlashCommand("export-links", null, true)]
         [DescriptionCustomAttribute("exportlinksCommand")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleExportLinks(CommandContext ctx, DiscordChannel channel)
@@ -605,6 +627,7 @@ namespace ModuleBotClassLibrary
         
 
         [Command("getprocinfo")]
+        [SlashCommand("getprocinfo", null, true)]
         [DescriptionCustomAttribute("procInfoCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleProcInfo(CommandContext ctx, int iterate)
@@ -625,6 +648,7 @@ namespace ModuleBotClassLibrary
 
         }
         [Command("getRamInfo")]
+        [SlashCommand("ramInfoCmd", null, true)]
         [DescriptionCustomAttribute("ramInfoCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleRamInfo(CommandContext ctx, int iterate)

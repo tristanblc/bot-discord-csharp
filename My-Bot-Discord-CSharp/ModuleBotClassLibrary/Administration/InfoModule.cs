@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using ModuleBotClassLibrary.RessourceManager;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -32,6 +33,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("ping")]
+        [SlashCommand("ping", null, false)]
         [DescriptionCustomAttribute("pingsenderCommand")]
 
         public async Task PingCommand(CommandContext ctx)
@@ -67,6 +69,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("pingweb")]
+        [SlashCommand("pingweb", null, false)]
         [DescriptionCustomAttribute("pingwebCommand")]
         public async Task PingWebsiteCommand(CommandContext ctx, string url)
         {

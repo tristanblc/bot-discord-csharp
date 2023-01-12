@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using ModuleBotClassLibrary.RessourceManager;
 using ModuleBotClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -39,6 +40,7 @@ namespace ModuleBotClassLibrary
 
    
         [Command("transpiracy")]
+        [SlashCommand("transpiracy", null, false)]
         [DescriptionCustomAttribute("transpiracyCommand")]
         public async Task HandleImageToTranspiracy(CommandContext ctx)
         {
@@ -81,6 +83,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("grayscale")]
+
+        [SlashCommand("grayscale", null, false)]
         [DescriptionCustomAttribute("grayscaleCommand")]
         public async Task HandleImageToGrayscale(CommandContext ctx)
         {
@@ -126,6 +130,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("sepia")]
+
+        [SlashCommand("sepia", null, false)]
         [DescriptionCustomAttribute("sepiaCommand")]
 
         public async Task HandleImageToSepiaTone(CommandContext ctx)
@@ -170,6 +176,8 @@ namespace ModuleBotClassLibrary
 
 
         [Command("negative")]
+
+        [SlashCommand("nagative", null, false)]
         [DescriptionCustomAttribute("negativeCommand")]
         public async Task HandleImageToNegativeCopy(CommandContext ctx)
         {
@@ -212,6 +220,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("bw")]
+
+        [SlashCommand("bw", null, false)]
         [DescriptionCustomAttribute("bwCommand")]
 
         public async Task HandleImageToBlackAndWhite(CommandContext ctx)
@@ -260,6 +270,8 @@ namespace ModuleBotClassLibrary
 
 
         [Command("clear-directory")]
+
+        [SlashCommand("clear-directory", null, true)]
         [DescriptionCustomAttribute("clearDirCommand")]
 
         [RequirePermissions(Permissions.Administrator)]
@@ -286,6 +298,8 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("watch-directory")]
+
+        [SlashCommand("watch-directory", null, false)]
         [DescriptionCustomAttribute("watchDirectoryCmd")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task HandleWatchDirectory(CommandContext ctx)
