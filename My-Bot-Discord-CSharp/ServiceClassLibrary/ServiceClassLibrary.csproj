@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="DSharpPlus" Version="4.2.0" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0" />
+    <PackageReference Include="DSharpPlus" Version="4.3.0" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.3.0" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.3.0" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.3.0" />
     <PackageReference Include="FFMpegCore" Version="4.8.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BotDTOClassLibrary\BotDTOClassLibrary.csproj" />
     <ProjectReference Include="..\ExceptionClassLibrary\ExceptionClassLibrary.csproj" />
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Configuration;
 using ModuleBotClassLibrary.RessourceManager;
 using ModuleBotClassLibrary.Services;
@@ -42,6 +43,7 @@ namespace ModuleBotClassLibrary
 
  
         [Command("create-ticket")]
+        [SlashCommand("create-ticket", null, true)]
         [DescriptionCustomAttribute("createticketCommand")]
         public async Task HandleCreateTicket(CommandContext ctx,DiscordMember member,string title,string description)
         {
@@ -73,6 +75,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("checked-ticket")]
+        [SlashCommand("checked-ticket", null, true)]
         [DescriptionCustomAttribute("checkTicketCommand")]
         public async Task HandleDeleteTicket(CommandContext ctx, string id)
         {
@@ -139,6 +142,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("read-ticket")]
+        [SlashCommand("read-ticket", null, true)]
         public async Task HandleReadTicket(CommandContext ctx,  string id)
         {
             try
@@ -174,6 +178,7 @@ namespace ModuleBotClassLibrary
 
         [RequirePermissions(Permissions.Administrator)]
         [Command("check-ticket")]
+        [SlashCommand("check-ticket", null, true)]
         public async Task HandleDealTicket(CommandContext ctx, string id)
         {
             try

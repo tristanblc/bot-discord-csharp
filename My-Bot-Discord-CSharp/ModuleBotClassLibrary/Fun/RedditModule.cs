@@ -249,6 +249,7 @@ namespace ModuleBotClassLibrary.Fun
         }
 
         [Command("getuserposts")]
+
         [DescriptionCustomAttribute("RUserPostCmd")]
         public async Task HandleGetUsersInfo(CommandContext ctx, string username)
         {

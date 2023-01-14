@@ -39,6 +39,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("join")]
+
         [DescriptionCustomAttribute("joinAudioCommand")]
         public async Task Join(CommandContext ctx, DiscordChannel channel)
         {

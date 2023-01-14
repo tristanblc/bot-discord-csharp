@@ -15,6 +15,7 @@ using System.Collections;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
 using ModuleBotClassLibrary.RessourceManager;
+using DSharpPlus.SlashCommands;
 
 namespace ModuleBotClassLibrary
 {   
@@ -31,6 +32,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("pileorface")]
+        [SlashCommand("pileorface", null, false)]
         public async Task HandlePileOrFace(CommandContext ctx)
         {
             PileFace pileorface = new PileFace(ctx);
@@ -39,6 +41,7 @@ namespace ModuleBotClassLibrary
 
 
         [Command("rockpaperscissor")]
+        [SlashCommand("rockpaperscissor", null, false)]
         public async Task HandleRockPaperScissore(CommandContext ctx)
         {
             RockPaperScissors game = new RockPaperScissors(ctx);
@@ -46,6 +49,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("justprice")]
+        [SlashCommand("justprice", null, false)]
         public async Task HandleJustePrice(CommandContext ctx)
         {
             JustPrice juste = new JustPrice(ctx);

@@ -21,9 +21,10 @@ namespace ServiceClassLibrary.Interfaces
         string Compress2Zip(List<DiscordAttachment> attachements, string filename);
 
 
-         List<string> Decompress2File(DiscordAttachment attachment);
+        List<string> Decompress2File(DiscordAttachment attachment);
 
         void WriteJson(List<DiscordMessage> messages, string filename);
+
 
     }
 }

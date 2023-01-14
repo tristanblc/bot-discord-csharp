@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using ModuleBotClassLibrary.RessourceManager;
 using ServiceClassLibrary.Interfaces;
 using ServiceClassLibrary.Services;
@@ -25,6 +26,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("uploadvideo")]
+        [SlashCommand("uploadvideo", null, false)]
         [DescriptionCustomAttribute("uploadCommand")]
         public async Task HandleUploadVideoCommand(CommandContext ctx)
         {
@@ -48,6 +50,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("extractaudio")]
+        [SlashCommand("extractaudio", null, false)]
         [DescriptionCustomAttribute("extractCommand")]
         public async Task HandleExtractAudioCommand(CommandContext ctx)
         {
@@ -86,6 +89,7 @@ namespace ModuleBotClassLibrary
         }
 
         [Command("compressvideo")]
+        [SlashCommand("compressvideo", null, false)]
         [DescriptionCustomAttribute("compressCommand")]
         public async Task HandleCompressVideoCommand(CommandContext ctx)
         {
@@ -120,8 +124,9 @@ namespace ModuleBotClassLibrary
                 {
 
                     FileStream fileStream = VideoService.GetStream(path);   
+                    builders.AddFile(fileStream);
 
-                    builders.WithFile(fileStream);
+
                 }catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());

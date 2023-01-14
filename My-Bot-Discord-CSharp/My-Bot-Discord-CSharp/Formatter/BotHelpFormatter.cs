@@ -87,7 +87,7 @@ namespace My_Bot_Discord_CSharp.Formatter
 
             try
             {
-                _embed.Title = $"Bot Help - Use ! prefix - At {DateTime.Now.ToString()}  Timezone : {TimeZone.CurrentTimeZone.StandardName.ToString()}";
+                _embed.Title = $"Bot Help - Use ! prefix";
 
 
                 cmds.ToList().ForEach(cmd =>

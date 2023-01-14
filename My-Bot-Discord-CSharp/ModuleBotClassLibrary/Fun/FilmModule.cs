@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using ModuleBotClassLibrary.RessourceManager;
 using ReaderClassLibrary.Services;
 using ServiceClassLibrary.Interfaces;
@@ -26,6 +27,8 @@ namespace ModuleBotClassLibrary
             utilsService = new UtilsService();
         }
 
+
+        [SlashCommand("film",null,false)]
         [Command("film")]
         [DescriptionCustomAttribute("filmCommand")]
         public async Task FilmCommand(CommandContext ctx, string message)
@@ -53,9 +56,10 @@ namespace ModuleBotClassLibrary
         }
 
 
-
+        [SlashCommand("star", null, false)]
 
         [Command("star")]
+
         [DescriptionCustomAttribute("starCommand")]
         public async Task PeopleCommand(CommandContext ctx, string message)
         {
