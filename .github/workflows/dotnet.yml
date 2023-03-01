@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_PATH: My-Bot-Discord-CSharp\
+  PROJECT_PATH: My-Bot-Discord-CSharp\My-Bot-Discord-CSharp\My-Bot-Discord-CSharp.csproj
   
 jobs:
    build:
