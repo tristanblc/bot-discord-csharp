@@ -6,13 +6,19 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
 env:
   PROJECT_PATH: My-Bot-Discord-CSharp\My-Bot-Discord-CSharp\My-Bot-Discord-CSharp.csproj
-  
+  NAME: "My-Bot-Discord-CSharp_1.0.0-CI+$(Build.BuildNumber)"
+
+
 jobs:
+
+    
    build:
     runs-on: windows-latest
     steps:
+
       - uses: actions/checkout@v2
 
       - uses: actions/setup-dotnet@v1
@@ -21,13 +27,14 @@ jobs:
           
 
       - uses: actions/create-release@v1
+
         id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-
+          release_name: ${{ NAME }}
+          
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
