@@ -9,8 +9,6 @@ on:
 
 env:
   PROJECT_PATH: My-Bot-Discord-CSharp\My-Bot-Discord-CSharp\My-Bot-Discord-CSharp.csproj
-  NAME: "My-Bot-Discord-CSharp_1.0.0-CI+$(Build.BuildNumber)"
-
 
 jobs:
 
@@ -33,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ NAME }}
+          release_name: "My-Bot-Discord-CSharp_1.0.0-CI+$(Build.BuildNumber)"
           
       - uses: csexton/release-asset-action@v2
         with:
