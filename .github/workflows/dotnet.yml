@@ -30,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "My-Bot-Discord-CSharp_1.0.0-CI+$(Build.BuildNumber)"
-          release_name: "My-Bot-Discord-CSharp_1.0.0-CI+$(Build.BuildNumber)"
+          tag_name: My-Bot-Discord-CSharp_${{ github.run_number }}∕${{ github.run_attempt }}
+          release_name: My-Bot-Discord-CSharp_${{ github.run_number }}∕${{ github.run_attempt }}
           
       - uses: csexton/release-asset-action@v2
         with:
